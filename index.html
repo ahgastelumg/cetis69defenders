@@ -421,6 +421,93 @@
     .stage:fullscreen .touch { position: absolute; inset: auto 0 0 0; z-index: 3; background: none; padding: 0 22px 16px; pointer-events: none; }
     .stage:fullscreen .touch > * { pointer-events: auto; opacity: .82; }
 
+
+    /* ============ SIMPLIFIED UI (v2) ============ */
+    .app { gap: 10px; }
+    .topbar { gap: 10px; }
+    .brand h1 { font-size: 16px; }
+    .res-bar { gap: 8px; }
+    .chip-faction { height: 30px; font-size: 12px; padding: 0 10px; }
+    .res-group {
+      display: inline-flex; align-items: center; height: 32px; padding: 0 4px; border-radius: 999px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+    }
+    .res { display: inline-flex; align-items: center; gap: 5px; padding: 0 9px; font-size: 13px; white-space: nowrap; }
+    .res + .res { border-left: 1px solid rgba(255,255,255,.1); }
+    .res b { font-family: var(--mono); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .icon-btn { width: 38px; height: 38px; }
+
+    .tab { height: 36px; padding: 0 15px; }
+    .tab-badge { font-size: 10px; padding: 1px 6px; }
+
+    /* Menu stays clean: no overlapping stage tools while choosing */
+    body[data-mode="menu"] .stage-tools { display: none; }
+    .menu { gap: 16px; padding: 22px 24px; }
+    .menu-head { align-items: center; }
+    .menu-head h2 { font-size: 22px; }
+    .step-title { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-foreground); }
+    .step-note { text-transform: none; letter-spacing: 0; }
+    .roster-label { display: none; }
+    body.is-2p .roster-label { display: block; }
+    .area-thumb { height: 58px; }
+    .area-body { padding: 7px 9px 9px; gap: 2px; }
+    .area-name {
+      white-space: normal; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      min-height: 2.4em;
+    }
+    .menu-cta .btn-lg { min-width: 180px; }
+
+    /* Sidebar: one compact card */
+    .side { gap: 10px; }
+    .base-card .card-head { margin-bottom: 10px; }
+    .meter { margin-bottom: 10px; }
+    .def-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; margin: 4px 0 12px; }
+    .def-item {
+      flex-direction: column; justify-content: center; gap: 1px; padding: 7px 2px 6px; text-align: center;
+      border-radius: 10px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.05);
+    }
+    .def-ico { font-size: 16px; line-height: 1.1; }
+    .def-name { font-size: 10px; color: var(--muted-foreground); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .def-item b { font-size: 10px; }
+    .radio-card { padding: 12px 14px; }
+    .log { max-height: 150px; }
+
+    /* Merged "Cómo jugar" panel */
+    .controls-help > summary .portrait { width: 28px; height: 28px; border-radius: 8px; }
+    .controls-help .moves { margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.06); display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+
+    /* "Más" sheet */
+    .more-list { display: flex; flex-direction: column; padding: 8px; gap: 4px; }
+    .more-item {
+      display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px; border: 0; border-radius: 12px;
+      background: transparent; color: var(--foreground); text-align: left; cursor: pointer; transition: background-color .15s;
+    }
+    .more-item:hover, .more-item:focus-visible { background: rgba(255,255,255,.06); }
+    .more-ico { width: 40px; height: 40px; flex-shrink: 0; display: grid; place-items: center; font-size: 20px; border-radius: 12px; background: rgba(255,255,255,.06); }
+    .more-item b { display: block; font-size: 14px; }
+    .more-item small { display: block; font-size: 12px; color: var(--muted-foreground); }
+
+    @media (max-width: 1080px) {
+      .side { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .brand h1 { font-size: 15px; }
+      .res-bar { justify-content: space-between; gap: 6px; }
+      .res-group { height: 30px; }
+      .res { font-size: 12px; padding: 0 8px; }
+      .tabbar { grid-template-columns: repeat(5, 1fr); }
+      .tab { height: 54px; font-size: 11px; }
+      .tab-badge { top: 3px; right: auto; left: calc(50% + 7px); font-size: 9px; padding: 1px 5px; }
+      .menu { padding: 16px 14px; gap: 14px; }
+      .menu-head h2 { font-size: 20px; }
+      .area-thumb { height: 64px; }
+      .controls-help .moves { grid-template-columns: 1fr; }
+      .stage-tools { top: 6px; right: 6px; gap: 4px; }
+      .stage-tools .icon-btn { width: 30px; height: 30px; font-size: 13px; border-radius: 9px; }
+      #btnStageMenu { padding: 0 9px; font-size: 12px; }
+      .side { grid-template-columns: 1fr; }
+    }
+
     @keyframes sheetUp { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
   </style>
@@ -428,36 +515,36 @@
 <body data-mode="menu">
   <div id="app" class="app">
 
-    <!-- TOP BAR -->
+    <!-- TOP BAR (brand · resources · sound) -->
     <header class="topbar">
       <div class="brand">
         <div class="brand-logo" aria-hidden="true">C69</div>
         <div>
           <h1>CETis 69 Defenders</h1>
-          <p>Inglés técnico con Teacher Aldo · Cd. Obregón</p>
+          <p>Inglés técnico con Teacher Aldo</p>
         </div>
       </div>
       <div class="res-bar">
         <span id="hudFactionBadge" class="chip chip-faction is-pantera" title="Tu bando según tu puntuación académica">🐾 Pantera · 85</span>
-        <span class="chip" title="Materiales de construcción">🧱 <b id="resMat">60</b></span>
-        <span class="chip" title="Pintura escolar">🎨 <b id="resPaint">25</b></span>
-        <span class="chip" title="Chips de seguridad">🔌 <b id="resChips">15</b></span>
+        <span class="res-group" aria-label="Recursos">
+          <span class="res" title="Materiales de construcción">🧱 <b id="resMat">60</b></span>
+          <span class="res" title="Pintura escolar">🎨 <b id="resPaint">25</b></span>
+          <span class="res" title="Chips de seguridad">🔌 <b id="resChips">15</b></span>
+        </span>
       </div>
       <div class="top-actions">
         <button id="btnAudio" class="icon-btn" aria-pressed="true" title="Efectos de sonido" aria-label="Efectos de sonido">🔊</button>
         <button id="btnBgm" class="icon-btn" aria-pressed="true" title="Música" aria-label="Música">🎵</button>
-        <button class="icon-btn" onclick="UI.openModal('adminModal')" title="Panel docente (Teacher Aldo)" aria-label="Panel docente">⚙️</button>
       </div>
     </header>
 
-    <!-- NAVIGATION (top pills on desktop, bottom bar on mobile) -->
+    <!-- NAVIGATION: 5 clear destinations (top pills on desktop, bottom bar on mobile) -->
     <nav class="tabbar" aria-label="Navegación principal">
-      <button class="tab is-active" data-tab="play" onclick="UI.openMenu('play')"><span class="tab-ico">🥊</span><span>Defender</span></button>
+      <button class="tab is-active" data-tab="play" onclick="UI.openMenu('play')"><span class="tab-ico">🥊</span><span>Jugar</span></button>
       <button class="tab" data-tab="explore" onclick="Game.startExplore()"><span class="tab-ico">🌳</span><span>Explorar</span></button>
-      <button class="tab" data-tab="build" onclick="UI.openModal('buildModal')"><span class="tab-ico">🏗️</span><span>Construir</span><span id="navDefPower" class="tab-badge">Def 0</span></button>
-      <button class="tab" data-tab="map" onclick="UI.openModal('mapModal')"><span class="tab-ico">🗺️</span><span>Mapa</span></button>
+      <button class="tab" data-tab="build" onclick="UI.openModal('buildModal')"><span class="tab-ico">🏗️</span><span>Base</span><span id="navDefPower" class="tab-badge">Def 0</span></button>
       <button class="tab" data-tab="records" onclick="UI.openModal('recordsModal')"><span class="tab-ico">🏆</span><span>Récords</span></button>
-      <button class="tab" data-tab="codes" onclick="UI.openModal('codesModal')"><span class="tab-ico">🎟️</span><span>Códigos</span></button>
+      <button class="tab" data-tab="more" onclick="UI.openModal('moreModal')"><span class="tab-ico">☰</span><span>Más</span></button>
     </nav>
 
     <main class="layout">
@@ -467,17 +554,13 @@
           <div id="scanlineOverlay" class="scanlines hidden"></div>
           <div class="stage-tools">
             <button id="btnStageMenu" class="icon-btn" onclick="UI.openMenu('play')" title="Volver al menú">✕ Menú</button>
-            <button class="icon-btn" onclick="UI.toggleScanlines()" title="Filtro CRT" aria-label="Filtro CRT">📺</button>
             <button id="btnFullscreen" class="icon-btn" onclick="UI.toggleFullscreen()" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
           </div>
 
           <!-- START MENU -->
           <div id="menuOverlay" class="menu custom-scroll">
             <div class="menu-head">
-              <div>
-                <p class="eyebrow">Col. Benito Juárez · Cd. Obregón</p>
-                <h2>Defiende el CETis 69</h2>
-              </div>
+              <h2>Defiende el CETis 69</h2>
               <div class="seg" role="group" aria-label="Número de jugadores">
                 <button id="btnMode1P" onclick="UI.setPlayers(1)">1 Jugador</button>
                 <button id="btnMode2P" onclick="UI.setPlayers(2)">2 Jugadores</button>
@@ -485,7 +568,7 @@
             </div>
 
             <div>
-              <div class="step-title"><span class="step-n">1</span>Elige tu personaje</div>
+              <div class="step-title"><span class="step-n">1</span>Personaje</div>
               <div class="roster-wrap">
                 <div>
                   <div class="roster-label">Jugador 1</div>
@@ -499,13 +582,13 @@
             </div>
 
             <div>
-              <div class="step-title"><span class="step-n">2</span>Elige el área a defender <span id="activeWeekLabel" class="step-note"></span></div>
+              <div class="step-title"><span class="step-n">2</span>Área <span id="activeWeekLabel" class="step-note"></span></div>
               <div id="areaGrid" class="areas"></div>
             </div>
 
             <div class="menu-cta">
-              <button class="btn btn-ghost" onclick="Game.startExplore()">🌳 Explorar la colonia</button>
-              <button class="btn btn-primary btn-lg" onclick="Game.startCombat()">▶ Iniciar defensa</button>
+              <button class="btn btn-ghost" onclick="Game.startExplore()">🌳 Explorar</button>
+              <button class="btn btn-primary btn-lg" onclick="Game.startCombat()">▶ Jugar</button>
             </div>
           </div>
 
@@ -519,8 +602,6 @@
               <div class="result-actions">
                 <button id="resPrimaryBtn" onclick="Game.nextWaveOrMenu()" class="btn btn-primary">▶ Siguiente Oleada</button>
                 <button onclick="UI.openModal('buildModal')" class="btn btn-ghost">🏗️ Mejorar base</button>
-                <button onclick="UI.openModal('recordsModal')" class="btn btn-ghost">🏆 Récords</button>
-                <button onclick="Game.startExplore()" class="btn btn-ghost">🌳 Explorar</button>
               </div>
             </div>
           </div>
@@ -540,7 +621,7 @@
         </div>
 
         <details class="card controls-help">
-          <summary>⌨️ Controles de teclado y ratón (PC)</summary>
+          <summary><img id="aldoSidebarPortrait" alt="" class="portrait" />🎮 Cómo jugar (teclado y ratón)</summary>
           <div class="help-grid">
             <div>
               <h4>Jugador 1</h4>
@@ -562,30 +643,6 @@
               <div class="help-row"><span class="key">O</span>Acción / interactuar</div>
             </div>
           </div>
-        </details>
-      </section>
-
-      <!-- SIDEBAR -->
-      <aside class="side">
-        <div class="card">
-          <div class="card-head">
-            <h3>🏫 Estado del plantel</h3>
-            <span id="sideBaseStatus" class="status ok">SEGURA</span>
-          </div>
-          <div class="meter">
-            <div class="meter-row"><span>🚪 Puerta del salón</span><b id="sideBaseHpText">100 / 100</b></div>
-            <div class="track"><div id="sideBaseHpBar" class="fill fill-hp" style="width:100%"></div></div>
-          </div>
-          <div class="meter">
-            <div class="meter-row"><span>🐾 Control territorial</span><b id="sideTerritoryText">62%</b></div>
-            <div class="track"><div id="sideTerritoryBar" class="fill fill-terr" style="width:62%"></div></div>
-          </div>
-          <div id="sideDefSummary" class="def-grid"></div>
-          <button class="btn btn-guinda btn-block" onclick="UI.openModal('buildModal')">🏗️ Mejorar defensas</button>
-        </div>
-
-        <details class="card">
-          <summary><img id="aldoSidebarPortrait" alt="Teacher Aldo" class="portrait" />Poderes de Teacher Aldo</summary>
           <ul class="moves">
             <li><span class="key">F</span><div><strong>Combo 1-2-3</strong>Marker Kunai → Book Throw → Eraser Slam</div></li>
             <li><span class="key">R</span><div><strong>Examen Oral!</strong>Onda sónica aturdidora · 25% SP</div></li>
@@ -593,13 +650,49 @@
             <li><span class="key">H</span><div><strong>Super "F" Grade</strong>Reprobada masiva · 100% SP</div></li>
           </ul>
         </details>
+      </section>
 
-        <details class="card" open>
+      <!-- SIDEBAR: one compact base card + collapsed radio log -->
+      <aside class="side">
+        <div class="card base-card">
+          <div class="card-head">
+            <h3>🏫 Tu plantel</h3>
+            <span id="sideBaseStatus" class="status ok">Segura</span>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>🚪 Puerta</span><b id="sideBaseHpText">100 / 100</b></div>
+            <div class="track"><div id="sideBaseHpBar" class="fill fill-hp" style="width:100%"></div></div>
+          </div>
+          <div class="meter">
+            <div class="meter-row"><span>🐾 Territorio</span><b id="sideTerritoryText">62%</b></div>
+            <div class="track"><div id="sideTerritoryBar" class="fill fill-terr" style="width:62%"></div></div>
+          </div>
+          <div id="sideDefSummary" class="def-grid"></div>
+          <button class="btn btn-guinda btn-block" onclick="UI.openModal('buildModal')">🏗️ Mejorar base</button>
+        </div>
+
+        <details class="card radio-card">
           <summary>📻 Radio escolar</summary>
           <div id="eventLog" class="log custom-scroll"></div>
         </details>
       </aside>
     </main>
+  </div>
+
+  <!-- ================= MODAL: MÁS (secondary tools in one tidy list) ================= -->
+  <div id="moreModal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-3" onclick="if(event.target===this)UI.closeModal('moreModal')">
+    <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg max-w-sm w-full overflow-hidden pixel-border">
+      <div class="px-4 py-3 flex items-center justify-between">
+        <h3 class="font-black text-sm">☰ Más opciones</h3>
+        <button onclick="UI.closeModal('moreModal')" class="pixel-btn px-2.5 py-1 rounded bg-black/30 text-white text-xs font-bold cursor-pointer">✕</button>
+      </div>
+      <div class="more-list">
+        <button class="more-item" onclick="UI.closeModal('moreModal');UI.openModal('mapModal')"><span class="more-ico">🗺️</span><span><b>Mapa del territorio</b><small>Zonas Pantera vs. Cholos y sabotaje</small></span></button>
+        <button class="more-item" onclick="UI.closeModal('moreModal');UI.openModal('codesModal')"><span class="more-ico">🎟️</span><span><b>Códigos ADA20</b><small>Canjea recompensas de clase</small></span></button>
+        <button class="more-item" onclick="UI.closeModal('moreModal');UI.toggleScanlines()"><span class="more-ico">📺</span><span><b>Filtro retro CRT</b><small>Activa / desactiva las líneas de TV</small></span></button>
+        <button class="more-item" onclick="UI.closeModal('moreModal');UI.openModal('adminModal')"><span class="more-ico">⚙️</span><span><b>Panel docente</b><small>Solo Teacher Aldo (PIN)</small></span></button>
+      </div>
+    </div>
   </div>
 
   <!-- ================= MODAL: CONSTRUCCIÓN & QUIZ DE INGLÉS ================= -->
@@ -2632,7 +2725,9 @@ const Game = {
     const bg = this.mode === 'sabotage' ? 'explanada' : area.bg;
 
     if (bg === 'english') {
-      return { yMin: 300, yMax: 436, xMin, xMax: 774, obstacles: [] };
+      // Interior close-up hallway: lockers are ~155px tall and the doorway ~235px,
+      // so students/cholos must render at near-real human proportion (not dwarves!).
+      return { yMin: 300, yMax: 436, xMin, xMax: 774, obstacles: [], scaleMin: 1.34, scaleMax: 1.66 };
     }
     if (bg === 'robotics' || bg === 'ailab') {
       return {
@@ -2665,10 +2760,23 @@ const Game = {
     };
   },
 
+  getDepthT(y) {
+    const cfg = this.getStageConfig();
+    return Math.max(0, Math.min(1, (y - cfg.yMin) / Math.max(1, cfg.yMax - cfg.yMin)));
+  },
+
   getDepthScale(y) {
     const cfg = this.getStageConfig();
     const t = Math.max(0, Math.min(1, (y - cfg.yMin) / Math.max(1, cfg.yMax - cfg.yMin)));
-    return 0.72 + t * 0.40; // 0.72x at far back -> 1.12x in foreground
+    const lo = cfg.scaleMin || 0.72, hi = cfg.scaleMax || 1.12;
+    return lo + t * (hi - lo); // far back -> foreground (per-stage proportion)
+  },
+
+  // Body-size multiplier of the current stage vs. the default outdoor scale (1 = outdoor stages).
+  // Used so reach, hit heights and projectile radii grow with bigger sprites (e.g. Salón de Inglés).
+  stageK() {
+    const cfg = this.getStageConfig();
+    return ((cfg.scaleMin || 0.72) + (cfg.scaleMax || 1.12)) / 1.84;
   },
 
   resolveStageCollisions(ent, isEnemy = false) {
@@ -3050,7 +3158,7 @@ const Game = {
           this.enemies.forEach(e => {
             const dx = (e.x - p.x) * p.dir;
             const dy = Math.abs(e.y - p.y);
-            if (dx >= -18 && dx <= 118 && dy <= 52) {
+            if (dx >= -18 && dx <= 118 * this.stageK() && dy <= 52) {
               this.damageEnemy(e, dmg + 8, p.dir * 34, p);
               e.slowedTimer = 2.0;
             }
@@ -3064,7 +3172,7 @@ const Game = {
           this.spawnFloat(p.x + p.dir * 20, p.y - 82, 'BOOK THROW!', '#93c5fd');
           this.projectiles.push({
             kind: 'book', mode: 'linear', fromHero: true, owner: p,
-            x: p.x + p.dir * 34, y: p.y - 34, vx: p.dir * 9.5, vy: 0, dir: p.dir,
+            x: p.x + p.dir * 34, y: p.y - 34 * this.stageK(), vx: p.dir * 9.5, vy: 0, dir: p.dir,
             dmg: dmg + 4, knock: p.dir * 22, life: 0.65, radius: 34, hitSet: new Set()
           });
         } else {
@@ -3077,7 +3185,7 @@ const Game = {
           [-14, 0, 14].forEach((oy, idx) => {
             this.projectiles.push({
               kind: 'marker', mode: 'linear', fromHero: true, owner: p,
-              x: p.x + p.dir * 32, y: p.y - 34 + oy, vx: p.dir * 11, vy: oy * 0.05, dir: p.dir,
+              x: p.x + p.dir * 32, y: p.y - 34 * this.stageK() + oy, vx: p.dir * 11, vy: oy * 0.05, dir: p.dir,
               color: colors[idx], dmg: Math.round(dmg * 0.65), knock: p.dir * 8, life: 0.45, radius: 26, hitSet: new Set()
             });
           });
@@ -3090,7 +3198,7 @@ const Game = {
       this.enemies.forEach(e => {
         const dx = (e.x - p.x) * p.dir;
         const dy = Math.abs(e.y - p.y);
-        if (dx >= -14 && dx <= 68 && dy <= 36) {
+        if (dx >= -14 && dx <= 68 * this.stageK() && dy <= 36) {
           this.damageEnemy(e, dmg, p.dir * (p.combo === 3 ? 28 : 10), p);
           hitAny = true;
         }
@@ -3412,7 +3520,7 @@ const Game = {
       if (p.moving && p.z === 0) p.walkCycle = (p.walkCycle || 0) + dt * 10.5;
       else if (!p.moving) p.walkCycle = 0;
 
-      const depthSpd = 0.84 + (this.getDepthScale(p.y) - 0.72) * 0.65;
+      const depthSpd = 0.84 + this.getDepthT(p.y) * 0.26;
       const spd = c.speed * 60 * dt * depthSpd;
       p.x += vx * spd;
       p.y += vy * spd * 0.78;
@@ -3616,7 +3724,7 @@ const Game = {
         pr.life -= dt;
         this.enemies.forEach(e => {
           if (pr.hitSet && pr.hitSet.has(e)) return;
-          if (Math.hypot(e.x - pr.x, (e.y - 30) - pr.y) < (pr.radius || 32)) {
+          if (Math.hypot(e.x - pr.x, (e.y - 30 * this.stageK()) - pr.y) < (pr.radius || 32) * this.stageK()) {
             if (pr.hitSet) pr.hitSet.add(e);
             this.damageEnemy(e, pr.dmg, pr.knock || 12, pr.owner || null);
             if (pr.kind === 'super_f') {
@@ -3636,7 +3744,7 @@ const Game = {
           }
         } else if (pr.owner) {
           const rdx = pr.owner.x - pr.x;
-          const rdy = (pr.owner.y - 36) - pr.y;
+          const rdy = (pr.owner.y - 36 * this.stageK()) - pr.y;
           const rdist = Math.hypot(rdx, rdy);
           if (rdist < 24) { this.projectiles.splice(i, 1); continue; }
           pr.x += (rdx / rdist) * pr.speed * 60 * dt;
@@ -3644,7 +3752,7 @@ const Game = {
         }
         this.enemies.forEach(e => {
           if (pr.hitSet && pr.hitSet.has(e)) return;
-          if (Math.hypot(e.x - pr.x, (e.y - 30) - pr.y) < (pr.radius || 34)) {
+          if (Math.hypot(e.x - pr.x, (e.y - 30 * this.stageK()) - pr.y) < (pr.radius || 34) * this.stageK()) {
             if (pr.hitSet) pr.hitSet.add(e);
             this.damageEnemy(e, pr.dmg, (pr.returning ? -pr.dir : pr.dir) * 14, pr.owner || null);
           }
@@ -3655,7 +3763,7 @@ const Game = {
         // Track live target position so fast-moving enemies don't dodge turret/drone markers!
         if (pr.target && pr.target.hp > 0) {
           pr.tx = pr.target.x;
-          pr.ty = pr.target.y - 34;
+          pr.ty = pr.target.y - 34 * this.stageK();
         }
         const dx = pr.tx - pr.x;
         const dy = pr.ty - pr.y;
@@ -3669,7 +3777,7 @@ const Game = {
         }
         // Continuous mid-flight hit check against ANY enemy (or player in sabotage)
         if (pr.fromHero) {
-          const hit = this.enemies.find(e => e.hp > 0 && Math.hypot(e.x - pr.x, (e.y - 34) - pr.y) < 34);
+          const hit = this.enemies.find(e => e.hp > 0 && Math.hypot(e.x - pr.x, (e.y - 34 * this.stageK()) - pr.y) < 34 * this.stageK());
           if (hit) {
             this.damageEnemy(hit, pr.dmg, 8, null);
             for (let k = 0; k < 5; k++) {
@@ -3734,12 +3842,12 @@ const Game = {
       const dx = targetX - e.x;
       const dy = targetY - e.y;
       const dist = Math.hypot(dx, dy);
-      const reachDist = targetPlayer ? 40 : 22;
+      const reachDist = targetPlayer ? 40 * this.stageK() : 22;
 
       if (dist > reachDist) {
         e.moving = true;
         e.dir = dx >= 0 ? 1 : -1;
-        const eDepthSpd = 0.84 + (this.getDepthScale(e.y) - 0.72) * 0.65;
+        const eDepthSpd = 0.84 + this.getDepthT(e.y) * 0.26;
         e.x += (dx / dist) * spd * eDepthSpd;
         e.y += (dy / dist) * spd * 0.78 * eDepthSpd;
         this.resolveStageCollisions(e, true);
@@ -4969,7 +5077,7 @@ const UI = {
     st.className = 'status ' + (hpPct > 50 ? 'ok' : 'bad');
 
     document.getElementById('sideDefSummary').innerHTML = UPGRADES.map(u =>
-      `<div class="def-item"><span>${u.icon} ${u.name.split(' ')[0]}</span><b>Nv ${State.upgrades[u.id]}</b></div>`
+      `<div class="def-item" title="${u.name}"><span class="def-ico">${u.icon}</span><span class="def-name">${u.name.split(' ')[0]}</span><b>Nv ${State.upgrades[u.id]}</b></div>`
     ).join('');
 
     // Menu 1P / 2P buttons
@@ -5010,19 +5118,19 @@ const UI = {
       const bgThumb = GAME_ASSETS.bgs[a.bg === 'ailab' ? 'robotics' : a.bg] || GAME_ASSETS.bgs.explanada;
       return `<button class="area ${locked ? 'is-locked' : ''} ${sel ? 'is-sel' : ''}" ${locked ? 'disabled' : ''} onclick="UI.selectArea(${a.id})">
           <span class="area-thumb" style="background-image:url('${bgThumb}')"></span>
-          <span class="area-body"><span class="area-diff">${locked ? '🔒 Bloqueado' : a.diff}</span><span class="area-name">${a.id + 1}. ${a.name}</span></span>
+          <span class="area-body"><span class="area-diff">${locked ? '🔒 Bloqueada' : a.diff}</span><span class="area-name">${a.name}</span></span>
         </button>`;
     }).join('');
 
     const weekLabels = { week1: 'Semana 1: Soporte TI & IA', week2: 'Semana 2: Robótica & Taller', week3: 'Semana 3: Escuela & Seguridad', all: 'Todas las Semanas' };
-    document.getElementById('activeWeekLabel').textContent = `Vocabulario: ${weekLabels[State.admin.activeWeek] || 'Activo'}`;
+    document.getElementById('activeWeekLabel').textContent = `📘 ${weekLabels[State.admin.activeWeek] || 'Vocabulario activo'}`;
   },
 
   // Keeps <body data-mode> and the active tab in sync with the game mode (drives responsive CSS)
   syncMode(mode) {
     const prev = document.body.dataset.mode;
     document.body.dataset.mode = mode;
-    const tab = mode === 'explore' ? 'explore' : (mode === 'sabotage' ? 'map' : 'play');
+    const tab = mode === 'explore' ? 'explore' : (mode === 'sabotage' ? 'more' : 'play');
     document.querySelectorAll('.tabbar .tab').forEach(t => t.classList.toggle('is-active', t.dataset.tab === tab));
     if (mode === 'menu' && prev !== 'menu') {
       TouchControls.reset();
