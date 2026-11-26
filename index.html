@@ -331,6 +331,27 @@
     .build-fb { padding: 9px 12px; border-radius: 10px; font-size: 12px; font-weight: 700; }
     .build-fb.is-warn { background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.45); color: #fde68a; }
     .build-fb.is-ok { background: rgba(34,197,94,.16); border: 1px solid rgba(34,197,94,.45); color: #bbf7d0; }
+    .chip-coin { background: rgba(245,183,0,.16); color: var(--gold-2); border-color: rgba(245,183,0,.35); font-weight: 800; }
+    .build-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .btab {
+      flex: 1 1 auto; min-height: 36px; padding: 6px 12px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--content); color: var(--muted-foreground);
+      font-size: 12px; font-weight: 800; cursor: pointer; transition: all .15s;
+    }
+    .btab:hover { color: var(--foreground); border-color: rgba(255,255,255,.25); }
+    .btab.is-on { background: var(--guinda); color: #fff; border-color: var(--gold); }
+    .campus-wrap { background: #120e16; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .campus-canvas { width: 100%; display: block; cursor: pointer; touch-action: manipulation; image-rendering: pixelated; }
+    .place-bar {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 8px 12px; background: rgba(245,183,0,.14); border-top: 1px solid rgba(245,183,0,.35);
+      font-size: 12px; font-weight: 700; color: #fde68a;
+    }
+    .inv-strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 8px 12px; background: var(--content); border-top: 1px solid var(--border); font-size: 11px; }
+    .inv-chip {
+      display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(245,183,0,.16); border: 1px solid rgba(245,183,0,.45); color: #fde68a; font-weight: 800; cursor: pointer;
+    }
 
     /* ============ RESPONSIVE ============ */
     @media (max-width: 1080px) {
@@ -536,11 +557,7 @@
       </div>
       <div class="res-bar">
         <span id="hudFactionBadge" class="chip chip-faction is-pantera" title="Tu bando según tu puntuación académica">🐾 Pantera · 85</span>
-        <span class="res-group" aria-label="Recursos">
-          <span class="res" title="Materiales de construcción">🧱 <b id="resMat">60</b></span>
-          <span class="res" title="Pintura escolar">🎨 <b id="resPaint">25</b></span>
-          <span class="res" title="Chips de seguridad">🔌 <b id="resChips">15</b></span>
-        </span>
+        <span class="chip chip-coin" title="Monedas Pantera para construir y decorar tu escuela">🪙 <b id="resCoins">90</b></span>
       </div>
       <div class="top-actions">
         <button id="btnAudio" class="icon-btn" aria-pressed="true" title="Efectos de sonido" aria-label="Efectos de sonido">🔊</button>
@@ -552,7 +569,7 @@
     <nav class="tabbar" aria-label="Navegación principal">
       <button class="tab is-active" data-tab="play" onclick="UI.openMenu('play')"><span class="tab-ico">🥊</span><span>Jugar</span></button>
       <button class="tab" data-tab="explore" onclick="Game.startExplore()"><span class="tab-ico">🌳</span><span>Explorar</span></button>
-      <button class="tab" data-tab="build" onclick="UI.openModal('buildModal')"><span class="tab-ico">🏗️</span><span>Base</span><span id="navDefPower" class="tab-badge">Def 0</span></button>
+      <button class="tab" data-tab="build" onclick="UI.openModal('buildModal')"><span class="tab-ico">🏫</span><span>Escuela</span><span id="navDefPower" class="tab-badge">8%</span></button>
       <button class="tab" data-tab="records" onclick="UI.openModal('recordsModal')"><span class="tab-ico">🏆</span><span>Récords</span></button>
       <button class="tab" data-tab="more" onclick="UI.openModal('moreModal')"><span class="tab-ico">☰</span><span>Más</span></button>
     </nav>
@@ -612,7 +629,7 @@
               <div id="resRewards" class="rewards"></div>
               <div class="result-actions">
                 <button id="resPrimaryBtn" onclick="Game.nextWaveOrMenu()" class="btn btn-primary">▶ Siguiente Oleada</button>
-                <button onclick="UI.openModal('buildModal')" class="btn btn-ghost">🏗️ Mejorar base</button>
+                <button onclick="UI.openModal('buildModal')" class="btn btn-ghost">🏫 Mejorar escuela</button>
               </div>
             </div>
           </div>
@@ -671,15 +688,19 @@
             <span id="sideBaseStatus" class="status ok">Segura</span>
           </div>
           <div class="meter">
-            <div class="meter-row"><span>🚪 Puerta</span><b id="sideBaseHpText">100 / 100</b></div>
+            <div class="meter-row"><span>🚪 Puerta Aula E1</span><b id="sideBaseHpText">100 / 100</b></div>
             <div class="track"><div id="sideBaseHpBar" class="fill fill-hp" style="width:100%"></div></div>
           </div>
           <div class="meter">
+            <div class="meter-row"><span id="sideCampusRank">🏚️ Plantel Derruido</span><b id="sideCampusPct">8%</b></div>
+            <div class="track"><div id="sideCampusBar" class="fill fill-terr" style="width:8%"></div></div>
+          </div>
+          <div class="meter" style="margin-bottom:8px;">
             <div class="meter-row"><span>🐾 Territorio</span><b id="sideTerritoryText">62%</b></div>
             <div class="track"><div id="sideTerritoryBar" class="fill fill-terr" style="width:62%"></div></div>
           </div>
           <div id="sideDefSummary" class="def-grid"></div>
-          <button class="btn btn-guinda btn-block" onclick="UI.openModal('buildModal')">🏗️ Mejorar base</button>
+          <button class="btn btn-guinda btn-block" onclick="UI.openModal('buildModal')">🏗️ Construir escuela</button>
         </div>
 
         <details class="card radio-card">
@@ -706,36 +727,52 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: CONSTRUCCIÓN & QUIZ DE INGLÉS ================= -->
+  <!-- ================= MODAL: CONSTRUCTOR DE ESCUELA CETis 69 ================= -->
   <div id="buildModal" class="hidden fixed inset-0 z-40 modal-backdrop flex items-center justify-center p-3" onclick="if(event.target===this)UI.closeModal('buildModal')">
-    <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden pixel-border">
+    <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden pixel-border">
       <div class="px-4 py-3 border-b border-[var(--border)] flex items-center justify-between gap-2 cetis-guinda">
         <div class="min-w-0">
-          <h3 class="font-black text-sm sm:text-base">🏗️ GESTIÓN Y MEJORAMIENTO DEL CETis 69</h3>
-          <p class="text-[11px] opacity-85">Mejora tus instalaciones respondiendo el Vocabulario Técnico de Teacher Aldo</p>
+          <h3 class="font-black text-sm sm:text-base">🏫 MI ESCUELA · CONSTRUCTOR CETis 69</h3>
+          <p class="text-[11px] opacity-85">Reconstruye desde el Aula E1, compra mejoras con monedas y acomódalas en el mapa del plantel</p>
         </div>
         <button onclick="UI.closeModal('buildModal')" class="pixel-btn shrink-0 whitespace-nowrap px-3 py-1 rounded bg-black/30 text-white text-xs font-bold cursor-pointer">✕ Cerrar</button>
       </div>
-      <div class="p-4 overflow-y-auto custom-scroll space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2 bg-[var(--content)] p-2.5 rounded border border-[var(--border)] text-xs">
-          <div class="flex flex-wrap gap-3 font-bold">
-            <span>🧱 Materiales: <b id="bResMat">0</b></span>
-            <span>🎨 Pintura: <b id="bResPaint">0</b></span>
-            <span>🔌 Chips: <b id="bResChips">0</b></span>
+      <div class="p-3 sm:p-4 overflow-y-auto custom-scroll space-y-3">
+        <!-- Coins + School Rating + Repair -->
+        <div class="flex flex-wrap items-center justify-between gap-2 bg-[var(--content)] p-2.5 rounded-lg border border-[var(--border)] text-xs">
+          <div class="flex flex-wrap items-center gap-3 font-bold">
+            <span class="px-2.5 py-1 rounded-full bg-[#f5b700]/20 text-[#ffd24a] border border-[#f5b700]/40 font-black text-sm">🪙 <b id="bResCoins">0</b> Monedas</span>
+            <span id="bCampusBadge" class="font-bold text-slate-200">🏚️ Plantel Derruido · 8%</span>
           </div>
-          <button onclick="BaseManager.requestRepair()" class="pixel-btn px-3 py-1 rounded bg-emerald-700 text-white font-bold cursor-pointer">
-            🔧 Reparar Salón (+40 HP · Quiz Gratis)
+          <button onclick="BaseManager.requestRepair()" class="pixel-btn px-3 py-1.5 rounded bg-emerald-700 text-white font-bold cursor-pointer">
+            🔧 Reparar Aula E1 (+40 HP · Quiz Gratis)
           </button>
         </div>
 
         <div id="buildFeedback" class="hidden build-fb" role="status" aria-live="polite"></div>
 
-        <div class="bg-[#120e16] border border-[var(--border)] rounded-lg overflow-hidden">
+        <!-- Interactive School Map Grid -->
+        <div class="campus-wrap">
           <div class="px-3 py-1.5 bg-[var(--content)] border-b border-[var(--border)] flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5 text-[11px]">
-            <span class="font-bold">🏫 Vista previa en vivo del plantel</span>
-            <span id="basePreviewTag" class="font-black text-[#f5b700]">Nivel de defensa: 10</span>
+            <span class="font-bold">🗺️ Mapa interactivo del plantel <span class="opacity-70">(toca un edificio o mueble para moverlo)</span></span>
+            <span id="basePreviewTag" class="font-black text-[#f5b700]">Calidad: 8% · Puerta E1: 100/100</span>
           </div>
-          <canvas id="basePreviewCanvas" width="480" height="216" class="w-full block" style="image-rendering:pixelated;"></canvas>
+          <canvas id="basePreviewCanvas" width="640" height="320" class="campus-canvas"></canvas>
+          <div id="placeActionBar" class="hidden place-bar">
+            <span id="placeActionText">📍 Toca un espacio verde del mapa para colocar</span>
+            <div class="flex gap-1.5">
+              <button id="btnStoreItem" class="hidden pixel-btn px-2.5 py-1 rounded bg-slate-700 text-white text-[11px] font-bold cursor-pointer" onclick="BaseManager.storeSelectedItem()">📦 Guardar</button>
+              <button class="pixel-btn px-2.5 py-1 rounded bg-black/40 text-white text-[11px] font-bold cursor-pointer" onclick="BaseManager.cancelPlacement()">✕ Cancelar</button>
+            </div>
+          </div>
+          <div id="campusInvStrip" class="hidden inv-strip"></div>
+        </div>
+
+        <!-- 3 Shop Categories -->
+        <div class="build-tabs" role="tablist">
+          <button id="btab_buildings" class="btab is-on" onclick="BaseManager.setTab('buildings')">🏫 Aulas y Talleres</button>
+          <button id="btab_aesthetic" class="btab" onclick="BaseManager.setTab('aesthetic')">🪑 Limpieza y Mobiliario</button>
+          <button id="btab_defenses" class="btab" onclick="BaseManager.setTab('defenses')">🛡️ Defensas</button>
         </div>
 
         <div id="upgradeList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
@@ -976,11 +1013,9 @@
         <!-- BONUS CODE MANAGER -->
         <div class="bg-[var(--content)] border border-[var(--border)] rounded p-3 space-y-2">
           <div class="font-black">🎟️ GESTOR DE CÓDIGOS BONUS (TAREAS ADA20)</div>
-          <div class="grid grid-cols-2 sm:grid-cols-6 gap-2">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <input id="cCode" type="text" placeholder="CÓDIGO" class="col-span-2 px-2 py-1.5 rounded bg-[var(--card)] border border-[var(--border)] uppercase font-bold" />
-            <input id="cMat" type="number" value="40" placeholder="Mat" class="px-2 py-1.5 rounded bg-[var(--card)] border border-[var(--border)]" title="Materiales" />
-            <input id="cPaint" type="number" value="20" placeholder="Pint" class="px-2 py-1.5 rounded bg-[var(--card)] border border-[var(--border)]" title="Pintura" />
-            <input id="cChips" type="number" value="15" placeholder="Chips" class="px-2 py-1.5 rounded bg-[var(--card)] border border-[var(--border)]" title="Chips" />
+            <input id="cCoins" type="number" value="120" placeholder="Monedas 🪙" class="px-2 py-1.5 rounded bg-[var(--card)] border border-[var(--border)]" title="Monedas Pantera" />
             <button onclick="AdminPanel.addCode()" class="pixel-btn px-2 py-1.5 rounded cetis-gold font-black cursor-pointer">+ Crear</button>
           </div>
           <div id="adminCodesList" class="flex flex-wrap gap-1.5 pt-1"></div>
@@ -1031,10 +1066,10 @@ const DEFAULT_VOCAB = [
 ];
 
 const DEFAULT_CODES = [
-  { code: 'PANTERA69', mat: 60, paint: 30, chips: 20, score: 10, desc: 'Kit Bienvenida Panteras CETis 69' },
-  { code: 'ALDO-WEEK1', mat: 45, paint: 20, chips: 30, score: 15, desc: 'Tarea Semana 1 - Teacher Aldo' },
-  { code: 'ADA20-VIP', mat: 80, paint: 40, chips: 35, score: 20, desc: 'Cumplimiento Excelente en ADA20' },
-  { code: 'ENGLISH-PRO', mat: 30, paint: 15, chips: 15, score: 45, desc: 'Rescate Académico (Sal de Bajo el Puente)' },
+  { code: 'PANTERA69', coins: 120, score: 20, desc: 'Bono de Bienvenida CETis 69' },
+  { code: 'ALDO-WEEK1', coins: 150, score: 15, desc: 'Tarea Semana 1 - Teacher Aldo' },
+  { code: 'ADA20-VIP', coins: 240, score: 20, desc: 'Cumplimiento Excelente en ADA20' },
+  { code: 'ENGLISH-PRO', coins: 100, score: 45, desc: 'Rescate Académico (Sal de Bajo el Puente)' },
 ];
 
 const CHARACTERS = [
@@ -1076,11 +1111,27 @@ const AREAS = [
 ];
 
 const UPGRADES = [
-  { id: 'paint', name: 'Pintura y Mural Pantera', icon: '🎨', max: 5, baseCost: { mat: 15, paint: 20, chips: 0 }, desc: 'Elimina grafitis, sube +30 HP Máx. al salón y eleva la moral.' },
-  { id: 'cameras', name: 'Cámaras de Vigilancia CCTV', icon: '📹', max: 5, baseCost: { mat: 20, paint: 5, chips: 15 }, desc: 'Detectan y ralentizan cholos saboteadores (-12% velocidad por nivel).' },
-  { id: 'drones', name: 'Drones Pantera Autónomos', icon: '🚁', max: 5, baseCost: { mat: 25, paint: 5, chips: 25 }, desc: 'Patrullan el cielo disparando pulsos aturdidores y defienden en exploración.' },
-  { id: 'turrets', name: 'Sistema Seguridad Automatizado', icon: '⚡', max: 5, baseCost: { mat: 30, paint: 10, chips: 25 }, desc: 'Torretas láser y alarma automática que protegen la puerta del salón.' },
-  { id: 'gate', name: 'Rejas y Salones Reforzados', icon: '🛡️', max: 5, baseCost: { mat: 35, paint: 10, chips: 5 }, desc: 'Reduce daño recibido por la base (-12%/nivel) y otorga +15% botín.' },
+  { id: 'clean',   tab: 'aesthetic', name: 'Brigada de Limpieza y Piso', icon: '🧹', max: 3, baseCost: 40,  step: 35, quiz: true,  scorePts: 8,  desc: 'Limpia basura, maleza y repara grietas del piso en todo el plantel.' },
+  { id: 'paint',   tab: 'aesthetic', name: 'Pintura Guinda y Murales',   icon: '🎨', max: 3, baseCost: 55,  step: 45, quiz: true,  scorePts: 9,  desc: 'Restaura Aula E1 y todos los edificios con pintura guinda/dorado (+25 HP).' },
+  { id: 'gate',    tab: 'defenses',  name: 'Rejas y Puerta Reforzada',   icon: '🛡️', max: 5, baseCost: 55,  step: 40, quiz: true,  scorePts: 4,  desc: 'Refuerza la puerta de E1 y la barda (-12% daño y +15% monedas por nivel).' },
+  { id: 'cameras', tab: 'defenses',  name: 'Cámaras de Vigilancia CCTV', icon: '📹', max: 5, baseCost: 50,  step: 35, quiz: true,  scorePts: 3,  desc: 'Detectan y ralentizan cholos (-12% velocidad por nivel).' },
+  { id: 'drones',  tab: 'defenses',  name: 'Drones Pantera Autónomos',   icon: '🚁', max: 5, baseCost: 80,  step: 55, quiz: true,  scorePts: 3,  desc: 'Patrullan el cielo lanzando plumones teledirigidos.' },
+  { id: 'turrets', tab: 'defenses',  name: 'Torretas de Plumones',       icon: '⚡', max: 5, baseCost: 90,  step: 60, quiz: true,  scorePts: 3,  desc: 'Torretas automáticas en E1 que disparan plumones a los invasores.' },
+];
+
+// Placeable Campus Buildings (North Wing: rows 0..1) & Courtyard Furniture/Aesthetics (South: rows 2..3)
+const CAMPUS_CATALOG = [
+  { type: 'e2',       tab: 'buildings', zone: 'building',  icon: '🏫', short: 'Aula E2',     name: 'Aula E2 (General)',      cost: 70,  max: 1, quiz: true,  hp: 20, coinPct: 10, scorePts: 11, desc: 'Segundo salón del plantel. +20 HP base y +10% monedas en batalla.' },
+  { type: 'e3',       tab: 'buildings', zone: 'building',  icon: '📘', short: 'Aula E3',     name: 'Aula E3 (Inglés)',       cost: 110, max: 1, quiz: true,  hp: 25, coinPct: 15, scorePts: 12, desc: 'Salón de Inglés Técnico de Teacher Aldo. +25 HP y +15% monedas.' },
+  { type: 'robotics', tab: 'buildings', zone: 'building',  icon: '🤖', short: 'Robótica',    name: 'Taller de Robótica',     cost: 140, max: 1, quiz: true,  hp: 15, coinPct: 15, scorePts: 13, desc: 'Equipa drones y proyectos de automatización. +15% monedas.' },
+  { type: 'ailab',    tab: 'buildings', zone: 'building',  icon: '💻', short: 'Lab. IA',     name: 'Lab. de IA y Soporte TI',cost: 165, max: 1, quiz: true,  hp: 20, coinPct: 20, scorePts: 14, desc: 'Laboratorio moderno con computadoras. +20% monedas.' },
+  { type: 'workshop', tab: 'buildings', zone: 'building',  icon: '🔧', short: 'Taller Mant.',name: 'Taller Mant. Industrial',cost: 130, max: 1, quiz: true,  hp: 25, coinPct: 10, autoRepair: 18, scorePts: 12, desc: 'Repara automáticamente +18 HP a la puerta tras cada oleada.' },
+  { type: 'cancha',   tab: 'buildings', zone: 'building',  icon: '🏀', short: 'Cancha',      name: 'Cancha Techada Pantera', cost: 185, max: 1, quiz: true,  hp: 30, coinPct: 15, scorePts: 15, desc: 'Eleva el orgullo Pantera. +30 HP base y +15% monedas.' },
+  { type: 'bench',    tab: 'aesthetic', zone: 'courtyard', icon: '🪑', short: 'Bancas',      name: 'Bancas y Mesas',         cost: 30,  max: 6, quiz: false, hp: 0,  coinPct: 2,  scorePts: 3,  desc: 'Mobiliario limpio para el descanso en la explanada.' },
+  { type: 'tree',     tab: 'aesthetic', zone: 'courtyard', icon: '🌳', short: 'Árbol',       name: 'Árbol en Jardinera',     cost: 35,  max: 6, quiz: false, hp: 0,  coinPct: 2,  scorePts: 3,  desc: 'Áreas verdes con jardinera de ladrillo y sombra.' },
+  { type: 'lamp',     tab: 'aesthetic', zone: 'courtyard', icon: '💡', short: 'Luminaria',   name: 'Luminaria Solar LED',    cost: 40,  max: 4, quiz: false, hp: 0,  coinPct: 3,  scorePts: 4,  desc: 'Ilumina el patio y mejora la seguridad del plantel.' },
+  { type: 'recycle',  tab: 'aesthetic', zone: 'courtyard', icon: '🗑️', short: 'Reciclaje',   name: 'Estación de Reciclaje',  cost: 25,  max: 4, quiz: false, hp: 0,  coinPct: 2,  scorePts: 4,  desc: 'Mantiene la explanada limpia y libre de basura.' },
+  { type: 'flag',     tab: 'aesthetic', zone: 'courtyard', icon: '🇲🇽', short: 'Asta 69',    name: 'Asta Bandera CETis 69',  cost: 65,  max: 1, quiz: false, hp: 10, coinPct: 5,  scorePts: 7,  desc: 'Plaza cívica oficial con bandera y escudo Pantera.' },
 ];
 
 const ENEMY_ROSTER = [
@@ -1126,17 +1177,22 @@ let State = loadState();
 
 function defaultState() {
   return {
-    resources: { mat: 60, paint: 25, chips: 15 },
+    coins: 90,
     academicScore: 85,
     territoryControl: 62, // % Pantera control of Benito Juárez / CETis 69
-    baseHp: 120,
+    baseHp: 100,
     unlockedArea: 0,
     selectedArea: 0,
     playersCount: 1,
     p2IsAi: true,
     p1Char: 'aldo',
     p2Char: 'sofia',
-    upgrades: { paint: 1, cameras: 0, drones: 0, turrets: 0, gate: 0 },
+    // Starts genuinely run-down: clean=0, paint=0, and ONLY Classroom E1!
+    upgrades: { clean: 0, paint: 0, cameras: 0, drones: 0, turrets: 0, gate: 0 },
+    campus: {
+      items: [{ uid: 'e1_main', type: 'e1', gx: 0, gy: 0, fixed: true }],
+      inventory: []
+    },
     redeemedCodes: [],
     students: JSON.parse(JSON.stringify(DEFAULT_STUDENTS)),
     admin: {
@@ -1156,16 +1212,42 @@ function loadState() {
     if (!raw) return defaultState();
     const parsed = JSON.parse(raw);
     const def = defaultState();
+    // Migrate legacy 3-resource saves seamlessly into unified Pantera Coins!
+    let coins = parsed.coins;
+    if (typeof coins !== 'number' || isNaN(coins)) {
+      const r = parsed.resources || {};
+      coins = Math.max(def.coins, Math.round((r.mat || 0) + (r.paint || 0) * 1.5 + (r.chips || 0) * 1.8));
+    }
+    // Migrate legacy codes to unified coins field
+    const rawCodes = (parsed.admin && parsed.admin.codes && parsed.admin.codes.length) ? parsed.admin.codes : def.admin.codes;
+    const migratedCodes = rawCodes.map(c => (typeof c.coins === 'number') ? c : {
+      ...c,
+      coins: Math.round((c.mat || 0) + (c.paint || 0) * 1.5 + (c.chips || 0) * 1.8) || 100
+    });
+    // Ensure starting Aula E1 always exists on the campus map
+    const campus = (parsed.campus && Array.isArray(parsed.campus.items)) ? {
+      items: parsed.campus.items.slice(),
+      inventory: Array.isArray(parsed.campus.inventory) ? parsed.campus.inventory.slice() : []
+    } : def.campus;
+    if (!campus.items.some(it => it.type === 'e1')) {
+      campus.items.unshift({ uid: 'e1_main', type: 'e1', gx: 0, gy: 0, fixed: true });
+    }
+    const mergedUp = { ...def.upgrades, ...(parsed.upgrades || {}) };
+    // Old saves started with paint:1 automatically; if no campus items placed yet and old format, reset paint to 0 so user sees the run-down start
+    if (parsed.coins === undefined && campus.items.length === 1 && mergedUp.paint === 1 && mergedUp.cameras === 0 && mergedUp.drones === 0 && mergedUp.turrets === 0 && mergedUp.gate === 0) {
+      mergedUp.paint = 0;
+    }
     return {
       ...def,
       ...parsed,
-      resources: { ...def.resources, ...(parsed.resources || {}) },
-      upgrades: { ...def.upgrades, ...(parsed.upgrades || {}) },
+      coins,
+      upgrades: mergedUp,
+      campus,
       admin: {
         ...def.admin,
         ...(parsed.admin || {}),
         vocab: (parsed.admin && parsed.admin.vocab && parsed.admin.vocab.length) ? parsed.admin.vocab : def.admin.vocab,
-        codes: (parsed.admin && parsed.admin.codes && parsed.admin.codes.length) ? parsed.admin.codes : def.admin.codes,
+        codes: migratedCodes,
       },
       stats: { ...def.stats, ...(parsed.stats || {}) },
     };
@@ -1175,21 +1257,48 @@ function loadState() {
 }
 
 function saveState() {
-  try {
-    const playerEntry = State.students.find(s => s.isPlayer);
-    if (playerEntry) playerEntry.score = State.academicScore;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(State));
-  } catch (e) {}
-  UI.syncAll();
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(State)); } catch (e) {}
+  // Sync player score in student roster
+  const me = State.students.find(s => s.isPlayer);
+  if (me) me.score = State.academicScore;
+  if (typeof UI !== 'undefined' && UI.syncAll) UI.syncAll();
+}
+
+function getCampusStats() {
+  const items = (State.campus && State.campus.items) ? State.campus.items : [];
+  const u = State.upgrades || {};
+  let score = 6; // Base 6% for having weathered Aula E1
+  let bonusHp = 0, coinPct = 0, autoRepair = 0, buildings = 0, props = 0;
+  items.forEach(it => {
+    const def = CAMPUS_CATALOG.find(c => c.type === it.type);
+    if (!def) return;
+    score += def.scorePts || 0;
+    bonusHp += def.hp || 0;
+    coinPct += def.coinPct || 0;
+    autoRepair += def.autoRepair || 0;
+    if (def.zone === 'building') buildings++;
+    else props++;
+  });
+  UPGRADES.forEach(up => {
+    score += (u[up.id] || 0) * (up.scorePts || 3);
+  });
+  const pct = Math.min(100, Math.round(score));
+  let rank = '🏚️ Plantel Derruido';
+  if (pct >= 92) rank = '🏆 Mejor Escuela CETis 69';
+  else if (pct >= 70) rank = '✨ Campus Modelo';
+  else if (pct >= 45) rank = '🏫 Plantel Renovado';
+  else if (pct >= 20) rank = '🔨 En Reconstrucción';
+  return { pct, rank, bonusHp, coinPct, autoRepair, buildings, props };
 }
 
 function getBaseMaxHp() {
-  return 100 + State.upgrades.paint * 30 + State.upgrades.gate * 25;
+  const cs = getCampusStats();
+  return 100 + (State.upgrades.paint || 0) * 25 + (State.upgrades.gate || 0) * 25 + cs.bonusHp;
 }
 
 function getDefensePower() {
   const u = State.upgrades;
-  return u.paint * 10 + u.cameras * 18 + u.drones * 28 + u.turrets * 32 + u.gate * 15;
+  return (u.clean || 0) * 8 + (u.paint || 0) * 10 + (u.cameras || 0) * 15 + (u.drones || 0) * 25 + (u.turrets || 0) * 30 + (u.gate || 0) * 20;
 }
 
 function isPlayerCholo() {
@@ -2391,9 +2500,9 @@ const PixelArt = {
     }
 
     // Plaque above door ("SALÓN 69" -> "PANTERAS" -> "FORTALEZA 69")
-    const plaqueText = u.gate >= 4 ? 'FORTALEZA' : (u.paint >= 2 ? 'PANTERAS' : 'SALÓN 69');
-    this.pxRect(ctx, dx + 2, dy - 28, dw + 2, 20, u.paint >= 2 ? '#7a1c33' : '#1e293b', '#f5b700');
-    this.drawArcadeText(ctx, plaqueText, dx + dw / 2 + 3, dy - 14, 10, '#f5b700');
+    const plaqueText = u.gate >= 4 ? 'E1 BLIND.' : (u.paint >= 2 ? 'AULA E1 ★' : 'AULA E1');
+    this.pxRect(ctx, dx + 2, dy - 28, dw + 2, 20, u.paint >= 1 ? '#7a1c33' : '#334155', u.paint >= 1 ? '#f5b700' : '#94a3b8');
+    this.drawArcadeText(ctx, plaqueText, dx + dw / 2 + 3, dy - 14, 10, u.paint >= 1 ? '#f5b700' : '#e2e8f0');
 
     // Live Door Integrity HP Bar right above the plaque
     const barW = 68, barX = dx + 2, barY = dy - 42;
@@ -2488,6 +2597,256 @@ const PixelArt = {
     }
   },
 
+  // Live Combat Backdrop for Explanada: reflects your REAL constructed school!
+  // Starts run-down with ONLY Aula E1, cracked concrete, rubble, weeds & broken fence.
+  // Every building, cleaning level, paint tier & courtyard prop you place visibly transforms it!
+  drawDynamicCampusStage(ctx, time, isNight) {
+    const u = State.upgrades || {};
+    const clean = u.clean || 0;
+    const paint = u.paint || 0;
+    const gate = u.gate || 0;
+    const items = (State.campus && State.campus.items) ? State.campus.items : [];
+    const placedBuildings = items.filter(it => it.type !== 'e1' && CAMPUS_CATALOG.some(c => c.type === it.type && c.zone === 'building'));
+    const placedProps = items.filter(it => CAMPUS_CATALOG.some(c => c.type === it.type && c.zone === 'courtyard'));
+
+    ctx.save();
+    // 1. Sonora Sky (hazy dusty sky when run-down -> crisp vibrant blue as school improves)
+    const sky = ctx.createLinearGradient(0, 0, 0, 265);
+    if (isNight) {
+      sky.addColorStop(0, '#0b1024'); sky.addColorStop(1, '#1e293b');
+    } else if (clean === 0 && paint === 0) {
+      sky.addColorStop(0, '#6c7a89'); sky.addColorStop(0.65, '#9aa5b1'); sky.addColorStop(1, '#cbd5e1');
+    } else if (clean <= 1) {
+      sky.addColorStop(0, '#3b82f6'); sky.addColorStop(0.65, '#7dd3fc'); sky.addColorStop(1, '#e0f2fe');
+    } else {
+      sky.addColorStop(0, '#1d4ed8'); sky.addColorStop(0.6, '#38bdf8'); sky.addColorStop(1, '#fef9c3');
+    }
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, 800, 278);
+
+    // Distant Obregón clouds & silhouette hills
+    ctx.fillStyle = isNight ? 'rgba(148,163,184,0.12)' : (clean === 0 ? 'rgba(226,232,240,0.45)' : 'rgba(255,255,255,0.75)');
+    [[140,48,74,16],[390,34,92,18],[640,56,78,15]].forEach(([cx,cy,cw,ch]) => {
+      const ox = Math.round((cx + time * 4) % 860) - 40;
+      ctx.fillRect(ox, cy, cw, ch);
+      ctx.fillRect(ox + 14, cy - 8, cw - 28, 10);
+    });
+
+    // 2. Perimeter School Wall / Fence behind buildings (broken rusted wire -> solid guinda wall)
+    const wallY = 232;
+    if (gate === 0 && clean === 0) {
+      // Rusted leaning chain-link fence with gaps!
+      ctx.fillStyle = '#57534e';
+      for (let x = 120; x < 790; x += 48) {
+        ctx.fillRect(x, wallY - 26, 4, 54);
+      }
+      ctx.strokeStyle = '#78716c';
+      ctx.lineWidth = 1.5;
+      for (let x = 124; x < 785; x += 14) {
+        if ((x > 340 && x < 410) || (x > 610 && x < 650)) continue; // Broken fence holes!
+        ctx.beginPath(); ctx.moveTo(x, wallY - 22); ctx.lineTo(x + 12, wallY + 22); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(x + 12, wallY - 22); ctx.lineTo(x, wallY + 22); ctx.stroke();
+      }
+    } else {
+      const fCol = paint >= 1 ? '#e7d9b5' : '#94a3b8';
+      const fTrim = paint >= 1 ? '#7a1c33' : '#475569';
+      this.pxRect(ctx, 110, wallY - 12, 690, 44, fCol, '#1f2937');
+      ctx.fillStyle = fTrim;
+      ctx.fillRect(110, wallY - 12, 690, 8);
+      if (gate >= 1) {
+        ctx.fillStyle = '#334155';
+        for (let x = 122; x < 792; x += 16) ctx.fillRect(x, wallY - 30, 3, 20);
+        ctx.fillRect(116, wallY - 28, 680, 3);
+      }
+    }
+
+    // 3. Courtyard Ground (cracked dusty dirt/concrete -> clean tiled Pantera courtyard!)
+    const gCol = clean === 0 ? '#78716c' : (clean === 1 ? '#94a3b8' : (clean === 2 ? '#b6c0cc' : '#cbd5e1'));
+    ctx.fillStyle = gCol;
+    ctx.fillRect(0, 272, 800, 178);
+    // Sidewalk curb line along buildings
+    ctx.fillStyle = clean >= 2 ? '#e2e8f0' : '#57534e';
+    ctx.fillRect(0, 272, 800, 10);
+    ctx.fillStyle = '#1f2937';
+    ctx.fillRect(0, 281, 800, 2);
+
+    // Tile grid lines on clean courtyard
+    if (clean >= 2) {
+      ctx.strokeStyle = 'rgba(30,41,59,0.16)';
+      ctx.lineWidth = 1;
+      for (let x = 40; x < 800; x += 64) {
+        ctx.beginPath(); ctx.moveTo(x, 283); ctx.lineTo(x - 36, 450); ctx.stroke();
+      }
+      for (let y = 315; y < 450; y += 34) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(800, y); ctx.stroke();
+      }
+      if (clean >= 3) {
+        // Gleaming painted Pantera courtyard stripe!
+        ctx.fillStyle = 'rgba(122,28,51,0.22)';
+        ctx.fillRect(140, 286, 620, 6);
+        ctx.fillStyle = 'rgba(245,183,0,0.45)';
+        ctx.fillRect(140, 292, 620, 3);
+      }
+    }
+
+    // 4. NORTH WING BUILDINGS:
+    //    Slot 0 (x=115..235) is weathered Aula E1 facade wing!
+    //    Slots 1..5 (x=245..765) start as EMPTY DUSTY RUBBLE LOTS until you build E2, E3, Robótica, Lab IA, Taller, Cancha!
+    const bWall = paint === 0 ? '#78716c' : (paint === 1 ? '#e7d9b5' : '#fef3c7');
+    const bTrim = paint === 0 ? '#44403c' : '#7a1c33';
+    const bGold = paint >= 2 ? '#f5b700' : (paint >= 1 ? '#d97706' : '#57534e');
+
+    // Classroom E1 main body extending right of the E1 entrance door (x=108..234)
+    this.pxRect(ctx, 108, 154, 128, 120, bWall, '#18181b');
+    this.pxRect(ctx, 104, 142, 136, 15, bTrim, '#18181b');
+    ctx.fillStyle = bTrim;
+    ctx.fillRect(110, 240, 124, 32);
+    if (paint >= 2) { ctx.fillStyle = '#f5b700'; ctx.fillRect(108, 156, 128, 3); ctx.fillRect(110, 238, 124, 3); }
+    // E1 Classroom windows (broken/boarded at paint=0 -> gleaming glass when painted!)
+    for (let w = 0; w < 2; w++) {
+      const wx = 124 + w * 50, wy = 176;
+      this.pxRect(ctx, wx, wy, 36, 40, paint === 0 ? '#27272a' : (isNight ? '#fde047' : '#bae6fd'), '#18181b');
+      if (paint === 0) {
+        // Cracked glass & wooden plank nailed across broken window!
+        ctx.fillStyle = '#78350f';
+        ctx.fillRect(wx - 2, wy + 14, 40, 8);
+        ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(wx + 6, wy + 4); ctx.lineTo(wx + 24, wy + 34); ctx.stroke();
+      } else {
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        ctx.fillRect(wx + 4, wy + 4, 8, 14);
+      }
+    }
+    // Bold "E1" Signboard on the classroom roof
+    this.pxRect(ctx, 142, 126, 62, 19, paint === 0 ? '#3f3f46' : '#7a1c33', bGold);
+    this.drawArcadeText(ctx, 'AULA E1', 173, 139, 9, paint === 0 ? '#d4d4d8' : '#fde047');
+    if (paint === 0) {
+      // Wall plaster cracks & old graffiti on E1
+      ctx.strokeStyle = '#27272a'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(212, 166); ctx.lineTo(204, 184); ctx.lineTo(216, 202); ctx.stroke();
+      ctx.fillStyle = 'rgba(168,85,247,0.55)';
+      ctx.fillRect(130, 246, 38, 14);
+      ctx.fillStyle = 'rgba(236,72,153,0.6)';
+      ctx.fillRect(142, 250, 22, 8);
+    }
+
+    // Constructed Buildings along the campus skyline (up to 4 slots to the right of E1)
+    const slots = [252, 386, 520, 654];
+    for (let si = 0; si < slots.length; si++) {
+      const sx = slots[si];
+      const b = placedBuildings[si];
+      if (!b) {
+        // Empty run-down lot: cracked concrete pad + weeds + construction sawhorse!
+        if (clean < 2) {
+          ctx.fillStyle = 'rgba(41,37,36,0.35)';
+          ctx.fillRect(sx + 6, 254, 108, 18);
+          // Rubble bricks & weeds
+          ctx.fillStyle = '#9a3412';
+          ctx.fillRect(sx + 20, 258, 12, 7); ctx.fillRect(sx + 34, 260, 10, 6);
+          ctx.fillStyle = '#78716c';
+          ctx.fillRect(sx + 26, 254, 10, 6);
+          ctx.fillStyle = '#4d7c0f';
+          ctx.fillRect(sx + 74, 252, 5, 16); ctx.fillRect(sx + 80, 256, 5, 12); ctx.fillRect(sx + 68, 258, 5, 10);
+          if (si === 0) {
+            // Weathered wooden "SOLAR EN OBRA" sawhorse
+            this.pxRect(ctx, sx + 48, 240, 48, 12, '#ca8a04', '#18181b');
+            ctx.fillStyle = '#18181b';
+            ctx.fillRect(sx + 56, 240, 8, 12); ctx.fillRect(sx + 76, 240, 8, 12);
+            ctx.fillRect(sx + 54, 252, 4, 16); ctx.fillRect(sx + 86, 252, 4, 16);
+          }
+        }
+        continue;
+      }
+      // Draw the ACTUAL constructed building!
+      const isCancha = b.type === 'cancha';
+      const isLab = b.type === 'robotics' || b.type === 'ailab';
+      const isWork = b.type === 'workshop';
+      const bw = 118, bh = isCancha ? 104 : 118, by = 274 - bh;
+      if (isCancha) {
+        // Arched metal roof court
+        this.pxRect(ctx, sx, by + 20, 8, bh - 20, '#475569', '#18181b');
+        this.pxRect(ctx, sx + bw - 8, by + 20, 8, bh - 20, '#475569', '#18181b');
+        this.pxRect(ctx, sx - 4, by + 6, bw + 8, 18, '#7a1c33', '#18181b');
+        ctx.fillStyle = '#f5b700'; ctx.fillRect(sx, by + 22, bw, 3);
+        // Backboard hoop
+        this.pxRect(ctx, sx + 44, by + 36, 30, 20, '#f8fafc', '#18181b');
+        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 2;
+        ctx.strokeRect(sx + 52, by + 48, 14, 8);
+      } else {
+        this.pxRect(ctx, sx, by, bw, bh, isLab ? '#e2e8f0' : bWall, '#18181b');
+        this.pxRect(ctx, sx - 4, by - 10, bw + 8, 14, isLab ? '#1e3a8a' : (isWork ? '#9a3412' : bTrim), '#18181b');
+        ctx.fillStyle = isLab ? '#1e40af' : (isWork ? '#78350f' : bTrim);
+        ctx.fillRect(sx + 2, 244, bw - 4, 28);
+        if (paint >= 1) { ctx.fillStyle = '#f5b700'; ctx.fillRect(sx, by + 4, bw, 3); }
+        // Windows / Glass / Workshop rolling shutter
+        if (isWork) {
+          this.pxRect(ctx, sx + 18, by + 36, 82, 62, '#64748b', '#18181b');
+          for (let ry = by + 44; ry < by + 94; ry += 8) { ctx.fillStyle = '#334155'; ctx.fillRect(sx + 20, ry, 78, 2); }
+        } else {
+          for (let w = 0; w < 2; w++) {
+            const wx = sx + 14 + w * 48, wy = by + 24;
+            this.pxRect(ctx, wx, wy, 38, 36, isLab ? '#38bdf8' : '#bae6fd', '#18181b');
+            ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(wx + 4, wy + 4, 8, 12);
+          }
+        }
+      }
+      const def = CAMPUS_CATALOG.find(c => c.type === b.type);
+      const tag = def ? def.short.toUpperCase() : b.type.toUpperCase();
+      this.pxRect(ctx, sx + 18, by - 24, 82, 16, '#7a1c33', '#f5b700');
+      this.drawArcadeText(ctx, tag, sx + 59, by - 12, 8, '#fde047');
+    }
+
+    // 5. Run-down Decay & Rubbish on the Courtyard when clean < 2
+    if (clean === 0) {
+      // Cracks in ground + scattered litter & weeds
+      ctx.strokeStyle = '#3f3f46'; ctx.lineWidth = 2;
+      [[190,320,245,332,272,324],[450,365,512,354,548,376],[630,310,685,326,718,314],[310,410,375,402,410,420]].forEach(pts => {
+        ctx.beginPath(); ctx.moveTo(pts[0], pts[1]); ctx.lineTo(pts[2], pts[3]); ctx.lineTo(pts[4], pts[5]); ctx.stroke();
+      });
+      // Litter scraps & crumpled bags near curb
+      [[270,288,'#f8fafc'],[340,292,'#38bdf8'],[495,286,'#facc15'],[610,290,'#f8fafc'],[720,287,'#a855f7']].forEach(([lx,ly,lc]) => {
+        ctx.fillStyle = lc; ctx.fillRect(lx, ly, 8, 5);
+        ctx.fillStyle = '#27272a'; ctx.fillRect(lx + 2, ly + 4, 6, 2);
+      });
+    } else if (clean === 1) {
+      ctx.strokeStyle = 'rgba(63,63,70,0.45)'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(450, 365); ctx.lineTo(512, 354); ctx.stroke();
+    }
+
+    // 6. Placed Courtyard Props along the upper sidewalk edge (visual reward of your layout!)
+    placedProps.slice(0, 8).forEach((pr, idx) => {
+      const px = 165 + Math.round((pr.gx / 7) * 580);
+      const py = 278;
+      if (pr.type === 'tree') {
+        this.pxRect(ctx, px - 12, py - 8, 24, 10, '#9a3412', '#18181b');
+        this.pxRect(ctx, px - 3, py - 34, 6, 26, '#78350f');
+        this.pxRect(ctx, px - 18, py - 58, 36, 28, '#15803d', '#14532d');
+        ctx.fillStyle = '#4ade80'; ctx.fillRect(px - 12, py - 52, 12, 10);
+      } else if (pr.type === 'bench') {
+        this.pxRect(ctx, px - 18, py - 14, 36, 6, '#92400e', '#18181b');
+        this.pxRect(ctx, px - 18, py - 8, 36, 5, '#b45309', '#18181b');
+        ctx.fillStyle = '#334155'; ctx.fillRect(px - 14, py - 3, 4, 8); ctx.fillRect(px + 10, py - 3, 4, 8);
+      } else if (pr.type === 'lamp') {
+        this.pxRect(ctx, px - 2, py - 66, 4, 68, '#475569');
+        this.pxRect(ctx, px - 8, py - 70, 16, 6, '#1e293b');
+        ctx.fillStyle = '#fef08a'; ctx.fillRect(px - 6, py - 64, 12, 4);
+        ctx.fillStyle = 'rgba(254,240,138,0.14)'; ctx.beginPath(); ctx.moveTo(px - 8, py - 60); ctx.lineTo(px - 28, py + 8); ctx.lineTo(px + 28, py + 8); ctx.lineTo(px + 8, py - 60); ctx.closePath(); ctx.fill();
+      } else if (pr.type === 'recycle') {
+        this.pxRect(ctx, px - 12, py - 16, 10, 16, '#16a34a', '#18181b');
+        this.pxRect(ctx, px + 2, py - 16, 10, 16, '#2563eb', '#18181b');
+      } else if (pr.type === 'flag') {
+        this.pxRect(ctx, px - 12, py - 10, 24, 12, '#cbd5e1', '#18181b');
+        this.pxRect(ctx, px - 2, py - 112, 4, 102, '#e2e8f0');
+        const wave = Math.round(Math.sin(time * 4) * 2);
+        this.pxRect(ctx, px + 2, py - 110 + wave, 10, 20, '#16a34a');
+        this.pxRect(ctx, px + 12, py - 110 + wave, 10, 20, '#ffffff');
+        this.pxRect(ctx, px + 22, py - 110 + wave, 10, 20, '#dc2626');
+      }
+    });
+
+    ctx.restore();
+  },
+
   drawBackground(ctx, mode, areaBg, time) {
     if (mode === 'explore') {
       // Memory-efficient Side-Scroll: draw ONLY the 1–2 visible 800x450 panels overlapping [camX, camX+800]!
@@ -2557,19 +2916,27 @@ const PixelArt = {
     else if (areaBg === 'cancha') bgKey = 'cancha';
     else bgKey = 'explanada';
 
-    const bgImg = IMG.bgs[bgKey];
-    if (bgImg && bgImg.complete && bgImg.naturalWidth) {
-      ctx.save();
-      if (mode === 'sabotage') {
-        ctx.filter = 'brightness(0.45) contrast(1.15) hue-rotate(195deg) saturate(1.3)';
-      } else if (areaBg === 'ailab') {
-        ctx.filter = 'hue-rotate(18deg) saturate(1.25) brightness(0.95)';
-      }
-      ctx.drawImage(bgImg, 0, 0, 800, 450);
-      ctx.restore();
+    const cs = getCampusStats();
+    const useDynamicCampus = (bgKey === 'explanada' && cs.pct < 82);
+    if (useDynamicCampus) {
+      // Dynamic CETis 69 campus: starts visually run-down with ONLY weathered Aula E1,
+      // then cleans up, gets painted, and displays every building & prop you construct!
+      this.drawDynamicCampusStage(ctx, time, mode === 'sabotage');
     } else {
-      ctx.fillStyle = '#1f2937';
-      ctx.fillRect(0, 0, 800, 450);
+      const bgImg = IMG.bgs[bgKey];
+      if (bgImg && bgImg.complete && bgImg.naturalWidth) {
+        ctx.save();
+        if (mode === 'sabotage') {
+          ctx.filter = 'brightness(0.45) contrast(1.15) hue-rotate(195deg) saturate(1.3)';
+        } else if (areaBg === 'ailab') {
+          ctx.filter = 'hue-rotate(18deg) saturate(1.25) brightness(0.95)';
+        }
+        ctx.drawImage(bgImg, 0, 0, 800, 450);
+        ctx.restore();
+      } else {
+        ctx.fillStyle = '#1f2937';
+        ctx.fillRect(0, 0, 800, 450);
+      }
     }
 
     const topGrad = ctx.createLinearGradient(0, 0, 0, 74);
@@ -3339,41 +3706,21 @@ const Game = {
       State.academicScore += 4;
       State.territoryControl = Math.min(100, State.territoryControl + 2);
 
-      if (prop.kind === 'tree') {
-        State.resources.paint += 10;
-        State.resources.mat += 8;
-        this.spawnFloat(prop.x, prop.y - 45, '🌳 +10 Pintura +8 Mat (+4 pts)', '#4ade80');
-        addLog('🌳 Regaste un árbol en la Benito Juárez: <b>+10 Pintura, +8 Mat</b>.');
-      } else if (prop.kind === 'trash') {
-        State.resources.mat += 18;
-        this.spawnFloat(prop.x, prop.y - 35, '♻️ +18 Materiales (+4 pts)', '#facc15');
-        addLog('♻️ Recogiste basura y reciclaje: <b>+18 Materiales</b>.');
-      } else if (prop.kind === 'graffiti') {
-        State.resources.paint += 12;
-        State.resources.chips += 10;
-        this.spawnFloat(prop.x, prop.y - 52, '🧽 ¡Grafiti limpio! +12 Pintura +10 Chips', '#38bdf8');
-        addLog('🧽 Limpiaste y repintaste un muro grafiteado en la Benito Juárez: <b>+12 Pintura, +10 Chips</b>.');
-      } else if (prop.kind === 'fountain') {
-        State.resources.mat += 14;
-        State.resources.chips += 10;
-        this.spawnFloat(prop.x, prop.y - 45, '🚰 ¡Fuga reparada! +14 Mat +10 Chips', '#38bdf8');
-        addLog('🚰 Reparaste una fuga de agua en el parque: <b>+14 Materiales, +10 Chips</b>.');
-      } else if (prop.kind === 'bench') {
-        State.resources.paint += 14;
-        State.resources.mat += 10;
-        this.spawnFloat(prop.x, prop.y - 42, '🪑 ¡Banca Pantera! +14 Pintura +10 Mat', '#f5b700');
-        addLog('🪑 Pintaste y restauraste una banca del parque: <b>+14 Pintura, +10 Materiales</b>.');
-      } else if (prop.kind === 'books') {
-        State.resources.chips += 16;
-        State.academicScore += 6;
-        this.spawnFloat(prop.x, prop.y - 42, '📘 ¡Libros rescatados! +16 Chips +10 pts', '#38bdf8');
-        addLog('📘 Rescataste libros de Inglés Técnico de Teacher Aldo: <b>+16 Chips, +10 pts Académicos</b>.');
-      } else {
-        State.resources.chips += 12;
-        State.resources.paint += 6;
-        this.spawnFloat(prop.x, prop.y - 45, '💡 +12 Chips +6 Pintura (+4 pts)', '#38bdf8');
-        addLog('💡 Reparaste una luminaria urbana: <b>+12 Chips, +6 Pintura</b>.');
-      }
+      const deedCoins = prop.kind === 'graffiti' ? 35 : (prop.kind === 'books' ? 35 : (prop.kind === 'fountain' || prop.kind === 'bench' ? 30 : 25));
+      State.coins += deedCoins;
+      if (prop.kind === 'books') State.academicScore += 6;
+      const deedLabels = {
+        tree: ['🌳 ¡Árbol regado!', 'Regaste un árbol en la Benito Juárez'],
+        trash: ['♻️ ¡Basura recogida!', 'Recogiste basura y reciclaje'],
+        graffiti: ['🧽 ¡Grafiti limpio!', 'Limpiaste un muro grafiteado en la Benito Juárez'],
+        fountain: ['🚰 ¡Fuga reparada!', 'Reparaste una fuga de agua en el parque'],
+        bench: ['🪑 ¡Banca Pantera!', 'Restauraste una banca del parque'],
+        books: ['📘 ¡Libros rescatados!', 'Rescataste libros de Inglés Técnico'],
+        lamp: ['💡 ¡Luminaria reparada!', 'Reparaste una luminaria urbana']
+      };
+      const [fLbl, logLbl] = deedLabels[prop.kind] || deedLabels.lamp;
+      this.spawnFloat(prop.x, prop.y - 46, `${fLbl} +${deedCoins}🪙`, '#fde047');
+      addLog(`${logLbl}: <b>+${deedCoins} 🪙 Monedas</b>.`);
       const pColors = prop.kind === 'graffiti' ? ['#f8fafc', '#38bdf8', '#f5b700'] : (prop.kind === 'tree' ? ['#38bdf8', '#4ade80'] : ['#4ade80', '#facc15']);
       for (let i = 0; i < 16; i++) {
         this.particles.push({
@@ -3391,16 +3738,16 @@ const Game = {
       // Check if all deeds in the CURRENT Explore zone are done -> unlock smooth Side-Scroll + "GO ➡"!
       const zoneProps = this.worldProps.filter(w => w.zone === this.exploreScreen);
       if (zoneProps.length > 0 && zoneProps.every(w => w.done)) {
-        State.resources.mat += 15;
+        State.coins += 35;
         saveState();
         if (this.exploreScreen < 2 && this.exploreMaxCamX < (this.exploreScreen + 1) * 800) {
           this.exploreGoReady = true;
           this.exploreMaxCamX = (this.exploreScreen + 1) * 800;
           this.spawnExploreZoneProps(this.exploreScreen + 1);
-          this.spawnFloat(this.exploreCamX + 400, 175, '¡SECCIÓN LIMPIA! +15 Mat · AVANZA →', '#f5b700');
-          addLog('➡️ <b>¡Sección limpia!</b> Camina hacia la derecha siguiendo la flecha <b>GO ➡</b> (scroll lateral continuo).');
+          this.spawnFloat(this.exploreCamX + 400, 175, '¡SECCIÓN LIMPIA! +35🪙 · AVANZA →', '#f5b700');
+          addLog('➡️ <b>¡Sección limpia!</b> Ganaste <b>+35 🪙</b>. Camina a la derecha siguiendo <b>GO ➡</b>.');
         } else if (this.exploreScreen === 2) {
-          this.spawnFloat(this.exploreCamX + 400, 175, '¡MURAL Y ZONA LIMPIOS! +15 Materiales', '#f5b700');
+          this.spawnFloat(this.exploreCamX + 400, 175, '¡MURAL Y ZONA LIMPIOS! +35🪙', '#f5b700');
           if (this.exploreBossDefeated) {
             this.banner = { text: '🏆 ¡BENITO JUÁREZ LIBERADA!', color: '#f5b700', timer: 2.6 };
           }
@@ -3415,10 +3762,9 @@ const Game = {
       this.spawnFloat(prop.x, prop.y - 35, '💣 ¡SABOTEADO!', '#f43f5e');
       if (this.sabotageTargetsLeft <= 0) {
         State.territoryControl = Math.max(10, State.territoryControl - 12);
-        State.resources.mat += 30;
-        State.resources.paint += 20;
+        State.coins += 65;
         saveState();
-        this.showResult('💣', '¡SABOTAJE COMPLETADO!', 'Los cholos de Bajo el Puente ganaron 12% de territorio en la Col. Benito Juárez. ¡Sube tus calificaciones en inglés para volver a defender el CETis 69!', ['+30 Mat (Botín)', '+20 Pintura', '-12% Control Pantera'], 'Volver al Menú');
+        this.showResult('💣', '¡SABOTAJE COMPLETADO!', 'Los cholos de Bajo el Puente ganaron 12% de territorio en la Col. Benito Juárez. ¡Sube tus calificaciones en inglés para volver a defender el CETis 69!', ['+65 🪙 (Botín)', '-12% Control Pantera'], 'Volver al Menú');
       }
     }
   },
@@ -3453,25 +3799,22 @@ const Game = {
       const koPts = e.type === 'boss' ? 600 : (e.type === 'saboteur' ? 160 : (e.type === 'fast' ? 130 : 100));
       this.runScore += koPts + (this.runMaxCombo * 15);
       RecordsManager.bumpLifetime({ totalKOs: 1, totalBosses: e.type === 'boss' ? 1 : 0, maxCombo: this.runMaxCombo });
-      const bonusMult = 1 + State.upgrades.gate * 0.15;
-      const matGain = Math.round((e.type === 'boss' ? 28 : 7) * bonusMult);
-      const chipGain = e.type === 'boss' ? 12 : (e.type === 'saboteur' ? 4 : 1);
-      State.resources.mat += matGain;
-      State.resources.chips += chipGain;
-      this.spawnFloat(e.x, e.y - 70, `+${matGain}🧱`, '#4ade80');
+      const cs = getCampusStats();
+      const bonusMult = 1 + (State.upgrades.gate || 0) * 0.15 + (cs.coinPct || 0) / 100;
+      const coinGain = Math.round((e.type === 'boss' ? 45 : (e.type === 'saboteur' ? 15 : 10)) * bonusMult);
+      State.coins += coinGain;
+      this.spawnFloat(e.x, e.y - 70, `+${coinGain}🪙`, '#fde047');
       if (this.mode === 'explore' && e.isExploreBoss) {
         this.exploreBossDefeated = true;
-        State.resources.mat += 45;
-        State.resources.paint += 35;
-        State.resources.chips += 30;
+        State.coins += 180;
         State.academicScore += 15;
         State.territoryControl = Math.min(100, State.territoryControl + 10);
         this.runScore += 1000;
         this.lastRunLabel = 'Exploración (Jefe Derrotado)';
         RecordsManager.recordRun(this.runScore, this.lastRunLabel);
         this.banner = { text: '🏆 ¡JEFE DE BAJO EL PUENTE DERROTADO!', color: '#f5b700', timer: 2.8 };
-        this.spawnFloat(e.x, e.y - 96, '+45🧱 +35🎨 +30🔌 +10% Control!', '#fde047');
-        addLog(`🏆 ¡Derrotaste a <b>${e.nameTag}</b> en Bajo el Puente! <b>+45 Mat, +35 Pintura, +30 Chips, +10% Control Territorial</b>.`);
+        this.spawnFloat(e.x, e.y - 96, '+180🪙 +10% Control!', '#fde047');
+        addLog(`🏆 ¡Derrotaste a <b>${e.nameTag}</b> en Bajo el Puente! <b>+180 🪙 Monedas y +10% Control Territorial</b>.`);
         AudioEngine.setBgm('explore_park');
       }
       saveState();
@@ -4070,12 +4413,13 @@ const Game = {
       } else if (this.spawnQueue.length === 0 && this.enemies.length === 0) {
         // Wave cleared!
         const area = AREAS[State.selectedArea];
-        const matR = 25 + State.selectedArea * 10;
-        const paintR = 12 + State.selectedArea * 5;
-        const chipR = 10 + State.selectedArea * 5;
-        State.resources.mat += matR;
-        State.resources.paint += paintR;
-        State.resources.chips += chipR;
+        const cs = getCampusStats();
+        const coinBonus = 1 + (cs.coinPct || 0) / 100;
+        const coinR = Math.round((65 + State.selectedArea * 28) * coinBonus);
+        State.coins += coinR;
+        if (cs.autoRepair > 0) {
+          State.baseHp = Math.min(getBaseMaxHp(), State.baseHp + cs.autoRepair);
+        }
         State.academicScore += 8;
         State.territoryControl = Math.min(100, State.territoryControl + 6);
         State.stats.wavesCleared++;
@@ -4089,11 +4433,13 @@ const Game = {
         saveState();
         AudioEngine.quizOk();
         const isAreaDone = this.wave >= this.maxWaves;
+        const rw = [`+${coinR} 🪙 Monedas`, '+8 pts Académicos'];
+        if (cs.autoRepair > 0) rw.push(`🔧 +${cs.autoRepair} HP Taller`);
         this.showResult(
           isAreaDone ? '🏆' : '🔥',
           isAreaDone ? `¡ÁREA ${area.name.toUpperCase()} ASEGURADA!` : `¡OLEADA ${this.wave}/${this.maxWaves} SUPERADA!`,
-          `¡Gran trabajo Pantera! Aprovecha para mejorar tu base con el Quiz de Teacher Aldo o explorar la colonia.${unlockedMsg}`,
-          [`+${matR} 🧱`, `+${paintR} 🎨`, `+${chipR} 🔌`, '+8 pts Académicos'],
+          `¡Gran trabajo Pantera! Usa tus monedas para reconstruir y decorar tu escuela CETis 69.${unlockedMsg}`,
+          rw,
           isAreaDone ? 'Elegir Siguiente Área' : '▶ Siguiente Oleada'
         );
       }
@@ -4600,57 +4946,531 @@ const QuizManager = {
 
 const BaseManager = {
   flashTimer: 0,
+  flashTile: null,
+  activeTab: 'buildings', // 'buildings' | 'aesthetic' | 'defenses'
+  pendingPlaceType: null, // item type being placed (new or from inventory)
+  pendingFromInvIdx: -1,
+  selectedUid: null,      // existing placed item uid being moved
+  hoverCell: null,        // { gx, gy }
+  canvasBound: false,
+  COLS: 8,
+  ROWS: 4,
+  CELL: 80,
 
+  bindCanvas() {
+    if (this.canvasBound) return;
+    const cv = document.getElementById('basePreviewCanvas');
+    if (!cv) return;
+    this.canvasBound = true;
+    const cellFromEvent = (e) => {
+      const r = cv.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * cv.width;
+      const y = ((e.clientY - r.top) / r.height) * cv.height;
+      const gx = Math.max(0, Math.min(this.COLS - 1, Math.floor(x / this.CELL)));
+      const gy = Math.max(0, Math.min(this.ROWS - 1, Math.floor(y / this.CELL)));
+      return { gx, gy };
+    };
+    cv.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      this.hoverCell = cellFromEvent(e);
+    });
+    cv.addEventListener('pointerleave', () => { this.hoverCell = null; });
+    cv.addEventListener('click', (e) => {
+      const { gx, gy } = cellFromEvent(e);
+      this.handleTileClick(gx, gy);
+    });
+  },
+
+  setTab(tab) {
+    this.activeTab = tab;
+    ['buildings', 'aesthetic', 'defenses'].forEach(t => {
+      const el = document.getElementById('btab_' + t);
+      if (el) el.classList.toggle('is-on', t === tab);
+    });
+    this.renderBuildList();
+  },
+
+  getItemAt(gx, gy) {
+    return (State.campus && State.campus.items) ? State.campus.items.find(it => it.gx === gx && it.gy === gy) : null;
+  },
+
+  isZoneValid(type, gy) {
+    const def = CAMPUS_CATALOG.find(c => c.type === type);
+    if (!def) return false;
+    return def.zone === 'building' ? (gy <= 1) : (gy >= 2);
+  },
+
+  countOwned(type) {
+    const onMap = (State.campus.items || []).filter(it => it.type === type).length;
+    const inInv = (State.campus.inventory || []).filter(t => t === type).length;
+    return onMap + inInv;
+  },
+
+  findFirstFreeTile(type) {
+    const def = CAMPUS_CATALOG.find(c => c.type === type);
+    if (!def) return null;
+    const rStart = def.zone === 'building' ? 0 : 2;
+    const rEnd = def.zone === 'building' ? 1 : 3;
+    for (let gy = rStart; gy <= rEnd; gy++) {
+      for (let gx = 0; gx < this.COLS; gx++) {
+        if (!this.getItemAt(gx, gy)) return { gx, gy };
+      }
+    }
+    return null;
+  },
+
+  handleTileClick(gx, gy) {
+    const existing = this.getItemAt(gx, gy);
+
+    // Case 1: Placing a newly bought or inventory item
+    if (this.pendingPlaceType) {
+      const def = CAMPUS_CATALOG.find(c => c.type === this.pendingPlaceType);
+      if (!this.isZoneValid(this.pendingPlaceType, gy)) {
+        const zona = def && def.zone === 'building' ? 'las filas superiores (Zona de Edificios)' : 'las filas inferiores (Explanada)';
+        this.showFeedback(`📍 Coloca ${def ? def.name : 'este elemento'} en ${zona}.`, false);
+        AudioEngine.quizFail();
+        return;
+      }
+      if (existing) {
+        this.showFeedback('⚠️ Ese espacio ya está ocupado. Toca un espacio verde libre.', false);
+        AudioEngine.quizFail();
+        return;
+      }
+      State.campus.items.push({
+        uid: 'it_' + Date.now() + '_' + Math.floor(Math.random() * 999),
+        type: this.pendingPlaceType,
+        gx, gy, fixed: false
+      });
+      if (this.pendingFromInvIdx >= 0) {
+        State.campus.inventory.splice(this.pendingFromInvIdx, 1);
+      }
+      if (def && def.hp) State.baseHp = Math.min(getBaseMaxHp(), State.baseHp + def.hp);
+      this.flashTimer = 1.2;
+      this.flashTile = { gx, gy };
+      AudioEngine.pickup();
+      addLog(`🏫 <b>${def ? def.name : 'Mejora'}</b> colocada en el mapa del CETis 69.`);
+      this.showFeedback(`✅ ¡${def ? def.name : 'Elemento'} colocado en tu escuela! Toca cualquier elemento para moverlo.`, true);
+      this.pendingPlaceType = null;
+      this.pendingFromInvIdx = -1;
+      saveState();
+      this.renderBuildList();
+      return;
+    }
+
+    // Case 2: Moving a selected existing item
+    if (this.selectedUid) {
+      const moving = State.campus.items.find(it => it.uid === this.selectedUid);
+      if (!moving) { this.selectedUid = null; this.syncPlaceBar(); return; }
+      if (existing && existing.uid === moving.uid) {
+        // Deselect
+        this.selectedUid = null;
+        this.syncPlaceBar();
+        return;
+      }
+      if (!this.isZoneValid(moving.type, gy)) {
+        const def = CAMPUS_CATALOG.find(c => c.type === moving.type);
+        const zona = def && def.zone === 'building' ? 'la Zona de Edificios (arriba)' : 'la Explanada (abajo)';
+        this.showFeedback(`📍 Solo puedes acomodar esto en ${zona}.`, false);
+        AudioEngine.quizFail();
+        return;
+      }
+      if (existing) {
+        if (existing.fixed) {
+          this.showFeedback('🏫 El Aula E1 es el edificio original y no se puede mover.', false);
+          return;
+        }
+        // Smart swap if same zone!
+        if (this.isZoneValid(existing.type, moving.gy)) {
+          const ox = moving.gx, oy = moving.gy;
+          moving.gx = gx; moving.gy = gy;
+          existing.gx = ox; existing.gy = oy;
+          this.flashTimer = 0.8; this.flashTile = { gx, gy };
+          AudioEngine.pickup();
+          this.selectedUid = null;
+          saveState();
+          this.renderBuildList();
+          this.showFeedback('🔄 ¡Posiciones intercambiadas en el mapa!', true);
+          return;
+        }
+        this.showFeedback('⚠️ Ese espacio está ocupado. Elige un espacio libre.', false);
+        return;
+      }
+      moving.gx = gx;
+      moving.gy = gy;
+      this.flashTimer = 0.9;
+      this.flashTile = { gx, gy };
+      AudioEngine.pickup();
+      this.selectedUid = null;
+      saveState();
+      this.renderBuildList();
+      this.showFeedback('✅ ¡Acomodado en su nueva posición!', true);
+      return;
+    }
+
+    // Case 3: Tap an existing item to pick it up and move it
+    if (existing) {
+      if (existing.fixed) {
+        this.showFeedback('🏫 Aula E1 es tu primer salón original. ¡Compra Limpieza y Pintura para restaurarla!', true);
+        return;
+      }
+      this.selectedUid = existing.uid;
+      AudioEngine.pickup();
+      this.syncPlaceBar();
+    } else {
+      this.showFeedback('💡 Compra aulas, talleres o mobiliario abajo y tócalos aquí para acomodarlos en tu plantel.', true);
+    }
+  },
+
+  startPlaceFromInventory(idx) {
+    const type = State.campus.inventory[idx];
+    if (!type) return;
+    this.selectedUid = null;
+    this.pendingPlaceType = type;
+    this.pendingFromInvIdx = idx;
+    this.syncPlaceBar();
+    const cv = document.getElementById('basePreviewCanvas');
+    if (cv) cv.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  },
+
+  storeSelectedItem() {
+    if (!this.selectedUid) return;
+    const idx = State.campus.items.findIndex(it => it.uid === this.selectedUid && !it.fixed);
+    if (idx < 0) return;
+    const [removed] = State.campus.items.splice(idx, 1);
+    State.campus.inventory.push(removed.type);
+    this.selectedUid = null;
+    saveState();
+    this.renderBuildList();
+    this.showFeedback('📦 Guardado en tu inventario. Puedes volver a colocarlo gratis cuando quieras.', true);
+  },
+
+  cancelPlacement() {
+    if (this.pendingPlaceType && this.pendingFromInvIdx < 0) {
+      // Bought item cancelled before placing -> keep safely in inventory so coins are never lost!
+      State.campus.inventory.push(this.pendingPlaceType);
+      saveState();
+      this.showFeedback('📦 Tu elemento comprado se guardó en el inventario del mapa para colocarlo después.', true);
+    }
+    this.pendingPlaceType = null;
+    this.pendingFromInvIdx = -1;
+    this.selectedUid = null;
+    this.renderBuildList();
+  },
+
+  syncPlaceBar() {
+    const bar = document.getElementById('placeActionBar');
+    const txt = document.getElementById('placeActionText');
+    const btnStore = document.getElementById('btnStoreItem');
+    if (!bar || !txt) return;
+    if (this.pendingPlaceType) {
+      const def = CAMPUS_CATALOG.find(c => c.type === this.pendingPlaceType);
+      bar.classList.remove('hidden');
+      if (btnStore) btnStore.classList.add('hidden');
+      txt.textContent = `📍 Toca un espacio verde del mapa para colocar: ${def ? def.icon + ' ' + def.name : this.pendingPlaceType}`;
+    } else if (this.selectedUid) {
+      const it = State.campus.items.find(x => x.uid === this.selectedUid);
+      const def = it ? CAMPUS_CATALOG.find(c => c.type === it.type) : null;
+      bar.classList.remove('hidden');
+      if (btnStore) btnStore.classList.remove('hidden');
+      txt.textContent = `✋ Moviendo ${def ? def.icon + ' ' + def.name : 'elemento'} — toca otro espacio libre (o intercambia)`;
+    } else {
+      bar.classList.add('hidden');
+    }
+
+    const invStrip = document.getElementById('campusInvStrip');
+    if (invStrip) {
+      const inv = (State.campus && State.campus.inventory) ? State.campus.inventory : [];
+      if (!inv.length) {
+        invStrip.classList.add('hidden');
+      } else {
+        invStrip.classList.remove('hidden');
+        invStrip.innerHTML = `<span class="font-bold opacity-80">📦 Por colocar:</span>` + inv.map((type, idx) => {
+          const def = CAMPUS_CATALOG.find(c => c.type === type);
+          return `<button class="inv-chip" onclick="BaseManager.startPlaceFromInventory(${idx})">${def ? def.icon + ' ' + def.short : type} · Colocar</button>`;
+        }).join('');
+      }
+    }
+  },
+
+  // --- INTERACTIVE PIXEL-ART CAMPUS MAP RENDERER (640x320, 8x4 grid) ---
   renderPreview(time) {
     const modal = document.getElementById('buildModal');
     if (!modal || modal.classList.contains('hidden')) return;
+    this.bindCanvas();
     const cv = document.getElementById('basePreviewCanvas');
     if (!cv) return;
     const ctx = cv.getContext('2d');
     ctx.imageSmoothingEnabled = false;
-    const tag = document.getElementById('basePreviewTag');
-    if (tag) tag.textContent = `Defensa total: ${getDefensePower()} · Puerta ${Math.ceil(State.baseHp)}/${getBaseMaxHp()} HP`;
 
-    ctx.save();
-    // Uniform 0.64x zoom onto the left CETis 69 school facade (keeps 1:1 pixel aspect ratio!)
-    const sc = 0.64;
-    ctx.scale(sc, sc);
-    ctx.translate(0, -68);
-    const area = AREAS[State.selectedArea] || AREAS[0];
-    PixelArt.drawBackground(ctx, 'combat', area.bg, time);
-    // Show active patrol drones hovering in preview!
-    const dCount = Math.min(4, State.upgrades.drones || 0);
-    for (let i = 0; i < dCount; i++) {
-      PixelArt.drawDrone(ctx, { id: i, x: 165 + i * 54 + Math.sin(time * 2 + i) * 14, y: 145 + (i % 2) * 26 }, time);
+    const cs = getCampusStats();
+    const u = State.upgrades || {};
+    const clean = u.clean || 0;
+    const paint = u.paint || 0;
+    const gate = u.gate || 0;
+
+    const tag = document.getElementById('basePreviewTag');
+    if (tag) tag.textContent = `${cs.rank} (${cs.pct}%) · Puerta E1 ${Math.ceil(State.baseHp)}/${getBaseMaxHp()} HP`;
+
+    const W = cv.width, H = cv.height, C = this.CELL;
+
+    // 1. Background Grounds: North Building Terrace (rows 0-1) & South Courtyard (rows 2-3)
+    const northBg = clean === 0 ? '#57534e' : (clean === 1 ? '#64748b' : (clean === 2 ? '#7c8a99' : '#94a3b8'));
+    const southBg = clean === 0 ? '#6b635b' : (clean === 1 ? '#828b96' : (clean === 2 ? '#a5b0bd' : '#cbd5e1'));
+    ctx.fillStyle = northBg;
+    ctx.fillRect(0, 0, W, C * 2);
+    ctx.fillStyle = southBg;
+    ctx.fillRect(0, C * 2, W, C * 2);
+
+    // Subtle zone divider walkway
+    ctx.fillStyle = clean >= 2 ? '#e2e8f0' : '#44403c';
+    ctx.fillRect(0, C * 2 - 4, W, 8);
+    if (clean >= 3) {
+      ctx.fillStyle = '#7a1c33'; ctx.fillRect(0, C * 2 - 2, W, 4);
+      ctx.fillStyle = '#f5b700'; ctx.fillRect(0, C * 2 + 2, W, 2);
     }
-    // Golden celebratory construction sparkles right after upgrading!
-    if (this.flashTimer > 0) {
-      this.flashTimer = Math.max(0, this.flashTimer - 0.02);
-      ctx.fillStyle = `rgba(250, 204, 21, ${(this.flashTimer * 0.25).toFixed(2)})`;
-      ctx.fillRect(0, 95, 160, 310);
-      for (let i = 0; i < 8; i++) {
-        const sx = 20 + ((i * 37 + Math.floor(time * 40)) % 130);
-        const sy = 120 + ((i * 53) % 240);
-        ctx.fillStyle = i % 2 === 0 ? '#ffffff' : '#fde047';
-        ctx.fillRect(sx, sy, 5, 5);
+
+    // Perimeter top fence (broken rusty wire -> reinforced guinda/steel fence)
+    ctx.fillStyle = gate >= 1 ? '#7a1c33' : (clean >= 1 ? '#475569' : '#3f3f46');
+    ctx.fillRect(0, 0, W, 7);
+    if (gate >= 1) {
+      ctx.fillStyle = '#f5b700';
+      for (let x = 8; x < W; x += 24) ctx.fillRect(x, 2, 10, 3);
+    } else {
+      ctx.fillStyle = '#78716c';
+      for (let x = 10; x < W; x += 28) if (x % 84 !== 10) ctx.fillRect(x, 1, 14, 2);
+    }
+
+    // 2. Grid lines + Empty-lot decay details (weeds, cracks, rubble when clean < 2!)
+    const activeType = this.pendingPlaceType || (this.selectedUid ? (State.campus.items.find(x => x.uid === this.selectedUid) || {}).type : null);
+    for (let gy = 0; gy < this.ROWS; gy++) {
+      for (let gx = 0; gx < this.COLS; gx++) {
+        const tx = gx * C, ty = gy * C;
+        const occ = this.getItemAt(gx, gy);
+
+        // Clean tile paving lines or cracked dirt
+        ctx.strokeStyle = clean >= 2 ? 'rgba(30,41,59,0.18)' : 'rgba(255,255,255,0.08)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(tx + 0.5, ty + 0.5, C - 1, C - 1);
+
+        if (!occ) {
+          const seed = (gx * 13 + gy * 31) % 7;
+          if (clean === 0) {
+            // Cracks, rubble bricks, weeds, trash on empty tiles!
+            ctx.strokeStyle = 'rgba(24,24,27,0.45)';
+            ctx.beginPath();
+            ctx.moveTo(tx + 14 + seed * 3, ty + 22);
+            ctx.lineTo(tx + 38, ty + 34 + seed * 2);
+            ctx.lineTo(tx + 58, ty + 26);
+            ctx.stroke();
+            if (seed % 2 === 0) {
+              ctx.fillStyle = '#4d7c0f'; // weeds
+              ctx.fillRect(tx + 12, ty + 54, 4, 12); ctx.fillRect(tx + 17, ty + 58, 4, 8);
+              ctx.fillRect(tx + 54, ty + 16, 4, 10);
+            }
+            if (seed % 3 === 0) {
+              ctx.fillStyle = '#9a3412'; // rubble bricks
+              ctx.fillRect(tx + 44, ty + 56, 10, 6); ctx.fillRect(tx + 56, ty + 58, 8, 5);
+            } else if (gy >= 2 && seed % 2 === 1) {
+              ctx.fillStyle = '#e2e8f0'; // litter scrap
+              ctx.fillRect(tx + 28, ty + 46, 7, 5);
+              ctx.fillStyle = '#38bdf8'; ctx.fillRect(tx + 48, ty + 52, 6, 4);
+            }
+          } else if (clean === 1 && seed % 3 === 0) {
+            ctx.strokeStyle = 'rgba(24,24,27,0.22)';
+            ctx.beginPath(); ctx.moveTo(tx + 18, ty + 40); ctx.lineTo(tx + 46, ty + 48); ctx.stroke();
+          }
+        }
+
+        // Highlight valid placement / move slots!
+        if (activeType) {
+          const validZone = this.isZoneValid(activeType, gy);
+          const isSelf = occ && occ.uid === this.selectedUid;
+          const isHover = this.hoverCell && this.hoverCell.gx === gx && this.hoverCell.gy === gy;
+          if (validZone && (!occ || isSelf)) {
+            const pulse = 0.16 + Math.sin(time * 5) * 0.06;
+            ctx.fillStyle = isHover ? 'rgba(74, 222, 128, 0.42)' : `rgba(74, 222, 128, ${pulse.toFixed(2)})`;
+            ctx.fillRect(tx + 3, ty + 3, C - 6, C - 6);
+            ctx.strokeStyle = isHover ? '#86efac' : '#22c55e';
+            ctx.lineWidth = isHover ? 2.5 : 1.5;
+            ctx.strokeRect(tx + 3, ty + 3, C - 6, C - 6);
+          } else if (isHover) {
+            ctx.fillStyle = 'rgba(239, 68, 68, 0.28)';
+            ctx.fillRect(tx + 3, ty + 3, C - 6, C - 6);
+          }
+        } else if (this.hoverCell && this.hoverCell.gx === gx && this.hoverCell.gy === gy) {
+          ctx.strokeStyle = 'rgba(245, 183, 0, 0.55)';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(tx + 2, ty + 2, C - 4, C - 4);
+        }
       }
-      PixelArt.drawArcadeText(ctx, '¡MEJORA CONSTRUIDA!', 230, 142, 16, '#fde047');
     }
+
+    // Subtle zone labels on far right (only shown when right-edge tiles are free so text never collides!)
+    ctx.save();
+    ctx.font = 'bold 9px monospace';
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    if (!this.getItemAt(6, 0) && !this.getItemAt(7, 0)) ctx.fillText('EDIFICIOS (AULAS Y TALLERES)', W - 8, 18);
+    if (!this.getItemAt(6, 2) && !this.getItemAt(7, 2)) ctx.fillText('EXPLANADA (MOBILIARIO)', W - 8, C * 2 + 16);
     ctx.restore();
+
+    // 3. Draw every placed campus item (E1, classrooms, workshops, furniture!)
+    (State.campus.items || []).forEach(it => {
+      const tx = it.gx * C, ty = it.gy * C;
+      this.drawCampusTileItem(ctx, it, tx, ty, C, paint, gate, time);
+      if (it.uid === this.selectedUid) {
+        ctx.strokeStyle = '#fde047';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(tx + 2, ty + 2, C - 4, C - 4);
+      }
+    });
+
+    // 4. Visual Defenses overlay on campus map (Cameras + Patrol Drones!)
+    if ((u.cameras || 0) >= 1) {
+      const cams = Math.min(4, u.cameras);
+      for (let i = 0; i < cams; i++) {
+        const cx = 74 + i * 160, cy = 12;
+        ctx.fillStyle = '#0f172a'; ctx.fillRect(cx, cy, 10, 7);
+        ctx.fillStyle = Math.floor(time * 4 + i) % 2 === 0 ? '#ef4444' : '#7f1d1d';
+        ctx.fillRect(cx + 8, cy + 2, 3, 3);
+      }
+    }
+    if ((u.drones || 0) >= 1) {
+      const dCount = Math.min(4, u.drones);
+      for (let i = 0; i < dCount; i++) {
+        const dx = 110 + i * 145 + Math.sin(time * 2.2 + i) * 26;
+        const dy = 148 + Math.cos(time * 1.8 + i) * 22;
+        ctx.fillStyle = 'rgba(0,0,0,0.28)';
+        ctx.fillRect(Math.round(dx - 8), Math.round(dy + 14), 16, 4);
+        ctx.fillStyle = '#0284c7';
+        ctx.fillRect(Math.round(dx - 9), Math.round(dy - 4), 18, 8);
+        ctx.fillStyle = '#fde047';
+        ctx.fillRect(Math.round(dx - 3), Math.round(dy - 2), 6, 4);
+        ctx.fillStyle = '#e2e8f0';
+        ctx.fillRect(Math.round(dx - 13), Math.round(dy - 7), 8, 2);
+        ctx.fillRect(Math.round(dx + 5), Math.round(dy - 7), 8, 2);
+      }
+    }
+
+    // 5. Construction sparkle burst when placing/moving/upgrading!
+    if (this.flashTimer > 0) {
+      this.flashTimer = Math.max(0, this.flashTimer - 0.025);
+      const fx = this.flashTile ? this.flashTile.gx * C : 0;
+      const fy = this.flashTile ? this.flashTile.gy * C : 0;
+      const fw = this.flashTile ? C : W;
+      const fh = this.flashTile ? C : H;
+      ctx.fillStyle = `rgba(250, 204, 21, ${(this.flashTimer * 0.25).toFixed(2)})`;
+      ctx.fillRect(fx, fy, fw, fh);
+      for (let i = 0; i < 8; i++) {
+        const sx = fx + 8 + ((i * 23 + Math.floor(time * 50)) % Math.max(16, fw - 16));
+        const sy = fy + 8 + ((i * 19) % Math.max(16, fh - 16));
+        ctx.fillStyle = i % 2 === 0 ? '#ffffff' : '#fde047';
+        ctx.fillRect(sx, sy, 4, 4);
+      }
+    }
+  },
+
+  drawCampusTileItem(ctx, it, tx, ty, C, paint, gate, time) {
+    const px = PixelArt.pxRect.bind(PixelArt);
+    const txt = PixelArt.drawArcadeText.bind(PixelArt);
+    const t = it.type;
+
+    if (t === 'e1' || t === 'e2' || t === 'e3' || t === 'robotics' || t === 'ailab' || t === 'workshop' || t === 'cancha') {
+      // Ground shadow
+      ctx.fillStyle = 'rgba(0,0,0,0.32)';
+      ctx.fillRect(tx + 8, ty + C - 11, C - 12, 8);
+
+      const isWeathered = (t === 'e1' && paint === 0);
+      const isLab = (t === 'robotics' || t === 'ailab');
+      const isWork = (t === 'workshop');
+      const isCancha = (t === 'cancha');
+
+      if (isCancha) {
+        // Covered sports court tile
+        px(ctx, tx + 6, ty + 16, C - 12, C - 24, '#334155', '#18181b');
+        px(ctx, tx + 10, ty + 20, C - 20, C - 32, '#c2410c', '#f8fafc');
+        ctx.strokeStyle = '#f8fafc'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(tx + C / 2, ty + 42, 9, 0, Math.PI * 2); ctx.stroke();
+        px(ctx, tx + 5, ty + 11, C - 10, 9, '#7a1c33', '#f5b700');
+        txt(ctx, 'CANCHA', tx + C / 2, ty + 73, 8, '#fde047');
+        return;
+      }
+
+      const wall = isWeathered ? '#78716c' : (isLab ? '#e2e8f0' : (paint >= 2 ? '#fef3c7' : '#e7d9b5'));
+      const roof = isWeathered ? '#44403c' : (isLab ? '#1d4ed8' : (isWork ? '#9a3412' : '#7a1c33'));
+      const trim = isWeathered ? '#57534e' : (paint >= 1 ? '#f5b700' : '#94a3b8');
+
+      // Building walls + roof
+      px(ctx, tx + 8, ty + 20, C - 16, C - 28, wall, '#18181b');
+      px(ctx, tx + 5, ty + 10, C - 10, 14, roof, '#18181b');
+      ctx.fillStyle = trim; ctx.fillRect(tx + 7, ty + 22, C - 14, 3);
+
+      // Door & Windows
+      if (isWork) {
+        px(ctx, tx + 18, ty + 34, C - 36, 34, '#64748b', '#18181b');
+        for (let ry = ty + 40; ry < ty + 66; ry += 6) { ctx.fillStyle = '#334155'; ctx.fillRect(tx + 20, ry, C - 40, 2); }
+      } else {
+        // Entrance door
+        px(ctx, tx + 14, ty + 44, 15, 24, (t === 'e1' && gate >= 3) ? '#475569' : '#92400e', '#18181b');
+        // Windows
+        const wCol = isWeathered ? '#27272a' : (isLab ? '#38bdf8' : '#bae6fd');
+        px(ctx, tx + 35, ty + 32, 14, 15, wCol, '#18181b');
+        px(ctx, tx + 53, ty + 32, 14, 15, wCol, '#18181b');
+        if (isWeathered) {
+          // Cracks, plank & graffiti on weathered Aula E1!
+          ctx.fillStyle = '#78350f'; ctx.fillRect(tx + 34, ty + 38, 16, 4);
+          ctx.fillStyle = '#a855f7'; ctx.fillRect(tx + 38, ty + 54, 24, 9);
+          ctx.fillStyle = '#ec4899'; ctx.fillRect(tx + 44, ty + 56, 14, 5);
+        }
+      }
+
+      // Sign label
+      const labels = { e1: 'AULA E1', e2: 'AULA E2', e3: 'AULA E3', robotics: 'ROBÓTICA', ailab: 'LAB IA', workshop: 'TALLER' };
+      txt(ctx, labels[t] || t.toUpperCase(), tx + C / 2, ty + 20, 8, isWeathered ? '#e4e4e7' : '#fde047');
+      return;
+    }
+
+    // Courtyard Props & Furniture
+    if (t === 'tree') {
+      px(ctx, tx + 24, ty + 54, 32, 14, '#9a3412', '#18181b');
+      px(ctx, tx + 36, ty + 34, 8, 22, '#78350f');
+      px(ctx, tx + 18, ty + 14, 44, 28, '#15803d', '#14532d');
+      ctx.fillStyle = '#4ade80'; ctx.fillRect(tx + 24, ty + 18, 16, 10);
+      txt(ctx, 'ÁRBOL', tx + C / 2, ty + 76, 7, '#bbf7d0');
+    } else if (t === 'bench') {
+      px(ctx, tx + 14, ty + 30, 52, 12, '#b45309', '#18181b');
+      px(ctx, tx + 12, ty + 46, 56, 10, '#92400e', '#18181b');
+      ctx.fillStyle = '#334155'; ctx.fillRect(tx + 18, ty + 56, 6, 10); ctx.fillRect(tx + 56, ty + 56, 6, 10);
+      txt(ctx, 'BANCAS', tx + C / 2, ty + 76, 7, '#fde68a');
+    } else if (t === 'lamp') {
+      px(ctx, tx + 32, ty + 56, 16, 10, '#475569', '#18181b');
+      px(ctx, tx + 38, ty + 16, 4, 42, '#94a3b8');
+      px(ctx, tx + 26, ty + 10, 28, 8, '#1e293b', '#38bdf8');
+      const glow = 0.20 + Math.sin(time * 4) * 0.06;
+      ctx.fillStyle = `rgba(254, 240, 138, ${glow.toFixed(2)})`;
+      ctx.beginPath(); ctx.arc(tx + 40, ty + 24, 24, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fef08a'; ctx.fillRect(tx + 32, ty + 17, 16, 4);
+      txt(ctx, 'LUZ LED', tx + C / 2, ty + 76, 7, '#fef08a');
+    } else if (t === 'recycle') {
+      px(ctx, tx + 14, ty + 34, 15, 28, '#16a34a', '#18181b');
+      px(ctx, tx + 32, ty + 34, 15, 28, '#2563eb', '#18181b');
+      px(ctx, tx + 50, ty + 34, 15, 28, '#eab308', '#18181b');
+      ctx.fillStyle = '#f8fafc'; ctx.fillRect(tx + 18, ty + 42, 7, 6); ctx.fillRect(tx + 36, ty + 42, 7, 6); ctx.fillRect(tx + 54, ty + 42, 7, 6);
+      txt(ctx, 'RECICLAJE', tx + C / 2, ty + 76, 7, '#86efac');
+    } else if (t === 'flag') {
+      px(ctx, tx + 22, ty + 52, 36, 16, '#cbd5e1', '#7a1c33');
+      px(ctx, tx + 38, ty + 8, 4, 46, '#f8fafc');
+      const wv = Math.round(Math.sin(time * 4) * 2);
+      px(ctx, tx + 42, ty + 10 + wv, 9, 16, '#16a34a');
+      px(ctx, tx + 51, ty + 10 + wv, 9, 16, '#ffffff');
+      px(ctx, tx + 60, ty + 10 + wv, 9, 16, '#dc2626');
+      txt(ctx, 'ASTA 69', tx + C / 2, ty + 76, 7, '#fde047');
+    }
   },
 
   getCost(up) {
     const lvl = State.upgrades[up.id] || 0;
-    const mult = 1 + lvl * 0.6;
-    return {
-      mat: Math.round(up.baseCost.mat * mult),
-      paint: Math.round(up.baseCost.paint * mult),
-      chips: Math.round(up.baseCost.chips * mult),
-    };
-  },
-
-  canAfford(cost) {
-    return State.resources.mat >= cost.mat && State.resources.paint >= cost.paint && State.resources.chips >= cost.chips;
+    return Math.round(up.baseCost + lvl * (up.step || 35));
   },
 
   showFeedback(msg, isOk = false) {
@@ -4672,84 +5492,139 @@ const BaseManager = {
     const lvl = State.upgrades[upId] || 0;
     if (lvl >= up.max) return;
     const cost = this.getCost(up);
-    if (!this.canAfford(cost)) {
-      const faltan = [];
-      if (State.resources.mat < cost.mat) faltan.push(`🧱 ${cost.mat - State.resources.mat} Mat`);
-      if (State.resources.paint < cost.paint) faltan.push(`🎨 ${cost.paint - State.resources.paint} Pintura`);
-      if (State.resources.chips < cost.chips) faltan.push(`🔌 ${cost.chips - State.resources.chips} Chips`);
-      this.showFeedback(`⚠️ Te faltan ${faltan.join(', ')} para mejorar ${up.name}. Explora la colonia o canjea un código ADA20.`, false);
-      addLog(`⚠️ Te faltan recursos para mejorar <b>${up.name}</b>. ¡Explora la colonia o canjea un código ADA20!`);
+    if (State.coins < cost) {
+      this.showFeedback(`⚠️ Te faltan 🪙 ${cost - State.coins} monedas para mejorar ${up.name}. ¡Lucha en oleadas o explora para ganar más!`, false);
       AudioEngine.quizFail();
       return;
     }
 
     this.clearFeedback();
-    QuizManager.startQuiz(`Mejorar ${up.name}`, () => {
-      State.resources.mat -= cost.mat;
-      State.resources.paint -= cost.paint;
-      State.resources.chips -= cost.chips;
-      State.upgrades[upId]++;
-      if (upId === 'paint' || upId === 'gate') State.baseHp = Math.min(getBaseMaxHp(), State.baseHp + 35);
+    const apply = () => {
+      State.coins -= cost;
+      State.upgrades[upId] = (State.upgrades[upId] || 0) + 1;
+      if (upId === 'paint' || upId === 'gate') State.baseHp = Math.min(getBaseMaxHp(), State.baseHp + 30);
       State.territoryControl = Math.min(100, State.territoryControl + 4);
       if (Game.mode === 'combat' || Game.mode === 'sabotage') Game.setupDrones();
-      BaseManager.flashTimer = 1.2;
-      addLog(`🏗️ <b>${up.name}</b> mejorado a Nivel ${State.upgrades[upId]} tras aprobar el quiz de inglés.`);
+      this.flashTimer = 1.2;
+      this.flashTile = null;
+      addLog(`${up.icon} <b>${up.name}</b> subió a Nivel ${State.upgrades[upId]}.`);
       saveState();
       this.renderBuildList();
       this.showFeedback(`✅ ¡${up.name} mejorado a Nivel ${State.upgrades[upId]}!`, true);
-    });
+    };
+    if (up.quiz) QuizManager.startQuiz(`Mejorar ${up.name}`, apply);
+    else { AudioEngine.pickup(); apply(); }
+  },
+
+  requestCampusItem(type) {
+    const def = CAMPUS_CATALOG.find(c => c.type === type);
+    if (!def) return;
+    if (this.countOwned(type) >= def.max) return;
+    if (!this.findFirstFreeTile(type)) {
+      this.showFeedback('⚠️ Ya no hay espacios libres en esa zona del mapa. Guarda o mueve algún elemento primero.', false);
+      return;
+    }
+    if (State.coins < def.cost) {
+      this.showFeedback(`⚠️ Te faltan 🪙 ${def.cost - State.coins} monedas para comprar ${def.name}. ¡Defiende el plantel o explora!`, false);
+      AudioEngine.quizFail();
+      return;
+    }
+
+    this.clearFeedback();
+    const apply = () => {
+      State.coins -= def.cost;
+      State.territoryControl = Math.min(100, State.territoryControl + (def.zone === 'building' ? 5 : 2));
+      this.selectedUid = null;
+      this.pendingPlaceType = type;
+      this.pendingFromInvIdx = -1;
+      saveState();
+      this.renderBuildList();
+      this.showFeedback(`📍 ¡Comprado! Ahora toca cualquier espacio verde del mapa para colocar ${def.icon} ${def.name}.`, true);
+      const cv = document.getElementById('basePreviewCanvas');
+      if (cv) cv.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+    if (def.quiz) QuizManager.startQuiz(`Construir ${def.name}`, apply);
+    else { AudioEngine.pickup(); apply(); }
   },
 
   requestRepair() {
     if (State.baseHp >= getBaseMaxHp()) {
-      this.showFeedback('✅ El salón ya está al 100% de integridad.', true);
-      addLog('✅ El salón ya está al 100% de integridad.');
+      this.showFeedback('✅ El Aula E1 ya está al 100% de integridad.', true);
+      addLog('✅ El Aula E1 ya está al 100% de integridad.');
       return;
     }
     this.clearFeedback();
-    QuizManager.startQuiz('Reparar Salón (+40 HP)', () => {
+    QuizManager.startQuiz('Reparar Aula E1 (+40 HP)', () => {
       State.baseHp = Math.min(getBaseMaxHp(), State.baseHp + 40);
-      BaseManager.flashTimer = 0.9;
-      addLog('🔧 Salón reparado (+40 HP) gracias a tu dominio del inglés técnico.');
+      this.flashTimer = 0.9;
+      this.flashTile = { gx: 0, gy: 0 };
+      addLog('🔧 Aula E1 reparada (+40 HP) gracias a tu inglés técnico.');
       saveState();
       this.renderBuildList();
-      this.showFeedback(`🔧 ¡Salón reparado! Integridad: ${Math.ceil(State.baseHp)}/${getBaseMaxHp()} HP.`, true);
+      this.showFeedback(`🔧 ¡Aula E1 reparada! Integridad: ${Math.ceil(State.baseHp)}/${getBaseMaxHp()} HP.`, true);
     });
   },
 
   renderBuildList() {
-    document.getElementById('bResMat').textContent = State.resources.mat;
-    document.getElementById('bResPaint').textContent = State.resources.paint;
-    document.getElementById('bResChips').textContent = State.resources.chips;
+    const cs = getCampusStats();
+    const cEl = document.getElementById('bResCoins');
+    if (cEl) cEl.textContent = State.coins;
+    const bdg = document.getElementById('bCampusBadge');
+    if (bdg) bdg.textContent = `${cs.rank} · ${cs.pct}%`;
+    this.syncPlaceBar();
 
     const list = document.getElementById('upgradeList');
+    if (!list) return;
     list.innerHTML = '';
-    UPGRADES.forEach(up => {
+
+    // 1. Global upgrades belonging to this tab (Limpieza, Pintura, Defensas)
+    UPGRADES.filter(up => up.tab === this.activeTab).forEach(up => {
       const lvl = State.upgrades[up.id] || 0;
       const maxed = lvl >= up.max;
       const cost = this.getCost(up);
-      const affordable = !maxed && this.canAfford(cost);
-
+      const affordable = !maxed && State.coins >= cost;
       const card = document.createElement('div');
       card.className = 'bg-[var(--content)] border border-[var(--border)] rounded-lg p-3 flex flex-col justify-between gap-2 text-xs';
       card.innerHTML = `
         <div>
-          <div class="flex items-center justify-between font-black">
+          <div class="flex items-center justify-between gap-2 font-black">
             <span>${up.icon} ${up.name}</span>
-            <span class="px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--border)] text-[11px]">Nv. ${lvl}/${up.max}</span>
+            <span class="px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--border)] text-[11px] shrink-0">Nv. ${lvl}/${up.max}</span>
           </div>
           <p class="text-[11px] text-[var(--muted-foreground)] mt-1">${up.desc}</p>
         </div>
         <div class="flex items-center justify-between gap-2 pt-2 border-t border-[var(--border)]">
-          <div class="text-[11px] font-bold">
-            ${maxed ? '<span class="text-emerald-500">MÁXIMO NIVEL</span>' : `🧱${cost.mat} 🎨${cost.paint} 🔌${cost.chips}`}
-          </div>
+          <div class="text-xs font-black text-[#ffd24a]">${maxed ? '<span class="text-emerald-400">✓ NIVEL MÁXIMO</span>' : `🪙 ${cost}`}</div>
           <button ${maxed ? 'disabled' : ''} onclick="BaseManager.requestUpgrade('${up.id}')"
-            class="pixel-btn px-2.5 py-1 rounded text-[11px] font-black cursor-pointer ${maxed ? 'opacity-40 bg-gray-600 text-white' : (affordable ? 'cetis-gold' : 'bg-rose-900/50 text-rose-200')}">
-            ${maxed ? '✓ Completo' : '📘 Quiz y Mejorar'}
+            class="pixel-btn px-3 py-1 rounded text-[11px] font-black cursor-pointer ${maxed ? 'opacity-40 bg-gray-600 text-white' : (affordable ? 'cetis-gold' : 'bg-rose-900/50 text-rose-200')}">
+            ${maxed ? '✓ Listo' : (up.quiz ? '📘 Quiz y Mejorar' : 'Comprar')}
           </button>
+        </div>`;
+      list.appendChild(card);
+    });
+
+    // 2. Placeable campus buildings & furniture belonging to this tab
+    CAMPUS_CATALOG.filter(item => item.tab === this.activeTab).forEach(item => {
+      const owned = this.countOwned(item.type);
+      const maxed = owned >= item.max;
+      const affordable = !maxed && State.coins >= item.cost;
+      const card = document.createElement('div');
+      card.className = 'bg-[var(--content)] border border-[var(--border)] rounded-lg p-3 flex flex-col justify-between gap-2 text-xs';
+      card.innerHTML = `
+        <div>
+          <div class="flex items-center justify-between gap-2 font-black">
+            <span>${item.icon} ${item.name}</span>
+            <span class="px-1.5 py-0.5 rounded bg-[var(--card)] border border-[var(--border)] text-[11px] shrink-0">${owned}/${item.max}</span>
+          </div>
+          <p class="text-[11px] text-[var(--muted-foreground)] mt-1">${item.desc}</p>
         </div>
-      `;
+        <div class="flex items-center justify-between gap-2 pt-2 border-t border-[var(--border)]">
+          <div class="text-xs font-black text-[#ffd24a]">${maxed ? '<span class="text-emerald-400">✓ EN TU ESCUELA</span>' : `🪙 ${item.cost}`}</div>
+          <button ${maxed ? 'disabled' : ''} onclick="BaseManager.requestCampusItem('${item.type}')"
+            class="pixel-btn px-3 py-1 rounded text-[11px] font-black cursor-pointer ${maxed ? 'opacity-40 bg-gray-600 text-white' : (affordable ? 'cetis-gold' : 'bg-rose-900/50 text-rose-200')}">
+            ${maxed ? '✓ Construido' : (item.quiz ? '📘 Construir y Colocar' : '📍 Comprar y Colocar')}
+          </button>
+        </div>`;
       list.appendChild(card);
     });
   }
@@ -4790,15 +5665,14 @@ const CodeManager = {
     }
 
     State.redeemedCodes.push(found.code);
-    State.resources.mat += found.mat || 0;
-    State.resources.paint += found.paint || 0;
-    State.resources.chips += found.chips || 0;
+    const cGain = found.coins || Math.round((found.mat || 0) + (found.paint || 0) * 1.5 + (found.chips || 0) * 1.8) || 100;
+    State.coins += cGain;
     State.academicScore += found.score || 10;
     saveState();
     AudioEngine.quizOk();
 
     msg.className = 'p-2 rounded font-bold bg-emerald-950/70 text-emerald-200 border border-emerald-500';
-    msg.textContent = `🎉 ¡Código ${found.code} canjeado! +${found.mat}🧱 +${found.paint}🎨 +${found.chips}🔌 +${found.score || 10} pts`;
+    msg.textContent = `🎉 ¡Código ${found.code} canjeado! +${cGain}🪙 Monedas +${found.score || 10} pts`;
     addLog(`🎟️ Código ADA20 <b>${found.code}</b> canjeado con éxito.`);
     input.value = '';
     this.renderHints();
@@ -4925,7 +5799,7 @@ const AdminPanel = {
     State.admin.codes.forEach(c => {
       const tag = document.createElement('span');
       tag.className = 'px-2 py-1 rounded bg-[var(--card)] border border-[var(--border)] text-[11px] font-bold flex items-center gap-1.5';
-      tag.innerHTML = `${c.code} (🧱${c.mat} 🎨${c.paint} 🔌${c.chips}) <button onclick="AdminPanel.deleteCode('${c.code}')" class="text-rose-500 cursor-pointer">✕</button>`;
+      tag.innerHTML = `${c.code} (🪙${c.coins || 100}) <button onclick="AdminPanel.deleteCode('${c.code}')" class="text-rose-500 cursor-pointer">✕</button>`;
       cList.appendChild(tag);
     });
   },
@@ -4971,14 +5845,12 @@ const AdminPanel = {
   addCode() {
     const code = document.getElementById('cCode').value.trim().toUpperCase();
     if (!code) return;
-    const mat = parseInt(document.getElementById('cMat').value, 10) || 30;
-    const paint = parseInt(document.getElementById('cPaint').value, 10) || 15;
-    const chips = parseInt(document.getElementById('cChips').value, 10) || 10;
-    State.admin.codes.push({ code, mat, paint, chips, score: 15, desc: 'Código personalizado Teacher Aldo' });
+    const coins = parseInt(document.getElementById('cCoins').value, 10) || 120;
+    State.admin.codes.push({ code, coins, score: 15, desc: 'Código personalizado Teacher Aldo' });
     document.getElementById('cCode').value = '';
     saveState();
     this.render();
-    addLog(`🎟️ Código bonus creado: <b>${code}</b>.`);
+    addLog(`🎟️ Código bonus creado: <b>${code}</b> (+${coins}🪙).`);
   },
 
   deleteCode(code) {
@@ -5239,11 +6111,10 @@ const UI = {
   },
 
   syncAll() {
-    // Top bar resources
-    document.getElementById('resMat').textContent = State.resources.mat;
-    document.getElementById('resPaint').textContent = State.resources.paint;
-    document.getElementById('resChips').textContent = State.resources.chips;
-    document.getElementById('navDefPower').textContent = `Def ${getDefensePower()}`;
+    // Top bar coins & campus quality badge
+    const cs = getCampusStats();
+    document.getElementById('resCoins').textContent = State.coins;
+    document.getElementById('navDefPower').textContent = `${cs.pct}%`;
 
     // Faction badge
     const cholo = isPlayerCholo();
@@ -5256,14 +6127,24 @@ const UI = {
     const hpPct = Math.round((State.baseHp / maxHp) * 100);
     document.getElementById('sideBaseHpText').textContent = `${Math.ceil(State.baseHp)} / ${maxHp}`;
     document.getElementById('sideBaseHpBar').style.width = `${Math.max(0, Math.min(100, hpPct))}%`;
+    document.getElementById('sideCampusRank').textContent = cs.rank;
+    document.getElementById('sideCampusPct').textContent = `${cs.pct}%`;
+    document.getElementById('sideCampusBar').style.width = `${cs.pct}%`;
     document.getElementById('sideTerritoryText').textContent = `${State.territoryControl}%`;
     document.getElementById('sideTerritoryBar').style.width = `${State.territoryControl}%`;
     const st = document.getElementById('sideBaseStatus');
     st.textContent = hpPct > 50 ? 'Segura' : 'En riesgo';
     st.className = 'status ' + (hpPct > 50 ? 'ok' : 'bad');
 
-    document.getElementById('sideDefSummary').innerHTML = UPGRADES.map(u =>
-      `<div class="def-item" title="${u.name}"><span class="def-ico">${u.icon}</span><span class="def-name">${u.name.split(' ')[0]}</span><b>Nv ${State.upgrades[u.id]}</b></div>`
+    const sideTiles = [
+      { icon: '🏫', name: 'Aulas',   val: `${cs.buildings + 1}` },
+      { icon: '🪑', name: 'Muebles', val: `${cs.props}` },
+      { icon: '🧹', name: 'Limpieza',val: `Nv ${State.upgrades.clean || 0}` },
+      { icon: '🎨', name: 'Pintura', val: `Nv ${State.upgrades.paint || 0}` },
+      { icon: '🛡️', name: 'Defensa', val: `${getDefensePower()}` }
+    ];
+    document.getElementById('sideDefSummary').innerHTML = sideTiles.map(t =>
+      `<div class="def-item"><span class="def-ico">${t.icon}</span><span class="def-name">${t.name}</span><b>${t.val}</b></div>`
     ).join('');
 
     // Menu 1P / 1P + IA / 2P Local buttons
