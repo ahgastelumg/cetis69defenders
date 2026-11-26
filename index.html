@@ -557,7 +557,7 @@
       </div>
       <div class="res-bar">
         <span id="hudFactionBadge" class="chip chip-faction is-pantera" title="Tu bando según tu puntuación académica">🐾 Pantera · 85</span>
-        <span class="chip chip-coin" title="Monedas Pantera para construir y decorar tu escuela">🪙 <b id="resCoins">90</b></span>
+        <span class="chip chip-coin" title="Monedas Pantera para construir y decorar tu escuela">🪙 <b id="resCoins">30</b></span>
       </div>
       <div class="top-actions">
         <button id="btnAudio" class="icon-btn" aria-pressed="true" title="Efectos de sonido" aria-label="Efectos de sonido">🔊</button>
@@ -1066,10 +1066,10 @@ const DEFAULT_VOCAB = [
 ];
 
 const DEFAULT_CODES = [
-  { code: 'PANTERA69', coins: 120, score: 20, desc: 'Bono de Bienvenida CETis 69' },
-  { code: 'ALDO-WEEK1', coins: 150, score: 15, desc: 'Tarea Semana 1 - Teacher Aldo' },
-  { code: 'ADA20-VIP', coins: 240, score: 20, desc: 'Cumplimiento Excelente en ADA20' },
-  { code: 'ENGLISH-PRO', coins: 100, score: 45, desc: 'Rescate Académico (Sal de Bajo el Puente)' },
+  { code: 'PANTERA69', coins: 45, score: 20, desc: 'Bono de Bienvenida CETis 69' },
+  { code: 'ALDO-WEEK1', coins: 60, score: 15, desc: 'Tarea Semana 1 - Teacher Aldo' },
+  { code: 'ADA20-VIP', coins: 95, score: 20, desc: 'Cumplimiento Excelente en ADA20' },
+  { code: 'ENGLISH-PRO', coins: 40, score: 45, desc: 'Rescate Académico (Sal de Bajo el Puente)' },
 ];
 
 const CHARACTERS = [
@@ -1110,28 +1110,29 @@ const AREAS = [
   { id: 4, name: 'Cancha Techada (Final)', diff: '★★★★★ Jefe Final', waves: 3, bg: 'cancha', desc: 'Batalla definitiva contra El Jefe del Puente.' },
 ];
 
+// Economy: 1 screen (~32-40 coins) buys 1 aesthetic item; Construction & Defenses cost ~3x more!
 const UPGRADES = [
-  { id: 'clean',   tab: 'aesthetic', name: 'Brigada de Limpieza y Piso', icon: '🧹', max: 3, baseCost: 40,  step: 35, quiz: true,  scorePts: 8,  desc: 'Limpia basura, maleza y repara grietas del piso en todo el plantel.' },
-  { id: 'paint',   tab: 'aesthetic', name: 'Pintura Guinda y Murales',   icon: '🎨', max: 3, baseCost: 55,  step: 45, quiz: true,  scorePts: 9,  desc: 'Restaura Aula E1 y todos los edificios con pintura guinda/dorado (+25 HP).' },
-  { id: 'gate',    tab: 'defenses',  name: 'Rejas y Puerta Reforzada',   icon: '🛡️', max: 5, baseCost: 55,  step: 40, quiz: true,  scorePts: 4,  desc: 'Refuerza la puerta de E1 y la barda (-12% daño y +15% monedas por nivel).' },
-  { id: 'cameras', tab: 'defenses',  name: 'Cámaras de Vigilancia CCTV', icon: '📹', max: 5, baseCost: 50,  step: 35, quiz: true,  scorePts: 3,  desc: 'Detectan y ralentizan cholos (-12% velocidad por nivel).' },
-  { id: 'drones',  tab: 'defenses',  name: 'Drones Pantera Autónomos',   icon: '🚁', max: 5, baseCost: 80,  step: 55, quiz: true,  scorePts: 3,  desc: 'Patrullan el cielo lanzando plumones teledirigidos.' },
-  { id: 'turrets', tab: 'defenses',  name: 'Torretas de Plumones',       icon: '⚡', max: 5, baseCost: 90,  step: 60, quiz: true,  scorePts: 3,  desc: 'Torretas automáticas en E1 que disparan plumones a los invasores.' },
+  { id: 'clean',   tab: 'aesthetic', name: 'Brigada de Limpieza y Piso', icon: '🧹', max: 3, baseCost: 42,  step: 28, quiz: true,  scorePts: 8,  desc: 'Limpia basura, maleza y repara grietas del piso en todo el plantel.' },
+  { id: 'paint',   tab: 'aesthetic', name: 'Pintura Guinda y Murales',   icon: '🎨', max: 3, baseCost: 52,  step: 32, quiz: true,  scorePts: 9,  desc: 'Restaura Aula E1 y todos los edificios con pintura guinda/dorado (+25 HP).' },
+  { id: 'cameras', tab: 'defenses',  name: 'Cámaras de Vigilancia CCTV', icon: '📹', max: 5, baseCost: 110, step: 55, quiz: true,  scorePts: 3,  desc: 'Detectan y ralentizan cholos (-12% velocidad por nivel).' },
+  { id: 'gate',    tab: 'defenses',  name: 'Rejas y Puerta Reforzada',   icon: '🛡️', max: 5, baseCost: 125, step: 60, quiz: true,  scorePts: 4,  desc: 'Refuerza la puerta de E1 y la barda (-12% daño y +15% monedas por nivel).' },
+  { id: 'drones',  tab: 'defenses',  name: 'Drones Pantera Autónomos',   icon: '🚁', max: 5, baseCost: 155, step: 75, quiz: true,  scorePts: 3,  desc: 'Patrullan el cielo lanzando plumones teledirigidos.' },
+  { id: 'turrets', tab: 'defenses',  name: 'Torretas de Plumones',       icon: '⚡', max: 5, baseCost: 175, step: 85, quiz: true,  scorePts: 3,  desc: 'Torretas automáticas en E1 que disparan plumones a los invasores.' },
 ];
 
-// Placeable Campus Buildings (North Wing: rows 0..1) & Courtyard Furniture/Aesthetics (South: rows 2..3)
+// Placeable Campus Buildings (~3x cost of aesthetics!) & Courtyard Furniture (~1 screen each!)
 const CAMPUS_CATALOG = [
-  { type: 'e2',       tab: 'buildings', zone: 'building',  icon: '🏫', short: 'Aula E2',     name: 'Aula E2 (General)',      cost: 70,  max: 1, quiz: true,  hp: 20, coinPct: 10, scorePts: 11, desc: 'Segundo salón del plantel. +20 HP base y +10% monedas en batalla.' },
-  { type: 'e3',       tab: 'buildings', zone: 'building',  icon: '📘', short: 'Aula E3',     name: 'Aula E3 (Inglés)',       cost: 110, max: 1, quiz: true,  hp: 25, coinPct: 15, scorePts: 12, desc: 'Salón de Inglés Técnico de Teacher Aldo. +25 HP y +15% monedas.' },
-  { type: 'robotics', tab: 'buildings', zone: 'building',  icon: '🤖', short: 'Robótica',    name: 'Taller de Robótica',     cost: 140, max: 1, quiz: true,  hp: 15, coinPct: 15, scorePts: 13, desc: 'Equipa drones y proyectos de automatización. +15% monedas.' },
-  { type: 'ailab',    tab: 'buildings', zone: 'building',  icon: '💻', short: 'Lab. IA',     name: 'Lab. de IA y Soporte TI',cost: 165, max: 1, quiz: true,  hp: 20, coinPct: 20, scorePts: 14, desc: 'Laboratorio moderno con computadoras. +20% monedas.' },
-  { type: 'workshop', tab: 'buildings', zone: 'building',  icon: '🔧', short: 'Taller Mant.',name: 'Taller Mant. Industrial',cost: 130, max: 1, quiz: true,  hp: 25, coinPct: 10, autoRepair: 18, scorePts: 12, desc: 'Repara automáticamente +18 HP a la puerta tras cada oleada.' },
-  { type: 'cancha',   tab: 'buildings', zone: 'building',  icon: '🏀', short: 'Cancha',      name: 'Cancha Techada Pantera', cost: 185, max: 1, quiz: true,  hp: 30, coinPct: 15, scorePts: 15, desc: 'Eleva el orgullo Pantera. +30 HP base y +15% monedas.' },
-  { type: 'bench',    tab: 'aesthetic', zone: 'courtyard', icon: '🪑', short: 'Bancas',      name: 'Bancas y Mesas',         cost: 30,  max: 6, quiz: false, hp: 0,  coinPct: 2,  scorePts: 3,  desc: 'Mobiliario limpio para el descanso en la explanada.' },
-  { type: 'tree',     tab: 'aesthetic', zone: 'courtyard', icon: '🌳', short: 'Árbol',       name: 'Árbol en Jardinera',     cost: 35,  max: 6, quiz: false, hp: 0,  coinPct: 2,  scorePts: 3,  desc: 'Áreas verdes con jardinera de ladrillo y sombra.' },
-  { type: 'lamp',     tab: 'aesthetic', zone: 'courtyard', icon: '💡', short: 'Luminaria',   name: 'Luminaria Solar LED',    cost: 40,  max: 4, quiz: false, hp: 0,  coinPct: 3,  scorePts: 4,  desc: 'Ilumina el patio y mejora la seguridad del plantel.' },
-  { type: 'recycle',  tab: 'aesthetic', zone: 'courtyard', icon: '🗑️', short: 'Reciclaje',   name: 'Estación de Reciclaje',  cost: 25,  max: 4, quiz: false, hp: 0,  coinPct: 2,  scorePts: 4,  desc: 'Mantiene la explanada limpia y libre de basura.' },
-  { type: 'flag',     tab: 'aesthetic', zone: 'courtyard', icon: '🇲🇽', short: 'Asta 69',    name: 'Asta Bandera CETis 69',  cost: 65,  max: 1, quiz: false, hp: 10, coinPct: 5,  scorePts: 7,  desc: 'Plaza cívica oficial con bandera y escudo Pantera.' },
+  { type: 'e2',       tab: 'buildings', zone: 'building',  icon: '🏫', short: 'Aula E2',     name: 'Aula E2 (General)',      cost: 120, max: 1, quiz: true,  hp: 20, coinPct: 10, scorePts: 11, desc: 'Segundo salón del plantel. +20 HP base y +10% monedas en batalla.' },
+  { type: 'e3',       tab: 'buildings', zone: 'building',  icon: '📘', short: 'Aula E3',     name: 'Aula E3 (Inglés)',       cost: 150, max: 1, quiz: true,  hp: 25, coinPct: 15, scorePts: 12, desc: 'Salón de Inglés Técnico de Teacher Aldo. +25 HP y +15% monedas.' },
+  { type: 'workshop', tab: 'buildings', zone: 'building',  icon: '🔧', short: 'Taller Mant.',name: 'Taller Mant. Industrial',cost: 165, max: 1, quiz: true,  hp: 25, coinPct: 10, autoRepair: 18, scorePts: 12, desc: 'Repara automáticamente +18 HP a la puerta tras cada oleada.' },
+  { type: 'robotics', tab: 'buildings', zone: 'building',  icon: '🤖', short: 'Robótica',    name: 'Taller de Robótica',     cost: 180, max: 1, quiz: true,  hp: 15, coinPct: 15, scorePts: 13, desc: 'Equipa drones y proyectos de automatización. +15% monedas.' },
+  { type: 'ailab',    tab: 'buildings', zone: 'building',  icon: '💻', short: 'Lab. IA',     name: 'Lab. de IA y Soporte TI',cost: 195, max: 1, quiz: true,  hp: 20, coinPct: 20, scorePts: 14, desc: 'Laboratorio moderno con computadoras. +20% monedas.' },
+  { type: 'cancha',   tab: 'buildings', zone: 'building',  icon: '🏀', short: 'Cancha',      name: 'Cancha Techada Pantera', cost: 220, max: 1, quiz: true,  hp: 30, coinPct: 15, scorePts: 15, desc: 'Eleva el orgullo Pantera. +30 HP base y +15% monedas.' },
+  { type: 'recycle',  tab: 'aesthetic', zone: 'courtyard', icon: '🗑️', short: 'Reciclaje',   name: 'Estación de Reciclaje',  cost: 28,  max: 4, quiz: false, hp: 0,  coinPct: 2,  scorePts: 4,  desc: 'Mantiene la explanada limpia y libre de basura.' },
+  { type: 'bench',    tab: 'aesthetic', zone: 'courtyard', icon: '🪑', short: 'Bancas',      name: 'Bancas y Mesas',         cost: 32,  max: 6, quiz: false, hp: 0,  coinPct: 2,  scorePts: 3,  desc: 'Mobiliario limpio para el descanso en la explanada.' },
+  { type: 'tree',     tab: 'aesthetic', zone: 'courtyard', icon: '🌳', short: 'Árbol',       name: 'Árbol en Jardinera',     cost: 36,  max: 6, quiz: false, hp: 0,  coinPct: 2,  scorePts: 3,  desc: 'Áreas verdes con jardinera de ladrillo y sombra.' },
+  { type: 'lamp',     tab: 'aesthetic', zone: 'courtyard', icon: '💡', short: 'Luminaria',   name: 'Luminaria Solar LED',    cost: 42,  max: 4, quiz: false, hp: 0,  coinPct: 3,  scorePts: 4,  desc: 'Ilumina el patio y mejora la seguridad del plantel.' },
+  { type: 'flag',     tab: 'aesthetic', zone: 'courtyard', icon: '🇲🇽', short: 'Asta 69',    name: 'Asta Bandera CETis 69',  cost: 58,  max: 1, quiz: false, hp: 10, coinPct: 5,  scorePts: 7,  desc: 'Plaza cívica oficial con bandera y escudo Pantera.' },
 ];
 
 const ENEMY_ROSTER = [
@@ -1177,7 +1178,7 @@ let State = loadState();
 
 function defaultState() {
   return {
-    coins: 90,
+    coins: 30,
     academicScore: 85,
     territoryControl: 62, // % Pantera control of Benito Juárez / CETis 69
     baseHp: 100,
@@ -1703,6 +1704,13 @@ const AudioEngine = {
     if (!this._ready()) return;
     [220, 207.65].forEach(f => this.chordNote(f, 0.22, 0.11, 0, 'sawtooth', 900));
     [164.81, 155.56].forEach(f => this.chordNote(f, 0.34, 0.11, 0.18, 'sawtooth', 750));
+  },
+
+  critterSteal() {
+    if (!this._ready()) return;
+    // Cheeky fast rat squeak / iguana scurry chirp!
+    this.fmVoice({ freq: 980, endFreq: 1620, modRatio: 1.5, modIndex: 140, dur: 0.08, vol: 0.16, wave: 'triangle', wet: 0.12 });
+    this.fmVoice({ freq: 1320, endFreq: 720, modRatio: 2, modIndex: 120, dur: 0.10, vol: 0.14, wave: 'sine', delayStart: 0.07, wet: 0.15 });
   },
 
   alarm() {
@@ -2597,8 +2605,169 @@ const PixelArt = {
     }
   },
 
-  // Live Combat Backdrop for Explanada: reflects your REAL constructed school!
-  // Starts run-down with ONLY Aula E1, cracked concrete, rubble, weeds & broken fence.
+  // Crisp stepped pixel-art crack (zero anti-aliased diagonal stroke!)
+  pxCrack(ctx, x0, y0, steps, col = '#27272a', px = 2) {
+    ctx.fillStyle = col;
+    let x = Math.round(x0), y = Math.round(y0);
+    for (let i = 0; i < steps.length; i++) {
+      const [dx, dy, len] = steps[i];
+      for (let k = 0; k < len; k++) {
+        ctx.fillRect(x, y, px, px);
+        x += dx * px;
+        y += dy * px;
+      }
+    }
+  },
+
+  // 4-frame spinning 16-bit pixel-art Gold Coin drop with 3s urgency blink!
+  drawCoin(ctx, c, time) {
+    const ds = Game.getDepthScale(c.y);
+    const s = Math.max(1.5, Math.round(2 * ds * 2) / 2); // crisp pixel step
+    const x = Math.round(c.x);
+    const groundY = Math.round(c.y);
+    const bob = c.z <= 0 ? Math.round(Math.sin(time * 7 + x) * 2) : 0;
+    const y = Math.round(c.y - c.z - 8 * ds + bob);
+
+    // Urgency flash during last second before iguana/rat steals it!
+    if (c.age >= 2.0 && Math.floor(time * 16) % 2 === 0) {
+      ctx.fillStyle = 'rgba(251, 146, 60, 0.35)';
+      ctx.fillRect(x - Math.round(6 * s), groundY - Math.round(2 * s), Math.round(12 * s), Math.round(4 * s));
+    }
+
+    // Ground pixel shadow
+    ctx.fillStyle = 'rgba(15, 12, 24, 0.45)';
+    ctx.fillRect(x - Math.round(4 * s), groundY - Math.round(1 * s), Math.round(8 * s), Math.round(2 * s));
+
+    // 4-frame spin widths: full(6), tilt(4), edge(2), tilt(4)
+    const frame = Math.floor(time * 9 + c.x * 0.1) % 4;
+    const halfW = [4, 3, 1.5, 3][frame];
+    const w = Math.max(2, Math.round(halfW * 2 * s));
+    const h = Math.round(8 * s);
+    const bx = Math.round(x - w / 2);
+    const by = Math.round(y - h / 2);
+
+    // Dark pixel outline (stepped octagon feel)
+    ctx.fillStyle = '#18181b';
+    ctx.fillRect(bx - s, by, w + s * 2, h);
+    ctx.fillRect(bx, by - s, w, h + s * 2);
+
+    // Rich gold shading
+    ctx.fillStyle = '#d97706';
+    ctx.fillRect(bx, by, w, h);
+    ctx.fillStyle = '#facc15';
+    ctx.fillRect(bx, by, Math.max(s, w - s), Math.max(s, h - s));
+    // Bright pixel highlight & center stamp
+    ctx.fillStyle = '#fef9c3';
+    ctx.fillRect(bx + s * 0.5, by + s, Math.max(s, Math.round(w * 0.35)), Math.round(s * 2));
+    if (frame === 0) {
+      ctx.fillStyle = '#b45309';
+      ctx.fillRect(x - Math.round(s * 0.5), y - Math.round(s * 2), Math.round(s), Math.round(s * 4));
+    }
+
+    // Tiny crisp pixel value tag above coin
+    const tagCol = c.age >= 2.0 ? '#fb923c' : '#fde047';
+    this.drawArcadeText(ctx, `+${c.value}`, x, by - 4, Math.max(8, Math.round(9 * ds)), tagCol);
+  },
+
+  // Fast 16-bit Pixel-Art Coin-Stealing Critter: Iguana (outdoor) or Rat (indoor/bridge)!
+  drawCritter(ctx, cr, time) {
+    const ds = Game.getDepthScale(cr.y);
+    const p = Math.max(2, Math.round(2.4 * ds)); // pixel unit size
+    const x = Math.round(cr.x);
+    const y = Math.round(cr.y);
+    const legSwap = Math.floor(cr.runCycle) % 2 === 0;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(cr.dir, 1); // Drawn facing RIGHT (+X)
+
+    // Stepped pixel ground shadow
+    ctx.fillStyle = 'rgba(15, 12, 24, 0.42)';
+    ctx.fillRect(-7 * p, -p, 14 * p, 2 * p);
+
+    if (cr.kind === 'iguana') {
+      // --- 🦎 SONORA GREEN IGUANA (pixel art!) ---
+      // Banded tapering tail (left)
+      const tailWag = legSwap ? 0 : p;
+      ctx.fillStyle = '#14532d';
+      ctx.fillRect(-10 * p, -2 * p + tailWag, 6 * p, 2 * p);
+      ctx.fillStyle = '#22c55e';
+      ctx.fillRect(-9 * p, -2 * p + tailWag, 2 * p, p);
+      ctx.fillRect(-6 * p, -2 * p + tailWag, 2 * p, p);
+
+      // Outline + Body
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(-5 * p, -5 * p, 10 * p, 4 * p);
+      ctx.fillRect(3 * p, -6 * p, 5 * p, 4 * p);
+      ctx.fillStyle = '#16a34a';
+      ctx.fillRect(-4 * p, -4 * p, 8 * p, 3 * p);
+      ctx.fillStyle = '#4ade80'; // bright belly/top highlight
+      ctx.fillRect(-3 * p, -4 * p, 6 * p, p);
+
+      // Lime dorsal ridge spikes!
+      ctx.fillStyle = '#bef264';
+      ctx.fillRect(-3 * p, -6 * p, p, p);
+      ctx.fillRect(-1 * p, -6 * p, p, p);
+      ctx.fillRect(1 * p, -6 * p, p, p);
+      ctx.fillRect(3 * p, -7 * p, p, p);
+
+      // Head, dewlap & yellow pixel eye
+      ctx.fillStyle = '#22c55e';
+      ctx.fillRect(4 * p, -5 * p, 3 * p, 2 * p);
+      ctx.fillStyle = '#86efac';
+      ctx.fillRect(4 * p, -3 * p, 2 * p, p); // dewlap
+      ctx.fillStyle = '#fde047';
+      ctx.fillRect(5 * p, -5 * p, p, p);
+
+      // 2-frame scurrying pixel legs
+      ctx.fillStyle = '#15803d';
+      ctx.fillRect((legSwap ? -4 : -2) * p, -p, 2 * p, 2 * p);
+      ctx.fillRect((legSwap ? 3 : 1) * p, -p, 2 * p, 2 * p);
+    } else {
+      // --- 🐀 FAST SEWER/CAMPUS RAT (pixel art!) ---
+      // Pink segmented pixel tail (left)
+      const tailY = legSwap ? -2 * p : -3 * p;
+      ctx.fillStyle = '#f472b6';
+      ctx.fillRect(-10 * p, tailY, 3 * p, p);
+      ctx.fillRect(-7 * p, tailY + p, 3 * p, p);
+
+      // Dark outline + hunched fur body
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(-5 * p, -5 * p, 10 * p, 4 * p);
+      ctx.fillRect(4 * p, -4 * p, 3 * p, 3 * p);
+      ctx.fillStyle = '#475569';
+      ctx.fillRect(-4 * p, -4 * p, 8 * p, 3 * p);
+      ctx.fillStyle = '#94a3b8'; // light fur back highlight
+      ctx.fillRect(-3 * p, -4 * p, 5 * p, p);
+
+      // Pink rounded pixel ear + pink nose + dark glossy eye
+      ctx.fillStyle = '#f472b6';
+      ctx.fillRect(2 * p, -6 * p, 2 * p, 2 * p);
+      ctx.fillRect(6 * p, -3 * p, p, p);
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(5 * p, -4 * p, p, p);
+
+      // 2-frame scurrying pink paws
+      ctx.fillStyle = '#f9a8d4';
+      ctx.fillRect((legSwap ? -4 : -2) * p, -p, 2 * p, p);
+      ctx.fillRect((legSwap ? 3 : 1) * p, -p, 2 * p, p);
+    }
+
+    // Stolen gleaming pixel-art gold coin clutched in its mouth!
+    if (cr.hasCoin) {
+      ctx.fillStyle = '#18181b';
+      ctx.fillRect(6 * p, -5 * p, 4 * p, 4 * p);
+      ctx.fillStyle = '#facc15';
+      ctx.fillRect(7 * p, -4 * p, 2 * p, 2 * p);
+      ctx.fillStyle = '#fef9c3';
+      ctx.fillRect(7 * p, -4 * p, p, p);
+    }
+
+    ctx.restore();
+  },
+
+  // Crisp 16-Bit Pixel-Art Live Combat Backdrop for Explanada!
+  // Starts run-down with ONLY weathered Aula E1, cracked dithered ground, rubble, weeds & broken fence.
   // Every building, cleaning level, paint tier & courtyard prop you place visibly transforms it!
   drawDynamicCampusStage(ctx, time, isNight) {
     const u = State.upgrades || {};
@@ -2610,237 +2779,308 @@ const PixelArt = {
     const placedProps = items.filter(it => CAMPUS_CATALOG.some(c => c.type === it.type && c.zone === 'courtyard'));
 
     ctx.save();
-    // 1. Sonora Sky (hazy dusty sky when run-down -> crisp vibrant blue as school improves)
-    const sky = ctx.createLinearGradient(0, 0, 0, 265);
-    if (isNight) {
-      sky.addColorStop(0, '#0b1024'); sky.addColorStop(1, '#1e293b');
-    } else if (clean === 0 && paint === 0) {
-      sky.addColorStop(0, '#6c7a89'); sky.addColorStop(0.65, '#9aa5b1'); sky.addColorStop(1, '#cbd5e1');
-    } else if (clean <= 1) {
-      sky.addColorStop(0, '#3b82f6'); sky.addColorStop(0.65, '#7dd3fc'); sky.addColorStop(1, '#e0f2fe');
-    } else {
-      sky.addColorStop(0, '#1d4ed8'); sky.addColorStop(0.6, '#38bdf8'); sky.addColorStop(1, '#fef9c3');
+    // 1. Stepped 16-bit Pixel Sky Bands (ZERO blurry linear gradient!)
+    const skyBands = isNight
+      ? ['#090d1f', '#0f172a', '#172038', '#1e293b', '#27364f']
+      : (clean === 0 && paint === 0
+        ? ['#64707d', '#768391', '#8b98a6', '#a3afb9', '#bcc5cd']
+        : (clean <= 1
+          ? ['#1d4ed8', '#2563eb', '#38bdf8', '#7dd3fc', '#bae6fd']
+          : ['#1e40af', '#2563eb', '#38bdf8', '#7dd3fc', '#fef08a']));
+    const bandH = 56;
+    for (let i = 0; i < skyBands.length; i++) {
+      ctx.fillStyle = skyBands[i];
+      ctx.fillRect(0, i * bandH, 800, bandH + 2);
+      // 4px pixel dither transition strip between bands
+      if (i < skyBands.length - 1) {
+        ctx.fillStyle = skyBands[i + 1];
+        for (let dx = 0; dx < 800; dx += 8) ctx.fillRect(dx, (i + 1) * bandH - 4, 4, 4);
+      }
     }
-    ctx.fillStyle = sky;
-    ctx.fillRect(0, 0, 800, 278);
 
-    // Distant Obregón clouds & silhouette hills
-    ctx.fillStyle = isNight ? 'rgba(148,163,184,0.12)' : (clean === 0 ? 'rgba(226,232,240,0.45)' : 'rgba(255,255,255,0.75)');
-    [[140,48,74,16],[390,34,92,18],[640,56,78,15]].forEach(([cx,cy,cw,ch]) => {
-      const ox = Math.round((cx + time * 4) % 860) - 40;
-      ctx.fillRect(ox, cy, cw, ch);
+    // Pixel Sonora Sun / Moon
+    const sunX = 708, sunY = 42;
+    ctx.fillStyle = isNight ? '#e2e8f0' : (clean === 0 ? '#d6d3d1' : '#fde047');
+    ctx.fillRect(sunX - 12, sunY - 12, 24, 24);
+    ctx.fillRect(sunX - 16, sunY - 8, 32, 16);
+    ctx.fillRect(sunX - 8, sunY - 16, 16, 32);
+    ctx.fillStyle = isNight ? '#f8fafc' : '#fef9c3';
+    ctx.fillRect(sunX - 8, sunY - 8, 12, 12);
+
+    // Blocky 16-bit pixel clouds with shaded undersides
+    const cloudTop = isNight ? '#334155' : (clean === 0 ? '#cbd5e1' : '#ffffff');
+    const cloudBot = isNight ? '#1e293b' : (clean === 0 ? '#94a3b8' : '#cbd5e1');
+    [[110,48,68],[370,34,88],[600,56,72]].forEach(([cx, cy, cw]) => {
+      const ox = Math.round(((cx + time * 4) % 880) - 60);
+      ctx.fillStyle = cloudBot; ctx.fillRect(ox, cy + 8, cw, 8);
+      ctx.fillStyle = cloudTop; ctx.fillRect(ox + 4, cy, cw - 8, 10);
       ctx.fillRect(ox + 14, cy - 8, cw - 28, 10);
+      ctx.fillRect(ox + 22, cy - 12, cw - 48, 6);
     });
 
-    // 2. Perimeter School Wall / Fence behind buildings (broken rusted wire -> solid guinda wall)
+    // Distant Stepped Pixel Sonora Desert Mountains (Sierra de Obregón)
+    const mtnCol = isNight ? '#1e293b' : (clean === 0 ? '#78716c' : '#64748b');
+    const mtnHi  = isNight ? '#334155' : (clean === 0 ? '#8c857f' : '#94a3b8');
+    [[160,210,130,44],[340,210,160,54],[540,210,150,48],[710,210,120,40]].forEach(([mx, my, mw, mh]) => {
+      for (let step = 0; step < mh; step += 6) {
+        const w = Math.max(12, Math.round(mw * (1 - step / mh)));
+        ctx.fillStyle = mtnCol;
+        ctx.fillRect(mx - Math.round(w / 2), my - step, w, 6);
+        ctx.fillStyle = mtnHi;
+        ctx.fillRect(mx - Math.round(w / 2), my - step, Math.round(w * 0.35), 6);
+      }
+    });
+
+    // 2. Perimeter School Wall / Pixel Chain-Link Fence
     const wallY = 232;
     if (gate === 0 && clean === 0) {
-      // Rusted leaning chain-link fence with gaps!
-      ctx.fillStyle = '#57534e';
+      // Rusted pixel chain-link posts & stepped pixel wire with holes
       for (let x = 120; x < 790; x += 48) {
-        ctx.fillRect(x, wallY - 26, 4, 54);
+        this.pxRect(ctx, x, wallY - 28, 6, 56, '#57534e', '#18181b');
+        ctx.fillStyle = '#78716c'; ctx.fillRect(x + 1, wallY - 26, 2, 50);
       }
-      ctx.strokeStyle = '#78716c';
-      ctx.lineWidth = 1.5;
-      for (let x = 124; x < 785; x += 14) {
-        if ((x > 340 && x < 410) || (x > 610 && x < 650)) continue; // Broken fence holes!
-        ctx.beginPath(); ctx.moveTo(x, wallY - 22); ctx.lineTo(x + 12, wallY + 22); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(x + 12, wallY - 22); ctx.lineTo(x, wallY + 22); ctx.stroke();
+      ctx.fillStyle = '#57534e';
+      for (let x = 126; x < 785; x += 12) {
+        if ((x > 336 && x < 414) || (x > 606 && x < 654)) continue; // Broken fence gaps
+        for (let d = 0; d < 24; d += 4) {
+          ctx.fillRect(x + (d % 8), wallY - 20 + d, 2, 2);
+          ctx.fillRect(x + 8 - (d % 8), wallY - 20 + d, 2, 2);
+        }
       }
+      ctx.fillStyle = '#3f3f46'; ctx.fillRect(120, wallY - 22, 216, 3); ctx.fillRect(414, wallY - 22, 192, 3);
     } else {
       const fCol = paint >= 1 ? '#e7d9b5' : '#94a3b8';
       const fTrim = paint >= 1 ? '#7a1c33' : '#475569';
-      this.pxRect(ctx, 110, wallY - 12, 690, 44, fCol, '#1f2937');
-      ctx.fillStyle = fTrim;
-      ctx.fillRect(110, wallY - 12, 690, 8);
+      this.pxRect(ctx, 110, wallY - 12, 690, 44, fCol, '#18181b');
+      ctx.fillStyle = fTrim; ctx.fillRect(112, wallY - 10, 686, 8);
+      if (paint >= 2) { ctx.fillStyle = '#f5b700'; ctx.fillRect(112, wallY - 2, 686, 3); }
+      // Brick/plaster pixel joints
+      ctx.fillStyle = 'rgba(24,24,27,0.12)';
+      for (let bx = 124; bx < 790; bx += 32) ctx.fillRect(bx, wallY + 4, 2, 26);
       if (gate >= 1) {
-        ctx.fillStyle = '#334155';
+        ctx.fillStyle = '#18181b';
+        for (let x = 122; x < 792; x += 16) ctx.fillRect(x - 1, wallY - 31, 5, 21);
+        ctx.fillStyle = '#475569';
         for (let x = 122; x < 792; x += 16) ctx.fillRect(x, wallY - 30, 3, 20);
-        ctx.fillRect(116, wallY - 28, 680, 3);
+        this.pxRect(ctx, 116, wallY - 28, 680, 4, '#334155', '#18181b');
       }
     }
 
-    // 3. Courtyard Ground (cracked dusty dirt/concrete -> clean tiled Pantera courtyard!)
-    const gCol = clean === 0 ? '#78716c' : (clean === 1 ? '#94a3b8' : (clean === 2 ? '#b6c0cc' : '#cbd5e1'));
-    ctx.fillStyle = gCol;
+    // 3. Pixel-Art Dithered Courtyard Ground
+    const gBase = clean === 0 ? '#736b63' : (clean === 1 ? '#8c96a3' : (clean === 2 ? '#aeb8c4' : '#cbd5e1'));
+    const gDark = clean === 0 ? '#625b54' : (clean === 1 ? '#7b8591' : (clean === 2 ? '#98a3b0' : '#b8c3d0'));
+    ctx.fillStyle = gBase;
     ctx.fillRect(0, 272, 800, 178);
-    // Sidewalk curb line along buildings
-    ctx.fillStyle = clean >= 2 ? '#e2e8f0' : '#57534e';
-    ctx.fillRect(0, 272, 800, 10);
-    ctx.fillStyle = '#1f2937';
-    ctx.fillRect(0, 281, 800, 2);
-
-    // Tile grid lines on clean courtyard
-    if (clean >= 2) {
-      ctx.strokeStyle = 'rgba(30,41,59,0.16)';
-      ctx.lineWidth = 1;
-      for (let x = 40; x < 800; x += 64) {
-        ctx.beginPath(); ctx.moveTo(x, 283); ctx.lineTo(x - 36, 450); ctx.stroke();
+    // Crisp deterministic pixel speckles & stone texture
+    ctx.fillStyle = gDark;
+    for (let gy = 286; gy < 448; gy += 12) {
+      for (let gx = (gy % 24 === 0 ? 8 : 20); gx < 796; gx += 28) {
+        ctx.fillRect(gx, gy, 4, 2);
       }
-      for (let y = 315; y < 450; y += 34) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(800, y); ctx.stroke();
+    }
+    // Sidewalk curb with pixel shadow blocks
+    this.pxRect(ctx, 0, 270, 800, 12, clean >= 2 ? '#e2e8f0' : '#57534e', '#18181b');
+    ctx.fillStyle = 'rgba(24,24,27,0.28)';
+    for (let cx = 24; cx < 800; cx += 48) ctx.fillRect(cx, 272, 2, 8);
+
+    // Clean courtyard pixel paving tiles & Pantera gold trim
+    if (clean >= 2) {
+      ctx.fillStyle = 'rgba(30,41,59,0.16)';
+      for (let y = 312; y < 450; y += 36) ctx.fillRect(0, y, 800, 2);
+      for (let x = 48; x < 800; x += 64) {
+        for (let y = 284; y < 450; y += 4) ctx.fillRect(x - Math.floor((y - 284) * 0.16), y, 2, 4);
       }
       if (clean >= 3) {
-        // Gleaming painted Pantera courtyard stripe!
-        ctx.fillStyle = 'rgba(122,28,51,0.22)';
-        ctx.fillRect(140, 286, 620, 6);
-        ctx.fillStyle = 'rgba(245,183,0,0.45)';
-        ctx.fillRect(140, 292, 620, 3);
+        ctx.fillStyle = '#7a1c33'; ctx.fillRect(140, 286, 620, 6);
+        ctx.fillStyle = '#f5b700'; ctx.fillRect(140, 292, 620, 3);
       }
     }
 
-    // 4. NORTH WING BUILDINGS:
-    //    Slot 0 (x=115..235) is weathered Aula E1 facade wing!
-    //    Slots 1..5 (x=245..765) start as EMPTY DUSTY RUBBLE LOTS until you build E2, E3, Robótica, Lab IA, Taller, Cancha!
+    // 4. NORTH WING PIXEL-ART BUILDINGS:
+    //    Weathered Aula E1 (x=108..236) + up to 4 built wings to its right!
     const bWall = paint === 0 ? '#78716c' : (paint === 1 ? '#e7d9b5' : '#fef3c7');
+    const bShade= paint === 0 ? '#57534e' : (paint === 1 ? '#d4c39a' : '#f3e2a9');
     const bTrim = paint === 0 ? '#44403c' : '#7a1c33';
     const bGold = paint >= 2 ? '#f5b700' : (paint >= 1 ? '#d97706' : '#57534e');
 
-    // Classroom E1 main body extending right of the E1 entrance door (x=108..234)
-    this.pxRect(ctx, 108, 154, 128, 120, bWall, '#18181b');
-    this.pxRect(ctx, 104, 142, 136, 15, bTrim, '#18181b');
-    ctx.fillStyle = bTrim;
-    ctx.fillRect(110, 240, 124, 32);
-    if (paint >= 2) { ctx.fillStyle = '#f5b700'; ctx.fillRect(108, 156, 128, 3); ctx.fillRect(110, 238, 124, 3); }
-    // E1 Classroom windows (broken/boarded at paint=0 -> gleaming glass when painted!)
+    // Classroom E1 facade wing
+    this.pxRect(ctx, 108, 154, 128, 118, bWall, '#18181b');
+    ctx.fillStyle = bShade; ctx.fillRect(110, 156, 124, 6); ctx.fillRect(228, 156, 6, 114); // eave & side pixel shadow
+    // Stepped tiled pixel roofline
+    this.pxRect(ctx, 104, 140, 136, 16, bTrim, '#18181b');
+    ctx.fillStyle = paint === 0 ? '#57534e' : '#9c2645';
+    for (let rx = 108; rx < 234; rx += 12) ctx.fillRect(rx, 142, 8, 6);
+    ctx.fillStyle = bTrim; ctx.fillRect(110, 238, 124, 32);
+    if (paint >= 2) { ctx.fillStyle = '#f5b700'; ctx.fillRect(108, 156, 128, 3); ctx.fillRect(110, 236, 124, 3); }
+
+    // E1 pixel windows (boarded & cracked at paint=0 -> gleaming glass mullions when painted!)
     for (let w = 0; w < 2; w++) {
       const wx = 124 + w * 50, wy = 176;
-      this.pxRect(ctx, wx, wy, 36, 40, paint === 0 ? '#27272a' : (isNight ? '#fde047' : '#bae6fd'), '#18181b');
+      this.pxRect(ctx, wx, wy, 36, 42, paint === 0 ? '#27272a' : (isNight ? '#fde047' : '#7dd3fc'), '#18181b');
+      this.pxRect(ctx, wx - 2, wy + 40, 40, 5, '#475569', '#18181b'); // windowsill
       if (paint === 0) {
-        // Cracked glass & wooden plank nailed across broken window!
-        ctx.fillStyle = '#78350f';
-        ctx.fillRect(wx - 2, wy + 14, 40, 8);
-        ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.moveTo(wx + 6, wy + 4); ctx.lineTo(wx + 24, wy + 34); ctx.stroke();
+        // Broken glass shards + nailed pixel wooden plank!
+        ctx.fillStyle = '#64748b'; ctx.fillRect(wx + 4, wy + 4, 8, 6); ctx.fillRect(wx + 24, wy + 28, 8, 8);
+        this.pxRect(ctx, wx - 3, wy + 15, 42, 9, '#92400e', '#18181b');
+        ctx.fillStyle = '#cbd5e1'; ctx.fillRect(wx + 1, wy + 18, 3, 3); ctx.fillRect(wx + 32, wy + 18, 3, 3); // nails!
       } else {
-        ctx.fillStyle = 'rgba(255,255,255,0.55)';
-        ctx.fillRect(wx + 4, wy + 4, 8, 14);
+        ctx.fillStyle = '#bae6fd'; ctx.fillRect(wx + 2, wy + 2, 32, 16);
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(wx + 5, wy + 5, 6, 10); ctx.fillRect(wx + 13, wy + 5, 3, 6);
+        ctx.fillStyle = '#334155'; ctx.fillRect(wx + 17, wy + 2, 2, 38); ctx.fillRect(wx + 2, wy + 20, 32, 2); // mullions
       }
     }
-    // Bold "E1" Signboard on the classroom roof
-    this.pxRect(ctx, 142, 126, 62, 19, paint === 0 ? '#3f3f46' : '#7a1c33', bGold);
-    this.drawArcadeText(ctx, 'AULA E1', 173, 139, 9, paint === 0 ? '#d4d4d8' : '#fde047');
+    // Roof Plaque "AULA E1"
+    this.pxRect(ctx, 140, 122, 66, 19, paint === 0 ? '#3f3f46' : '#7a1c33', bGold);
+    this.drawArcadeText(ctx, 'AULA E1', 173, 135, 9, paint === 0 ? '#d4d4d8' : '#fde047');
     if (paint === 0) {
-      // Wall plaster cracks & old graffiti on E1
-      ctx.strokeStyle = '#27272a'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(212, 166); ctx.lineTo(204, 184); ctx.lineTo(216, 202); ctx.stroke();
-      ctx.fillStyle = 'rgba(168,85,247,0.55)';
-      ctx.fillRect(130, 246, 38, 14);
-      ctx.fillStyle = 'rgba(236,72,153,0.6)';
-      ctx.fillRect(142, 250, 22, 8);
+      // Exposed red brick patch + stepped wall crack + pixel spray graffiti!
+      ctx.fillStyle = '#9a3412'; ctx.fillRect(114, 224, 14, 6); ctx.fillRect(118, 230, 12, 5);
+      this.pxCrack(ctx, 214, 166, [[-1,1,4],[0,1,4],[1,1,4]], '#27272a', 2);
+      ctx.fillStyle = '#a855f7'; ctx.fillRect(128, 244, 42, 14);
+      ctx.fillStyle = '#ec4899'; ctx.fillRect(138, 248, 24, 8);
+      ctx.fillStyle = '#22d3ee'; ctx.fillRect(134, 258, 3, 8); ctx.fillRect(158, 256, 3, 10);
     }
 
-    // Constructed Buildings along the campus skyline (up to 4 slots to the right of E1)
+    // Constructed Buildings along the campus skyline (4 slots right of E1)
     const slots = [252, 386, 520, 654];
     for (let si = 0; si < slots.length; si++) {
       const sx = slots[si];
       const b = placedBuildings[si];
       if (!b) {
-        // Empty run-down lot: cracked concrete pad + weeds + construction sawhorse!
+        // Empty run-down pixel lot: rubble, pixel weeds, and construction barrier!
         if (clean < 2) {
-          ctx.fillStyle = 'rgba(41,37,36,0.35)';
-          ctx.fillRect(sx + 6, 254, 108, 18);
-          // Rubble bricks & weeds
-          ctx.fillStyle = '#9a3412';
-          ctx.fillRect(sx + 20, 258, 12, 7); ctx.fillRect(sx + 34, 260, 10, 6);
-          ctx.fillStyle = '#78716c';
-          ctx.fillRect(sx + 26, 254, 10, 6);
-          ctx.fillStyle = '#4d7c0f';
-          ctx.fillRect(sx + 74, 252, 5, 16); ctx.fillRect(sx + 80, 256, 5, 12); ctx.fillRect(sx + 68, 258, 5, 10);
+          ctx.fillStyle = '#57534e'; ctx.fillRect(sx + 6, 254, 108, 16);
+          ctx.fillStyle = '#44403c'; ctx.fillRect(sx + 10, 256, 100, 4);
+          // Pixel rubble bricks
+          this.pxRect(ctx, sx + 16, 256, 12, 6, '#9a3412', '#18181b');
+          this.pxRect(ctx, sx + 26, 252, 10, 6, '#b45309', '#18181b');
+          this.pxRect(ctx, sx + 32, 258, 12, 6, '#78716c', '#18181b');
+          // Pixel weed tufts
+          ctx.fillStyle = '#3f6212'; ctx.fillRect(sx + 74, 252, 4, 14); ctx.fillRect(sx + 80, 256, 4, 10);
+          ctx.fillStyle = '#65a30d'; ctx.fillRect(sx + 70, 256, 4, 10); ctx.fillRect(sx + 76, 248, 4, 8);
           if (si === 0) {
-            // Weathered wooden "SOLAR EN OBRA" sawhorse
-            this.pxRect(ctx, sx + 48, 240, 48, 12, '#ca8a04', '#18181b');
+            // Pixel construction sawhorse
+            this.pxRect(ctx, sx + 48, 240, 48, 12, '#facc15', '#18181b');
             ctx.fillStyle = '#18181b';
-            ctx.fillRect(sx + 56, 240, 8, 12); ctx.fillRect(sx + 76, 240, 8, 12);
-            ctx.fillRect(sx + 54, 252, 4, 16); ctx.fillRect(sx + 86, 252, 4, 16);
+            ctx.fillRect(sx + 56, 242, 8, 8); ctx.fillRect(sx + 76, 242, 8, 8);
+            this.pxRect(ctx, sx + 54, 252, 5, 16, '#78350f', '#18181b');
+            this.pxRect(ctx, sx + 85, 252, 5, 16, '#78350f', '#18181b');
           }
         }
         continue;
       }
-      // Draw the ACTUAL constructed building!
       const isCancha = b.type === 'cancha';
       const isLab = b.type === 'robotics' || b.type === 'ailab';
       const isWork = b.type === 'workshop';
-      const bw = 118, bh = isCancha ? 104 : 118, by = 274 - bh;
+      const bw = 118, bh = isCancha ? 106 : 118, by = 272 - bh;
       if (isCancha) {
-        // Arched metal roof court
-        this.pxRect(ctx, sx, by + 20, 8, bh - 20, '#475569', '#18181b');
-        this.pxRect(ctx, sx + bw - 8, by + 20, 8, bh - 20, '#475569', '#18181b');
-        this.pxRect(ctx, sx - 4, by + 6, bw + 8, 18, '#7a1c33', '#18181b');
-        ctx.fillStyle = '#f5b700'; ctx.fillRect(sx, by + 22, bw, 3);
-        // Backboard hoop
-        this.pxRect(ctx, sx + 44, by + 36, 30, 20, '#f8fafc', '#18181b');
-        ctx.strokeStyle = '#ea580c'; ctx.lineWidth = 2;
-        ctx.strokeRect(sx + 52, by + 48, 14, 8);
+        // Stepped pixel-art covered basketball court!
+        this.pxRect(ctx, sx + 2, by + 22, 8, bh - 22, '#475569', '#18181b');
+        this.pxRect(ctx, sx + bw - 10, by + 22, 8, bh - 22, '#475569', '#18181b');
+        this.pxRect(ctx, sx - 2, by + 8, bw + 4, 14, '#7a1c33', '#18181b');
+        this.pxRect(ctx, sx + 10, by + 2, bw - 20, 8, '#9c2645', '#18181b');
+        ctx.fillStyle = '#f5b700'; ctx.fillRect(sx, by + 20, bw, 3);
+        // Backboard & pixel hoop net
+        this.pxRect(ctx, sx + 44, by + 34, 30, 22, '#f8fafc', '#18181b');
+        ctx.fillStyle = '#7a1c33'; ctx.fillRect(sx + 52, by + 40, 14, 10);
+        ctx.fillStyle = '#ea580c'; ctx.fillRect(sx + 52, by + 50, 14, 3);
+        ctx.fillStyle = '#e2e8f0';
+        for (let nx = 54; nx <= 64; nx += 4) ctx.fillRect(sx + nx, by + 53, 2, 7);
       } else {
         this.pxRect(ctx, sx, by, bw, bh, isLab ? '#e2e8f0' : bWall, '#18181b');
-        this.pxRect(ctx, sx - 4, by - 10, bw + 8, 14, isLab ? '#1e3a8a' : (isWork ? '#9a3412' : bTrim), '#18181b');
+        ctx.fillStyle = isLab ? '#cbd5e1' : bShade;
+        ctx.fillRect(sx + 2, by + 4, bw - 4, 6); ctx.fillRect(sx + bw - 8, by + 4, 6, bh - 6);
+        const roofCol = isLab ? '#1e3a8a' : (isWork ? '#9a3412' : bTrim);
+        this.pxRect(ctx, sx - 4, by - 12, bw + 8, 15, roofCol, '#18181b');
+        ctx.fillStyle = isLab ? '#2563eb' : (isWork ? '#c2410c' : '#9c2645');
+        for (let rx = sx; rx < sx + bw - 4; rx += 12) ctx.fillRect(rx, by - 10, 8, 6);
+        // Rooftop AC unit or antenna
+        if (isLab) { this.pxRect(ctx, sx + bw - 26, by - 22, 18, 10, '#94a3b8', '#18181b'); ctx.fillStyle = '#334155'; ctx.fillRect(sx + bw - 22, by - 19, 10, 4); }
         ctx.fillStyle = isLab ? '#1e40af' : (isWork ? '#78350f' : bTrim);
-        ctx.fillRect(sx + 2, 244, bw - 4, 28);
-        if (paint >= 1) { ctx.fillStyle = '#f5b700'; ctx.fillRect(sx, by + 4, bw, 3); }
-        // Windows / Glass / Workshop rolling shutter
+        ctx.fillRect(sx + 2, 240, bw - 4, 30);
+        if (paint >= 1) { ctx.fillStyle = '#f5b700'; ctx.fillRect(sx, by + 3, bw, 3); ctx.fillRect(sx + 2, 238, bw - 4, 3); }
         if (isWork) {
-          this.pxRect(ctx, sx + 18, by + 36, 82, 62, '#64748b', '#18181b');
-          for (let ry = by + 44; ry < by + 94; ry += 8) { ctx.fillStyle = '#334155'; ctx.fillRect(sx + 20, ry, 78, 2); }
+          this.pxRect(ctx, sx + 16, by + 34, 86, 66, '#64748b', '#18181b');
+          for (let ry = by + 42; ry < by + 96; ry += 8) {
+            ctx.fillStyle = '#334155'; ctx.fillRect(sx + 18, ry, 82, 2);
+            ctx.fillStyle = '#94a3b8'; ctx.fillRect(sx + 18, ry + 2, 82, 2);
+          }
         } else {
           for (let w = 0; w < 2; w++) {
             const wx = sx + 14 + w * 48, wy = by + 24;
-            this.pxRect(ctx, wx, wy, 38, 36, isLab ? '#38bdf8' : '#bae6fd', '#18181b');
-            ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fillRect(wx + 4, wy + 4, 8, 12);
+            this.pxRect(ctx, wx, wy, 38, 38, isLab ? '#0284c7' : '#7dd3fc', '#18181b');
+            ctx.fillStyle = isLab ? '#38bdf8' : '#bae6fd'; ctx.fillRect(wx + 2, wy + 2, 34, 16);
+            ctx.fillStyle = '#ffffff'; ctx.fillRect(wx + 5, wy + 5, 6, 10);
+            ctx.fillStyle = '#1e293b'; ctx.fillRect(wx + 18, wy + 2, 2, 34); ctx.fillRect(wx + 2, wy + 19, 34, 2);
           }
         }
       }
       const def = CAMPUS_CATALOG.find(c => c.type === b.type);
       const tag = def ? def.short.toUpperCase() : b.type.toUpperCase();
-      this.pxRect(ctx, sx + 18, by - 24, 82, 16, '#7a1c33', '#f5b700');
-      this.drawArcadeText(ctx, tag, sx + 59, by - 12, 8, '#fde047');
+      this.pxRect(ctx, sx + 16, by - 28, 86, 16, '#7a1c33', '#f5b700');
+      this.drawArcadeText(ctx, tag, sx + 59, by - 16, 8, '#fde047');
     }
 
-    // 5. Run-down Decay & Rubbish on the Courtyard when clean < 2
+    // 5. Stepped Pixel Cracks & Pixel Litter when clean < 2
     if (clean === 0) {
-      // Cracks in ground + scattered litter & weeds
-      ctx.strokeStyle = '#3f3f46'; ctx.lineWidth = 2;
-      [[190,320,245,332,272,324],[450,365,512,354,548,376],[630,310,685,326,718,314],[310,410,375,402,410,420]].forEach(pts => {
-        ctx.beginPath(); ctx.moveTo(pts[0], pts[1]); ctx.lineTo(pts[2], pts[3]); ctx.lineTo(pts[4], pts[5]); ctx.stroke();
-      });
-      // Litter scraps & crumpled bags near curb
-      [[270,288,'#f8fafc'],[340,292,'#38bdf8'],[495,286,'#facc15'],[610,290,'#f8fafc'],[720,287,'#a855f7']].forEach(([lx,ly,lc]) => {
-        ctx.fillStyle = lc; ctx.fillRect(lx, ly, 8, 5);
-        ctx.fillStyle = '#27272a'; ctx.fillRect(lx + 2, ly + 4, 6, 2);
+      this.pxCrack(ctx, 194, 322, [[1,0,6],[1,1,4],[1,0,5],[1,-1,3]], '#3f3f46', 2);
+      this.pxCrack(ctx, 456, 368, [[1,-1,4],[1,0,6],[1,1,5]], '#3f3f46', 2);
+      this.pxCrack(ctx, 634, 314, [[1,1,4],[1,0,6],[1,-1,4]], '#3f3f46', 2);
+      this.pxCrack(ctx, 308, 412, [[1,0,7],[1,1,4]], '#3f3f46', 2);
+      // Pixel litter (crushed cans & paper scraps with dark outlines)
+      [[270,288,'#ef4444'],[340,292,'#38bdf8'],[495,286,'#facc15'],[610,290,'#f8fafc'],[720,287,'#a855f7']].forEach(([lx,ly,lc]) => {
+        this.pxRect(ctx, lx, ly, 8, 5, lc, '#18181b');
       });
     } else if (clean === 1) {
-      ctx.strokeStyle = 'rgba(63,63,70,0.45)'; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.moveTo(450, 365); ctx.lineTo(512, 354); ctx.stroke();
+      this.pxCrack(ctx, 456, 368, [[1,-1,3],[1,0,5]], 'rgba(63,63,70,0.45)', 2);
     }
 
-    // 6. Placed Courtyard Props along the upper sidewalk edge (visual reward of your layout!)
-    placedProps.slice(0, 8).forEach((pr, idx) => {
+    // 6. Crisp 16-Bit Pixel-Art Courtyard Props along the sidewalk!
+    placedProps.slice(0, 8).forEach((pr) => {
       const px = 165 + Math.round((pr.gx / 7) * 580);
       const py = 278;
       if (pr.type === 'tree') {
-        this.pxRect(ctx, px - 12, py - 8, 24, 10, '#9a3412', '#18181b');
-        this.pxRect(ctx, px - 3, py - 34, 6, 26, '#78350f');
-        this.pxRect(ctx, px - 18, py - 58, 36, 28, '#15803d', '#14532d');
-        ctx.fillStyle = '#4ade80'; ctx.fillRect(px - 12, py - 52, 12, 10);
+        this.pxRect(ctx, px - 14, py - 10, 28, 12, '#9a3412', '#18181b');
+        ctx.fillStyle = '#c2410c'; ctx.fillRect(px - 12, py - 8, 10, 4); ctx.fillRect(px + 2, py - 4, 10, 4);
+        this.pxRect(ctx, px - 4, py - 36, 8, 28, '#78350f', '#18181b');
+        // Multi-tone stepped pixel foliage canopy!
+        this.pxRect(ctx, px - 20, py - 56, 40, 22, '#14532d', '#18181b');
+        this.pxRect(ctx, px - 16, py - 64, 32, 24, '#15803d', '#18181b');
+        ctx.fillStyle = '#22c55e'; ctx.fillRect(px - 14, py - 60, 22, 12);
+        ctx.fillStyle = '#4ade80'; ctx.fillRect(px - 10, py - 58, 10, 6);
       } else if (pr.type === 'bench') {
-        this.pxRect(ctx, px - 18, py - 14, 36, 6, '#92400e', '#18181b');
-        this.pxRect(ctx, px - 18, py - 8, 36, 5, '#b45309', '#18181b');
-        ctx.fillStyle = '#334155'; ctx.fillRect(px - 14, py - 3, 4, 8); ctx.fillRect(px + 10, py - 3, 4, 8);
+        this.pxRect(ctx, px - 18, py - 16, 36, 6, '#7a1c33', '#18181b');
+        this.pxRect(ctx, px - 18, py - 10, 36, 6, '#b45309', '#18181b');
+        ctx.fillStyle = '#f5b700'; ctx.fillRect(px - 16, py - 14, 32, 2);
+        this.pxRect(ctx, px - 15, py - 4, 4, 8, '#334155', '#18181b');
+        this.pxRect(ctx, px + 11, py - 4, 4, 8, '#334155', '#18181b');
       } else if (pr.type === 'lamp') {
-        this.pxRect(ctx, px - 2, py - 66, 4, 68, '#475569');
-        this.pxRect(ctx, px - 8, py - 70, 16, 6, '#1e293b');
-        ctx.fillStyle = '#fef08a'; ctx.fillRect(px - 6, py - 64, 12, 4);
-        ctx.fillStyle = 'rgba(254,240,138,0.14)'; ctx.beginPath(); ctx.moveTo(px - 8, py - 60); ctx.lineTo(px - 28, py + 8); ctx.lineTo(px + 28, py + 8); ctx.lineTo(px + 8, py - 60); ctx.closePath(); ctx.fill();
+        this.pxRect(ctx, px - 5, py - 6, 10, 8, '#334155', '#18181b');
+        this.pxRect(ctx, px - 2, py - 68, 4, 62, '#64748b', '#18181b');
+        this.pxRect(ctx, px - 10, py - 74, 20, 8, '#1e293b', '#18181b');
+        ctx.fillStyle = '#fef08a'; ctx.fillRect(px - 7, py - 68, 14, 4);
+        // Stepped pixel light cone (zero smooth triangle!)
+        ctx.fillStyle = 'rgba(254,240,138,0.14)';
+        for (let step = 0; step < 5; step++) {
+          const sw = 18 + step * 10;
+          ctx.fillRect(px - Math.round(sw / 2), py - 62 + step * 14, sw, 14);
+        }
       } else if (pr.type === 'recycle') {
-        this.pxRect(ctx, px - 12, py - 16, 10, 16, '#16a34a', '#18181b');
-        this.pxRect(ctx, px + 2, py - 16, 10, 16, '#2563eb', '#18181b');
+        this.pxRect(ctx, px - 15, py - 18, 10, 18, '#16a34a', '#18181b');
+        this.pxRect(ctx, px - 5,  py - 18, 10, 18, '#2563eb', '#18181b');
+        this.pxRect(ctx, px + 5,  py - 18, 10, 18, '#eab308', '#18181b');
+        ctx.fillStyle = '#f8fafc'; ctx.fillRect(px - 12, py - 12, 4, 4); ctx.fillRect(px - 2, py - 12, 4, 4); ctx.fillRect(px + 8, py - 12, 4, 4);
       } else if (pr.type === 'flag') {
-        this.pxRect(ctx, px - 12, py - 10, 24, 12, '#cbd5e1', '#18181b');
-        this.pxRect(ctx, px - 2, py - 112, 4, 102, '#e2e8f0');
-        const wave = Math.round(Math.sin(time * 4) * 2);
-        this.pxRect(ctx, px + 2, py - 110 + wave, 10, 20, '#16a34a');
-        this.pxRect(ctx, px + 12, py - 110 + wave, 10, 20, '#ffffff');
-        this.pxRect(ctx, px + 22, py - 110 + wave, 10, 20, '#dc2626');
+        this.pxRect(ctx, px - 14, py - 12, 28, 14, '#cbd5e1', '#18181b');
+        ctx.fillStyle = '#7a1c33'; ctx.fillRect(px - 12, py - 6, 24, 4);
+        this.pxRect(ctx, px - 2, py - 114, 4, 102, '#e2e8f0', '#18181b');
+        ctx.fillStyle = '#facc15'; ctx.fillRect(px - 3, py - 118, 6, 5);
+        const w1 = Math.round(Math.sin(time * 4) * 2);
+        const w2 = Math.round(Math.sin(time * 4 + 1.4) * 2);
+        this.pxRect(ctx, px + 2,  py - 112 + w1, 10, 20, '#16a34a', '#18181b');
+        this.pxRect(ctx, px + 12, py - 112 + w2, 10, 20, '#ffffff', '#18181b');
+        ctx.fillStyle = '#78350f'; ctx.fillRect(px + 15, py - 104 + w2, 4, 4); // pixel eagle!
+        this.pxRect(ctx, px + 22, py - 112 + w1, 10, 20, '#dc2626', '#18181b');
       }
     });
 
@@ -2971,6 +3211,9 @@ const Game = {
   projectiles: [],
   particles: [],
   floats: [],
+  coinDrops: [],
+  critters: [],
+  waveClearGrace: 0,
   worldProps: [], // for explore & sabotage interactive objects
 
   wave: 1,
@@ -3294,6 +3537,9 @@ const Game = {
     this.projectiles = [];
     this.particles = [];
     this.floats = [];
+    this.coinDrops = [];
+    this.critters = [];
+    this.waveClearGrace = 0;
     this.worldProps = [];
     this.doorShake = 0;
     this.doorHitTimer = 0;
@@ -3335,6 +3581,9 @@ const Game = {
     this.projectiles = [];
     this.particles = [];
     this.floats = [];
+    this.coinDrops = [];
+    this.critters = [];
+    this.waveClearGrace = 0;
     this.worldProps = [];
     this.exploreSabotageCooldown = 10;
     this.exploreAlertTimer = 0;
@@ -3461,6 +3710,9 @@ const Game = {
     this.projectiles = [];
     this.particles = [];
     this.floats = [];
+    this.coinDrops = [];
+    this.critters = [];
+    this.waveClearGrace = 0;
     this.createPlayers(true);
     this.setupDrones();
     this.sabotageTimer = 42;
@@ -3706,7 +3958,7 @@ const Game = {
       State.academicScore += 4;
       State.territoryControl = Math.min(100, State.territoryControl + 2);
 
-      const deedCoins = prop.kind === 'graffiti' ? 35 : (prop.kind === 'books' ? 35 : (prop.kind === 'fountain' || prop.kind === 'bench' ? 30 : 25));
+      const deedCoins = prop.kind === 'graffiti' ? 8 : (prop.kind === 'books' ? 8 : (prop.kind === 'fountain' || prop.kind === 'bench' ? 7 : 6));
       State.coins += deedCoins;
       if (prop.kind === 'books') State.academicScore += 6;
       const deedLabels = {
@@ -3738,16 +3990,16 @@ const Game = {
       // Check if all deeds in the CURRENT Explore zone are done -> unlock smooth Side-Scroll + "GO ➡"!
       const zoneProps = this.worldProps.filter(w => w.zone === this.exploreScreen);
       if (zoneProps.length > 0 && zoneProps.every(w => w.done)) {
-        State.coins += 35;
+        State.coins += 8;
         saveState();
         if (this.exploreScreen < 2 && this.exploreMaxCamX < (this.exploreScreen + 1) * 800) {
           this.exploreGoReady = true;
           this.exploreMaxCamX = (this.exploreScreen + 1) * 800;
           this.spawnExploreZoneProps(this.exploreScreen + 1);
-          this.spawnFloat(this.exploreCamX + 400, 175, '¡SECCIÓN LIMPIA! +35🪙 · AVANZA →', '#f5b700');
-          addLog('➡️ <b>¡Sección limpia!</b> Ganaste <b>+35 🪙</b>. Camina a la derecha siguiendo <b>GO ➡</b>.');
+          this.spawnFloat(this.exploreCamX + 400, 175, '¡SECCIÓN LIMPIA! +8🪙 · AVANZA →', '#f5b700');
+          addLog('➡️ <b>¡Sección limpia!</b> Ganaste <b>+8 🪙</b>. Camina a la derecha siguiendo <b>GO ➡</b>.');
         } else if (this.exploreScreen === 2) {
-          this.spawnFloat(this.exploreCamX + 400, 175, '¡MURAL Y ZONA LIMPIOS! +35🪙', '#f5b700');
+          this.spawnFloat(this.exploreCamX + 400, 175, '¡MURAL Y ZONA LIMPIOS! +8🪙', '#f5b700');
           if (this.exploreBossDefeated) {
             this.banner = { text: '🏆 ¡BENITO JUÁREZ LIBERADA!', color: '#f5b700', timer: 2.6 };
           }
@@ -3762,9 +4014,9 @@ const Game = {
       this.spawnFloat(prop.x, prop.y - 35, '💣 ¡SABOTEADO!', '#f43f5e');
       if (this.sabotageTargetsLeft <= 0) {
         State.territoryControl = Math.max(10, State.territoryControl - 12);
-        State.coins += 65;
+        State.coins += 22;
         saveState();
-        this.showResult('💣', '¡SABOTAJE COMPLETADO!', 'Los cholos de Bajo el Puente ganaron 12% de territorio en la Col. Benito Juárez. ¡Sube tus calificaciones en inglés para volver a defender el CETis 69!', ['+65 🪙 (Botín)', '-12% Control Pantera'], 'Volver al Menú');
+        this.showResult('💣', '¡SABOTAJE COMPLETADO!', 'Los cholos de Bajo el Puente ganaron 12% de territorio en la Col. Benito Juárez. ¡Sube tus calificaciones en inglés para volver a defender el CETis 69!', ['+22 🪙 (Botín)', '-12% Control Pantera'], 'Volver al Menú');
       }
     }
   },
@@ -3801,25 +4053,154 @@ const Game = {
       RecordsManager.bumpLifetime({ totalKOs: 1, totalBosses: e.type === 'boss' ? 1 : 0, maxCombo: this.runMaxCombo });
       const cs = getCampusStats();
       const bonusMult = 1 + (State.upgrades.gate || 0) * 0.15 + (cs.coinPct || 0) / 100;
-      const coinGain = Math.round((e.type === 'boss' ? 45 : (e.type === 'saboteur' ? 15 : 10)) * bonusMult);
-      State.coins += coinGain;
-      this.spawnFloat(e.x, e.y - 70, `+${coinGain}🪙`, '#fde047');
+      const baseDrop = e.type === 'boss' ? 15 : (e.type === 'saboteur' ? 5 : 3);
+      const totalDrop = Math.max(2, Math.round(baseDrop * bonusMult));
+      const dropCount = e.type === 'boss' ? 3 : (e.type === 'saboteur' ? 2 : 1);
+      this.spawnCoinDrops(e.x, e.y, totalDrop, dropCount);
       if (this.mode === 'explore' && e.isExploreBoss) {
         this.exploreBossDefeated = true;
-        State.coins += 180;
+        this.spawnCoinDrops(e.x, e.y, 30, 5);
         State.academicScore += 15;
         State.territoryControl = Math.min(100, State.territoryControl + 10);
         this.runScore += 1000;
         this.lastRunLabel = 'Exploración (Jefe Derrotado)';
         RecordsManager.recordRun(this.runScore, this.lastRunLabel);
         this.banner = { text: '🏆 ¡JEFE DE BAJO EL PUENTE DERROTADO!', color: '#f5b700', timer: 2.8 };
-        this.spawnFloat(e.x, e.y - 96, '+180🪙 +10% Control!', '#fde047');
-        addLog(`🏆 ¡Derrotaste a <b>${e.nameTag}</b> en Bajo el Puente! <b>+180 🪙 Monedas y +10% Control Territorial</b>.`);
+        this.spawnFloat(e.x, e.y - 96, '¡RECOGE EL BOTÍN 🪙! +10% Control', '#fde047');
+        addLog(`🏆 ¡Derrotaste a <b>${e.nameTag}</b> en Bajo el Puente! ¡Recoge las monedas antes que las ratas!`);
         AudioEngine.setBgm('explore_park');
       }
       saveState();
     } else {
       AudioEngine.punch();
+    }
+  },
+
+  getStageCritterKind() {
+    if (this.mode === 'sabotage') return 'rat';
+    if (this.mode === 'explore') return this.exploreScreen >= 2 ? 'rat' : 'iguana';
+    const area = AREAS[State.selectedArea] || AREAS[0];
+    // Outdoor sunny Sonora stages -> Iguana! Indoor classrooms / labs -> Rat!
+    return (area.bg === 'explanada' || area.bg === 'cancha') ? 'iguana' : 'rat';
+  },
+
+  spawnCoinDrops(x, y, totalValue, count = 1) {
+    const cfg = this.getStageConfig();
+    const per = Math.max(1, Math.floor(totalValue / count));
+    let rem = totalValue - per * count;
+    for (let i = 0; i < count; i++) {
+      const val = per + (rem > 0 ? (rem--, 1) : 0);
+      const spread = (i - (count - 1) / 2) * 24 + (Math.random() - 0.5) * 14;
+      const cx = Math.max(cfg.xMin + 24, Math.min(cfg.xMax - 24, x + spread));
+      const cy = Math.max(cfg.yMin + 12, Math.min(cfg.yMax - 12, y + (Math.random() - 0.5) * 18));
+      this.coinDrops.push({
+        id: 'c_' + Date.now() + '_' + Math.floor(Math.random() * 9999),
+        x: cx, y: cy, z: 14 + Math.random() * 10,
+        vx: (Math.random() - 0.5) * 1.4, vy: (Math.random() - 0.5) * 0.6,
+        vz: 4.8 + Math.random() * 1.8,
+        value: val, age: 0, critterSent: false
+      });
+    }
+  },
+
+  updateCoinsAndCritters(dt) {
+    const cfg = this.getStageConfig();
+    const k = this.stageK();
+    const camX = (this.mode === 'explore') ? (this.exploreCamX || 0) : 0;
+
+    // 1. Update dropped coins (bounce, player pickup, 3-second critter thief trigger!)
+    for (let i = this.coinDrops.length - 1; i >= 0; i--) {
+      const c = this.coinDrops[i];
+      c.age += dt;
+      if (c.z > 0 || c.vz > 0) {
+        c.x = Math.max(cfg.xMin + 18, Math.min(cfg.xMax - 18, c.x + c.vx * 60 * dt));
+        c.y = Math.max(cfg.yMin + 8, Math.min(cfg.yMax - 8, c.y + c.vy * 60 * dt));
+        c.z += c.vz * 60 * dt;
+        c.vz -= 18 * dt;
+        if (c.z <= 0) {
+          c.z = 0;
+          if (Math.abs(c.vz) > 1.8) c.vz = -c.vz * 0.36;
+          else { c.vz = 0; c.vx = 0; c.vy = 0; }
+        }
+      }
+
+      // Check pickup by any alive player (P1 or P2)
+      const picker = this.players.find(p => p.hp > 0 && Math.hypot(p.x - c.x, p.y - c.y) < 46 * k);
+      if (picker) {
+        State.coins += c.value;
+        AudioEngine.pickup();
+        this.spawnFloat(c.x, c.y - 28, `+${c.value}🪙`, '#fde047');
+        for (let s = 0; s < 6; s++) {
+          this.particles.push({
+            x: c.x + (Math.random() - 0.5) * 16, y: c.y - 10,
+            vx: (Math.random() - 0.5) * 3.5, vy: -1.5 - Math.random() * 2.5,
+            life: 0.35, color: s % 2 === 0 ? '#fde047' : '#ffffff', size: 4
+          });
+        }
+        saveState();
+        this.coinDrops.splice(i, 1);
+        continue;
+      }
+
+      // At 2.65s, dispatch a fast pixel-art Iguana or Rat so it snatches the coin right at ~3.0s!
+      if (!c.critterSent && c.age >= 2.65) {
+        c.critterSent = true;
+        const kind = this.getStageCritterKind();
+        const fromLeft = (c.x - camX) < 400;
+        const spawnX = fromLeft ? (camX - 26) : (camX + 826);
+        this.critters.push({
+          kind,
+          x: spawnX,
+          y: Math.max(cfg.yMin + 6, Math.min(cfg.yMax - 6, c.y + (Math.random() - 0.5) * 18)),
+          dir: fromLeft ? 1 : -1,
+          escapeDir: fromLeft ? -1 : 1,
+          targetCoinId: c.id,
+          hasCoin: false,
+          coinValue: c.value,
+          speed: 375,
+          runCycle: 0
+        });
+      }
+    }
+
+    // 2. Update scurrying Iguanas & Rats!
+    for (let i = this.critters.length - 1; i >= 0; i--) {
+      const cr = this.critters[i];
+      cr.runCycle += dt * 18;
+      if (!cr.hasCoin) {
+        const coinIdx = this.coinDrops.findIndex(c => c.id === cr.targetCoinId);
+        if (coinIdx < 0) {
+          // Player beat the critter to the coin -> flee empty-handed!
+          cr.dir = cr.escapeDir;
+          cr.x += cr.escapeDir * cr.speed * 1.1 * dt;
+        } else {
+          const target = this.coinDrops[coinIdx];
+          const dx = target.x - cr.x;
+          const dy = target.y - cr.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist <= 18) {
+            // STOLEN!!
+            cr.hasCoin = true;
+            cr.coinValue = target.value;
+            this.coinDrops.splice(coinIdx, 1);
+            AudioEngine.critterSteal();
+            this.spawnFloat(cr.x, cr.y - 26, cr.kind === 'iguana' ? '🦎 ¡SE LA LLEVÓ!' : '🐀 ¡SE LA LLEVÓ!', '#fb923c');
+            cr.dir = cr.escapeDir;
+          } else {
+            cr.dir = dx >= 0 ? 1 : -1;
+            cr.x += (dx / dist) * cr.speed * dt;
+            cr.y += (dy / dist) * cr.speed * 0.72 * dt;
+          }
+        }
+      } else {
+        // Sprinting off-screen carrying the shiny stolen gold coin!
+        cr.dir = cr.escapeDir;
+        cr.x += cr.escapeDir * cr.speed * 1.18 * dt;
+      }
+
+      if (cr.x < camX - 64 || cr.x > camX + 864) {
+        this.critters.splice(i, 1);
+      }
     }
   },
 
@@ -4389,6 +4770,9 @@ const Game = {
       }
     }
 
+    // Update Dropped Coins & Thief Critters (Iguanas / Rats)
+    this.updateCoinsAndCritters(dt);
+
     // Update Particles & Floats
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const pt = this.particles[i];
@@ -4411,11 +4795,16 @@ const Game = {
         const loseTitle = State.baseHp <= 0 ? '🚪 ¡DERRIBARON LA PUERTA DEL SALÓN!' : '💥 ¡EL PLANTEL FUE SUPERADO!';
         this.showResult('💥', loseTitle, 'Los cholos lograron derribar el acceso al salón. Refuerza la puerta con rejas y drones en el menú de construcción tras responder los quizzes de Teacher Aldo.', ['-8% Control Territorial', '-6 pts Académicos'], 'Reintentar');
       } else if (this.spawnQueue.length === 0 && this.enemies.length === 0) {
-        // Wave cleared!
+        // Brief grace window if dropped coins are still on the floor so player can grab them before victory popup!
+        if (this.coinDrops.length > 0 && this.waveClearGrace < 3.6) {
+          this.waveClearGrace += dt;
+          return;
+        }
+        // Wave cleared! Small bonus so 1 screen (~32-40 coins total with drops) buys 1 aesthetic item!
         const area = AREAS[State.selectedArea];
         const cs = getCampusStats();
         const coinBonus = 1 + (cs.coinPct || 0) / 100;
-        const coinR = Math.round((65 + State.selectedArea * 28) * coinBonus);
+        const coinR = Math.round((12 + State.selectedArea * 5) * coinBonus);
         State.coins += coinR;
         if (cs.autoRepair > 0) {
           State.baseHp = Math.min(getBaseMaxHp(), State.baseHp + cs.autoRepair);
@@ -4600,58 +4989,68 @@ const Game = {
           } else if (pr.kind === 'trash') {
             if (!pr.done) {
               const s1 = ds;
-              PixelArt.pxRect(ctx, x - Math.round(12 * s1), y - Math.round(14 * s1), Math.round(24 * s1), Math.round(14 * s1), '#64748b');
-              PixelArt.pxRect(ctx, x - Math.round(5 * s1), y - Math.round(19 * s1), Math.round(7 * s1), Math.round(9 * s1), '#38bdf8');
-              PixelArt.pxRect(ctx, x + Math.round(4 * s1), y - Math.round(12 * s1), Math.round(9 * s1), Math.round(7 * s1), '#facc15');
+              // Knotted pixel trash bag + crushed soda can + plastic bottle!
+              PixelArt.pxRect(ctx, x - Math.round(13 * s1), y - Math.round(14 * s1), Math.round(18 * s1), Math.round(14 * s1), '#334155', '#15141c');
+              PixelArt.pxRect(ctx, x - Math.round(8 * s1), y - Math.round(19 * s1), Math.round(8 * s1), Math.round(5 * s1), '#475569', '#15141c');
+              ctx.fillStyle = '#64748b'; ctx.fillRect(x - Math.round(10 * s1), y - Math.round(11 * s1), Math.round(5 * s1), Math.round(6 * s1));
+              PixelArt.pxRect(ctx, x + Math.round(5 * s1), y - Math.round(9 * s1), Math.round(9 * s1), Math.round(6 * s1), '#ef4444', '#15141c');
+              PixelArt.pxRect(ctx, x + Math.round(2 * s1), y - Math.round(15 * s1), Math.round(6 * s1), Math.round(8 * s1), '#38bdf8', '#15141c');
             } else {
               PixelArt.drawSpriteAnchored(ctx, IMG.props.bin, x, y, 1, ds, ds, 0.5);
             }
           } else if (pr.kind === 'lamp') {
             const lh = Math.round(62 * ds), lw = Math.max(5, Math.round(8 * ds));
-            PixelArt.pxRect(ctx, x - Math.round(lw / 2), y - lh, lw, lh, '#475569');
-            PixelArt.pxRect(ctx, x - Math.round(11 * ds), y - lh - Math.round(7 * ds), Math.round(22 * ds), Math.round(9 * ds), pr.done ? '#fef08a' : '#27272a');
+            PixelArt.pxRect(ctx, x - Math.round(lw * 1.1), y - Math.round(6 * ds), Math.round(lw * 2.2), Math.round(7 * ds), '#334155', '#15141c');
+            PixelArt.pxRect(ctx, x - Math.round(lw / 2), y - lh, lw, lh - Math.round(4 * ds), '#475569', '#15141c');
+            ctx.fillStyle = '#94a3b8'; ctx.fillRect(x - Math.round(lw / 2) + 2, y - lh + 2, 2, lh - Math.round(8 * ds));
+            PixelArt.pxRect(ctx, x - Math.round(12 * ds), y - lh - Math.round(8 * ds), Math.round(24 * ds), Math.round(10 * ds), pr.done ? '#fef08a' : '#27272a', '#15141c');
             if (pr.done) {
-              ctx.fillStyle = 'rgba(254, 240, 138, 0.22)';
-              ctx.beginPath();
-              ctx.arc(x, y - lh, Math.round(26 * ds), 0, Math.PI * 2);
-              ctx.fill();
+              // Crisp stepped pixel light halo (zero smooth arc!)
+              const hr = Math.round(18 * ds);
+              ctx.fillStyle = 'rgba(254, 240, 138, 0.24)';
+              ctx.fillRect(x - hr, y - lh - Math.round(hr * 0.6), hr * 2, Math.round(hr * 1.2));
+              ctx.fillRect(x - Math.round(hr * 0.7), y - lh - hr, Math.round(hr * 1.4), hr * 2);
             }
           } else if (pr.kind === 'sabotage_cam') {
             PixelArt.drawSpriteAnchored(ctx, IMG.props.camera, x, y - 8, 1, 0.9 * ds, 0.9 * ds, 0.5, false, pr.done ? 'grayscale(1) brightness(0.45)' : '');
             if (pr.done) PixelArt.drawArcadeText(ctx, 'OFF', x, y - Math.round(24 * ds), 11, '#ef4444');
           } else if (pr.kind === 'fountain') {
-            // Street water pipe / leak that turns into a clean repaired valve/fountain!
-            PixelArt.pxRect(ctx, x - Math.round(12 * ds), y - Math.round(22 * ds), Math.round(24 * ds), Math.round(22 * ds), '#64748b');
-            PixelArt.pxRect(ctx, x - Math.round(6 * ds), y - Math.round(28 * ds), Math.round(12 * ds), Math.round(8 * ds), pr.done ? '#22c55e' : '#ef4444');
+            // Crisp pixel-art water valve & stepped pixel splash!
+            PixelArt.pxRect(ctx, x - Math.round(12 * ds), y - Math.round(22 * ds), Math.round(24 * ds), Math.round(22 * ds), '#64748b', '#15141c');
+            ctx.fillStyle = '#94a3b8'; ctx.fillRect(x - Math.round(9 * ds), y - Math.round(19 * ds), Math.round(6 * ds), Math.round(16 * ds));
+            PixelArt.pxRect(ctx, x - Math.round(7 * ds), y - Math.round(28 * ds), Math.round(14 * ds), Math.round(7 * ds), pr.done ? '#22c55e' : '#ef4444', '#15141c');
             if (!pr.done) {
-              // Animated blue water geyser spraying out of the broken pipe!
               const hSp = Math.round((24 + Math.sin(this.elapsed * 14) * 6) * ds);
-              ctx.fillStyle = '#38bdf8';
-              ctx.fillRect(x - 3, y - Math.round(28 * ds) - hSp, 6, hSp);
-              ctx.fillStyle = '#bae6fd';
-              ctx.fillRect(x - 10, y - Math.round(28 * ds) - hSp, 20, 5);
-              ctx.fillStyle = 'rgba(56, 189, 248, 0.35)';
-              ctx.beginPath();
-              ctx.ellipse(x, y + 2, Math.round(24 * ds), Math.round(6 * ds), 0, 0, Math.PI * 2);
-              ctx.fill();
+              ctx.fillStyle = '#0284c7'; ctx.fillRect(x - 4, y - Math.round(28 * ds) - hSp, 8, hSp);
+              ctx.fillStyle = '#7dd3fc'; ctx.fillRect(x - 2, y - Math.round(28 * ds) - hSp, 4, hSp);
+              ctx.fillStyle = '#bae6fd'; ctx.fillRect(x - 10, y - Math.round(28 * ds) - hSp, 20, 4);
+              // Stepped pixel puddle (zero smooth ellipse!)
+              const pw = Math.round(22 * ds);
+              ctx.fillStyle = 'rgba(56, 189, 248, 0.42)';
+              ctx.fillRect(x - pw, y - 2, pw * 2, 6);
+              ctx.fillRect(x - Math.round(pw * 0.7), y - 4, Math.round(pw * 1.4), 10);
             }
           } else if (pr.kind === 'bench') {
-            // Park bench: tagged gray wood -> freshly painted CETis 69 guinda & gold Panteras bench!
-            const bw = Math.round(46 * ds), bh = Math.round(22 * ds);
-            PixelArt.pxRect(ctx, x - bw / 2, y - bh, bw, Math.round(10 * ds), pr.done ? '#7a1c33' : '#64748b');
-            PixelArt.pxRect(ctx, x - bw / 2 - 2, y - Math.round(11 * ds), bw + 4, Math.round(6 * ds), pr.done ? '#f5b700' : '#475569');
-            PixelArt.pxRect(ctx, x - bw / 2 + 4, y - Math.round(6 * ds), 4, Math.round(8 * ds), '#1e293b');
-            PixelArt.pxRect(ctx, x + bw / 2 - 8, y - Math.round(6 * ds), 4, Math.round(8 * ds), '#1e293b');
+            const bw = Math.round(48 * ds), bh = Math.round(22 * ds);
+            PixelArt.pxRect(ctx, x - bw / 2, y - bh, bw, Math.round(6 * ds), pr.done ? '#7a1c33' : '#64748b', '#15141c');
+            PixelArt.pxRect(ctx, x - bw / 2, y - Math.round(16 * ds), bw, Math.round(5 * ds), pr.done ? '#9c2645' : '#57534e', '#15141c');
+            PixelArt.pxRect(ctx, x - bw / 2 - 2, y - Math.round(10 * ds), bw + 4, Math.round(5 * ds), pr.done ? '#f5b700' : '#475569', '#15141c');
+            PixelArt.pxRect(ctx, x - bw / 2 + 4, y - Math.round(5 * ds), 5, Math.round(7 * ds), '#1e293b', '#15141c');
+            PixelArt.pxRect(ctx, x + bw / 2 - 9, y - Math.round(5 * ds), 5, Math.round(7 * ds), '#1e293b', '#15141c');
           } else if (pr.kind === 'books') {
-            // Spilled English textbooks -> neat stack of Teacher Aldo's books!
+            // Detailed pixel hardcover books with white page edges & gold title line!
             if (!pr.done) {
-              PixelArt.pxRect(ctx, x - 16, y - 10, 18, 10, '#2563eb');
-              PixelArt.pxRect(ctx, x - 2, y - 14, 18, 10, '#7a1c33');
-              PixelArt.pxRect(ctx, x + 6, y - 7, 14, 8, '#f59e0b');
+              PixelArt.pxRect(ctx, x - 18, y - 10, 20, 10, '#2563eb', '#15141c');
+              ctx.fillStyle = '#f8fafc'; ctx.fillRect(x - 16, y - 4, 16, 2);
+              PixelArt.pxRect(ctx, x - 2, y - 14, 20, 10, '#7a1c33', '#15141c');
+              ctx.fillStyle = '#f8fafc'; ctx.fillRect(x, y - 8, 16, 2);
+              PixelArt.pxRect(ctx, x + 6, y - 7, 16, 8, '#f59e0b', '#15141c');
             } else {
-              PixelArt.pxRect(ctx, x - 12, y - 8, 24, 8, '#2563eb');
-              PixelArt.pxRect(ctx, x - 11, y - 16, 22, 8, '#7a1c33');
-              PixelArt.pxRect(ctx, x - 10, y - 23, 20, 7, '#f5b700');
+              PixelArt.pxRect(ctx, x - 13, y - 8, 26, 8, '#2563eb', '#15141c');
+              ctx.fillStyle = '#f8fafc'; ctx.fillRect(x - 10, y - 4, 20, 2);
+              PixelArt.pxRect(ctx, x - 12, y - 16, 24, 8, '#7a1c33', '#15141c');
+              ctx.fillStyle = '#f8fafc'; ctx.fillRect(x - 9, y - 12, 18, 2);
+              PixelArt.pxRect(ctx, x - 11, y - 23, 22, 7, '#f5b700', '#15141c');
             }
           } else if (pr.kind === 'sabotage_wall') {
             PixelArt.pxRect(ctx, x - 16, y - 30, 32, 30, pr.done ? '#9333ea' : '#f59e0b');
@@ -4661,6 +5060,14 @@ const Game = {
       });
     });
 
+    this.coinDrops.forEach(c => {
+      if (c.x < camX - 40 || c.x > camX + 840) return;
+      drawList.push({ y: c.y, draw: () => PixelArt.drawCoin(ctx, c, this.elapsed) });
+    });
+    this.critters.forEach(cr => {
+      if (cr.x < camX - 60 || cr.x > camX + 860) return;
+      drawList.push({ y: cr.y + 1, draw: () => PixelArt.drawCritter(ctx, cr, this.elapsed) });
+    });
     this.players.forEach(p => { if (p.hp > 0) drawList.push({ y: p.y, draw: () => PixelArt.drawHero(ctx, p, this.elapsed) }); });
     this.enemies.forEach(e => {
       if (e.x < camX - 180 || e.x > camX + 980) return;
@@ -5254,30 +5661,28 @@ const BaseManager = {
 
         if (!occ) {
           const seed = (gx * 13 + gy * 31) % 7;
+          // Subtle 4px pixel dither speckle on every ground tile
+          ctx.fillStyle = clean >= 2 ? 'rgba(255,255,255,0.08)' : 'rgba(24,24,27,0.12)';
+          ctx.fillRect(tx + 10 + seed * 4, ty + 12, 4, 4);
+          ctx.fillRect(tx + 50, ty + 46 + (seed % 3) * 4, 4, 4);
+
           if (clean === 0) {
-            // Cracks, rubble bricks, weeds, trash on empty tiles!
-            ctx.strokeStyle = 'rgba(24,24,27,0.45)';
-            ctx.beginPath();
-            ctx.moveTo(tx + 14 + seed * 3, ty + 22);
-            ctx.lineTo(tx + 38, ty + 34 + seed * 2);
-            ctx.lineTo(tx + 58, ty + 26);
-            ctx.stroke();
+            // Stepped pixel cracks + outlined pixel weeds, bricks & litter!
+            PixelArt.pxCrack(ctx, tx + 16 + seed * 2, ty + 24, [[1,0,4],[1,1,3],[1,0,4],[1,-1,2]], 'rgba(24,24,27,0.52)', 2);
             if (seed % 2 === 0) {
-              ctx.fillStyle = '#4d7c0f'; // weeds
-              ctx.fillRect(tx + 12, ty + 54, 4, 12); ctx.fillRect(tx + 17, ty + 58, 4, 8);
+              ctx.fillStyle = '#365314'; ctx.fillRect(tx + 12, ty + 56, 10, 10);
+              ctx.fillStyle = '#65a30d'; ctx.fillRect(tx + 14, ty + 52, 4, 12); ctx.fillRect(tx + 20, ty + 56, 4, 8);
               ctx.fillRect(tx + 54, ty + 16, 4, 10);
             }
             if (seed % 3 === 0) {
-              ctx.fillStyle = '#9a3412'; // rubble bricks
-              ctx.fillRect(tx + 44, ty + 56, 10, 6); ctx.fillRect(tx + 56, ty + 58, 8, 5);
+              PixelArt.pxRect(ctx, tx + 42, ty + 54, 12, 7, '#9a3412', '#18181b');
+              PixelArt.pxRect(ctx, tx + 54, ty + 57, 10, 6, '#b45309', '#18181b');
             } else if (gy >= 2 && seed % 2 === 1) {
-              ctx.fillStyle = '#e2e8f0'; // litter scrap
-              ctx.fillRect(tx + 28, ty + 46, 7, 5);
-              ctx.fillStyle = '#38bdf8'; ctx.fillRect(tx + 48, ty + 52, 6, 4);
+              PixelArt.pxRect(ctx, tx + 26, ty + 46, 8, 5, '#e2e8f0', '#18181b');
+              PixelArt.pxRect(ctx, tx + 46, ty + 52, 7, 5, '#38bdf8', '#18181b');
             }
           } else if (clean === 1 && seed % 3 === 0) {
-            ctx.strokeStyle = 'rgba(24,24,27,0.22)';
-            ctx.beginPath(); ctx.moveTo(tx + 18, ty + 40); ctx.lineTo(tx + 46, ty + 48); ctx.stroke();
+            PixelArt.pxCrack(ctx, tx + 20, ty + 38, [[1,0,4],[1,1,2]], 'rgba(24,24,27,0.28)', 2);
           }
         }
 
@@ -5386,13 +5791,17 @@ const BaseManager = {
       const isCancha = (t === 'cancha');
 
       if (isCancha) {
-        // Covered sports court tile
+        // Crisp 16-bit pixel covered sports court tile (stepped pixel circle!)
         px(ctx, tx + 6, ty + 16, C - 12, C - 24, '#334155', '#18181b');
         px(ctx, tx + 10, ty + 20, C - 20, C - 32, '#c2410c', '#f8fafc');
-        ctx.strokeStyle = '#f8fafc'; ctx.lineWidth = 1.5;
-        ctx.beginPath(); ctx.arc(tx + C / 2, ty + 42, 9, 0, Math.PI * 2); ctx.stroke();
-        px(ctx, tx + 5, ty + 11, C - 10, 9, '#7a1c33', '#f5b700');
-        txt(ctx, 'CANCHA', tx + C / 2, ty + 73, 8, '#fde047');
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(tx + 39, ty + 21, 2, 46); // half-court line
+        // Stepped pixel center circle
+        ctx.fillRect(tx + 34, ty + 35, 12, 2); ctx.fillRect(tx + 34, ty + 49, 12, 2);
+        ctx.fillRect(tx + 32, ty + 37, 2, 12); ctx.fillRect(tx + 46, ty + 37, 2, 12);
+        px(ctx, tx + 5, ty + 10, C - 10, 10, '#7a1c33', '#f5b700');
+        ctx.fillStyle = '#9c2645'; for (let rx = tx + 9; rx < tx + C - 10; rx += 10) ctx.fillRect(rx, ty + 12, 6, 4);
+        txt(ctx, 'CANCHA', tx + C / 2, ty + 74, 8, '#fde047');
         return;
       }
 
@@ -5432,23 +5841,31 @@ const BaseManager = {
 
     // Courtyard Props & Furniture
     if (t === 'tree') {
-      px(ctx, tx + 24, ty + 54, 32, 14, '#9a3412', '#18181b');
-      px(ctx, tx + 36, ty + 34, 8, 22, '#78350f');
-      px(ctx, tx + 18, ty + 14, 44, 28, '#15803d', '#14532d');
-      ctx.fillStyle = '#4ade80'; ctx.fillRect(tx + 24, ty + 18, 16, 10);
+      px(ctx, tx + 22, ty + 52, 36, 14, '#9a3412', '#18181b');
+      ctx.fillStyle = '#c2410c'; ctx.fillRect(tx + 24, ty + 54, 14, 4); ctx.fillRect(tx + 42, ty + 58, 12, 4);
+      px(ctx, tx + 36, ty + 34, 8, 20, '#78350f', '#18181b');
+      px(ctx, tx + 16, ty + 18, 48, 22, '#14532d', '#18181b');
+      px(ctx, tx + 22, ty + 10, 36, 26, '#15803d', '#18181b');
+      ctx.fillStyle = '#22c55e'; ctx.fillRect(tx + 24, ty + 14, 24, 14);
+      ctx.fillStyle = '#4ade80'; ctx.fillRect(tx + 26, ty + 16, 12, 8);
       txt(ctx, 'ÁRBOL', tx + C / 2, ty + 76, 7, '#bbf7d0');
     } else if (t === 'bench') {
-      px(ctx, tx + 14, ty + 30, 52, 12, '#b45309', '#18181b');
-      px(ctx, tx + 12, ty + 46, 56, 10, '#92400e', '#18181b');
-      ctx.fillStyle = '#334155'; ctx.fillRect(tx + 18, ty + 56, 6, 10); ctx.fillRect(tx + 56, ty + 56, 6, 10);
+      px(ctx, tx + 14, ty + 26, 52, 8, '#7a1c33', '#18181b');
+      px(ctx, tx + 14, ty + 36, 52, 7, '#9c2645', '#18181b');
+      px(ctx, tx + 12, ty + 46, 56, 9, '#b45309', '#18181b');
+      ctx.fillStyle = '#f5b700'; ctx.fillRect(tx + 16, ty + 28, 48, 2);
+      px(ctx, tx + 18, ty + 55, 6, 10, '#334155', '#18181b');
+      px(ctx, tx + 56, ty + 55, 6, 10, '#334155', '#18181b');
       txt(ctx, 'BANCAS', tx + C / 2, ty + 76, 7, '#fde68a');
     } else if (t === 'lamp') {
       px(ctx, tx + 32, ty + 56, 16, 10, '#475569', '#18181b');
-      px(ctx, tx + 38, ty + 16, 4, 42, '#94a3b8');
+      px(ctx, tx + 38, ty + 16, 4, 42, '#94a3b8', '#18181b');
       px(ctx, tx + 26, ty + 10, 28, 8, '#1e293b', '#38bdf8');
-      const glow = 0.20 + Math.sin(time * 4) * 0.06;
+      const glow = 0.22 + Math.sin(time * 4) * 0.06;
+      // Stepped pixel light halo (zero smooth arc!)
       ctx.fillStyle = `rgba(254, 240, 138, ${glow.toFixed(2)})`;
-      ctx.beginPath(); ctx.arc(tx + 40, ty + 24, 24, 0, Math.PI * 2); ctx.fill();
+      ctx.fillRect(tx + 20, ty + 18, 40, 16);
+      ctx.fillRect(tx + 26, ty + 12, 28, 28);
       ctx.fillStyle = '#fef08a'; ctx.fillRect(tx + 32, ty + 17, 16, 4);
       txt(ctx, 'LUZ LED', tx + C / 2, ty + 76, 7, '#fef08a');
     } else if (t === 'recycle') {
